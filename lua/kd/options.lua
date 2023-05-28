@@ -8,8 +8,6 @@ vim.o.directory = vim.fn.stdpath("cache") .. "/swap"
 vim.o.undofile = true
 
 vim.o.encoding = "utf-8" -- Default file encoding
-vim.o.fileencoding = "utf-8" --  Default file encoding
-vim.o.fileencodings = "utf-8" --  Default file encoding
 vim.o.autochdir = false --  Don't change dirs automatically
 vim.o.errorbells = false --  No sound
 
