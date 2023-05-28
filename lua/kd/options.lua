@@ -1,5 +1,5 @@
--- vim.cmd("syntax enable")
--- vim.cmd("syntax on")
+vim.cmd("syntax enable")
+vim.cmd("syntax on")
 vim.cmd("filetype indent on")
 
 vim.o.undodir = vim.fn.stdpath("cache") .. "/undodir"
