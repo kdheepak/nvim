@@ -71,7 +71,6 @@ return {
               fallback()
             end
           end, { "i", "s" }),
-
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
@@ -91,11 +90,11 @@ return {
         formatting = {
           format = function(entry, item)
             local icons = require("kd/utils").icons.kinds
-            local cmp = require("kd/utils").icons.cmp
+            local cmp_icons = require("kd/utils").icons.cmp
             if icons[item.kind] then
               item.kind = icons[item.kind] .. item.kind
             end
-            item.menu = cmp[entry.source.name]
+            item.menu = cmp_icons[entry.source.name]
             return item
           end,
         },
