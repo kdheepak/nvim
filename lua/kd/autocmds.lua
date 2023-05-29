@@ -113,7 +113,7 @@ augroup("KDAutocmds", function()
 end)
 
 -- Autocommands to change "commentstring" for specific filetypes. TODO: Create lua version.
--- |> Use "//" instead of "/* */" for 'C' and 'cpp' files.
+-- Use "//" instead of "/* */" for 'C' and 'cpp' files.
 vim.cmd([[
 augroup set-commentstring-ag
 autocmd!
