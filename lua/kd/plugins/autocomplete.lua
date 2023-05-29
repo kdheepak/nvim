@@ -91,22 +91,11 @@ return {
         formatting = {
           format = function(entry, item)
             local icons = require("kd/utils").icons.kinds
+            local cmp = require("kd/utils").icons.cmp
             if icons[item.kind] then
               item.kind = icons[item.kind] .. item.kind
             end
-            item.menu = ({
-              calc = "±",
-              emoji = "☺",
-              latex_symbols = "λ",
-              nvim_lsp = "ﲳ",
-              nvim_lua = "",
-              treesitter = "",
-              path = "ﱮ",
-              buffer = "﬘",
-              zsh = "",
-              luasnip = "",
-              spell = "暈",
-            })[entry.source.name]
+            item.menu = cmp[entry.source.name]
             return item
           end,
         },
