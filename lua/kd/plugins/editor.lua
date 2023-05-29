@@ -153,7 +153,10 @@ return {
         untracked = { text = "▎" },
       },
       on_attach = function(buffer)
-        local map = require("kd/utils").map
+        local function map(mode, l, r, desc)
+          require("kd/utils").map(mode, l, r, { buffer = buffer, desc = desc })
+        end
+        local gs = package.loaded.gitsigns
         map("n", "]h", gs.next_hunk, "Next Hunk")
         map("n", "[h", gs.prev_hunk, "Prev Hunk")
         map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
