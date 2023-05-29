@@ -137,7 +137,9 @@ return {
         "jose-elias-alvarez/null-ls.nvim",
       },
       config = function()
+        require("mason").setup()
         require("mason-null-ls").setup({
+            automatic_setup = true,
             ensure_installed = { "stylua", "jq" }
         })
       end,
