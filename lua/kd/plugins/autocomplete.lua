@@ -14,22 +14,11 @@ return {
       history = true,
       delete_check_events = "TextChanged",
     },
-    -- stylua: ignore
-    keys = {
-      {
-        "<tab>",
-        function()
-          return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
-        end,
-        expr = true, silent = true, mode = "i",
-      },
-      { "<tab>", function() require("luasnip").jump(1) end, mode = "s" },
-      { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
-    },
   },
   -- auto completion
   {
     "hrsh7th/nvim-cmp",
+    lazy = false,
     version = false, -- last release is way too old
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
@@ -40,6 +29,7 @@ return {
     opts = function()
       local cmp = require("cmp")
       return {
+        preselect = cmp.PreselectMode.None,
         completion = {
           completeopt = "menu,menuone,noinsert",
         },
@@ -55,14 +45,14 @@ return {
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ["<CR>"] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
           ["<S-CR>"] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
           }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
-              cmp.select_next_item()
+              cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
             elseif require("luasnip").expand_or_locally_jumpable() then
               require("luasnip").expand_or_jump()
             elseif require("kd/utils").has_words_before() then
@@ -73,7 +63,7 @@ return {
           end, { "i", "s" }),
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
-              cmp.select_prev_item()
+              cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
             elseif require("luasnip").jumpable(-1) then
              require("luasnip").jump(-1)
             else
