@@ -127,6 +127,9 @@ return {
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { "j-hui/fidget.nvim", opts = {} },
 
+      -- init.lua and plugin development with full signature help, docs and completion for the nvim lua API.
+      { "folke/neodev.nvim", opts = {} },
+
       -- project local configuration
       { "folke/neoconf.nvim", cmd = "Neoconf" },
     },
@@ -154,11 +157,6 @@ return {
           "prettierd",
         },
       })
-      require("null-ls").setup({
-        on_attach = require("lsp-format").on_attach,
-        border = "single",
-      })
-      require("lspconfig").lua_ls.setup({ on_attach = require("lsp-format").on_attach })
     end,
   },
 }
