@@ -23,24 +23,7 @@ return {
     "onsails/lspkind.nvim",
     opts = {
       mode = "symbol",
-      symbol_map = {
-        Array = "󰅪",
-        Boolean = "⊨",
-        Class = "󰌗",
-        Constructor = "",
-        Key = "󰌆",
-        Namespace = "󰅪",
-        Null = "NULL",
-        Number = "#",
-        Object = "󰀚",
-        Package = "󰏗",
-        Property = "",
-        Reference = "",
-        Snippet = "",
-        String = "󰀬",
-        TypeParameter = "󰊄",
-        Unit = "",
-      },
+      symbol_map = require("kd/utils").icons.kinds,
     },
     enabled = vim.g.icons_enabled,
     config = function()
@@ -170,6 +153,9 @@ return {
           inc_rename = false, -- enables an input dialog for inc-rename.nvim
           lsp_doc_border = false, -- add a border to hover docs and signature help
         },
+        messages = {
+          enabled = false,
+        }
       })
     end,
     event = "VeryLazy",
