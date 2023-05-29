@@ -79,4 +79,3 @@ vim.o.hidden = true
 vim.o.autoread = true
 vim.opt.laststatus = 3
 vim.g.python3_host_prog = vim.fn.expand("~/miniconda3/bin/python3")
-

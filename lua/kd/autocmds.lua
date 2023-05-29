@@ -18,7 +18,7 @@ augroup("KDAutocmds", function()
 
   autocmd({ "BufRead", "BufNewFile" }, function()
     vim.api.nvim_command("set filetype=typst")
-  end, { pattern = { "*.typ" } } )
+  end, { pattern = { "*.typ" } })
 
   autocmd("FileType", "setl bufhidden=delete", { pattern = { "gitcommit", "gitrebase", "gitconfig" } })
 
@@ -47,69 +47,61 @@ augroup("KDAutocmds", function()
 
   -- go to last loc when opening a buffer
   autocmd("BufReadPost", function()
-      local mark = vim.api.nvim_buf_get_mark(0, '"')
-      local lcount = vim.api.nvim_buf_line_count(0)
-      if mark[1] > 0 and mark[1] <= lcount then
-        pcall(vim.api.nvim_win_set_cursor, 0, mark)
-      end
+    local mark = vim.api.nvim_buf_get_mark(0, "\"")
+    local lcount = vim.api.nvim_buf_line_count(0)
+    if mark[1] > 0 and mark[1] <= lcount then
+      pcall(vim.api.nvim_win_set_cursor, 0, mark)
     end
-  )
+  end)
 
   -- windows to close with "q"
-  autocmd("FileType",
-    function(event)
-      vim.bo[event.buf].buflisted = false
-      vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
-    end,
-    {
-      pattern = {
-        "dap-float",
-        "fugitive",
-        "help",
-        "man",
-        "notify",
-        "null-ls-info",
-        "qf",
-        "PlenaryTestPopup",
-        "startuptime",
-        "tsplayground",
-      },
-    }
-  )
+  autocmd("FileType", function(event)
+    vim.bo[event.buf].buflisted = false
+    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+  end, {
+    pattern = {
+      "dap-float",
+      "fugitive",
+      "help",
+      "man",
+      "notify",
+      "null-ls-info",
+      "qf",
+      "PlenaryTestPopup",
+      "startuptime",
+      "tsplayground",
+    },
+  })
 
-  autocmd("FileType", [[nnoremap <buffer><silent> q :quit<CR>]], { pattern = "man" } )
+  autocmd("FileType", [[nnoremap <buffer><silent> q :quit<CR>]], { pattern = "man" })
 
   -- show cursorline only in active window
   autocmd({ "InsertLeave", "WinEnter" }, "set cursorline")
   autocmd({ "InsertEnter", "WinLeave" }, "set nocursorline")
 
   autocmd("User", function(event)
-      local fallback_name = vim.api.nvim_buf_get_name(event.buf)
-      local fallback_ft = vim.api.nvim_buf_get_option(event.buf, "filetype")
-      local fallback_on_empty = fallback_name == "" and fallback_ft == ""
+    local fallback_name = vim.api.nvim_buf_get_name(event.buf)
+    local fallback_ft = vim.api.nvim_buf_get_option(event.buf, "filetype")
+    local fallback_on_empty = fallback_name == "" and fallback_ft == ""
 
-      if fallback_on_empty then
-        vim.api.nvim_command("Alpha")
-        vim.api.nvim_command(event.buf .. "bwipeout")
-      end
-    end,
-    { pattern = "BDeletePost*" }
-  )
+    if fallback_on_empty then
+      vim.api.nvim_command("Alpha")
+      vim.api.nvim_command(event.buf .. "bwipeout")
+    end
+  end, { pattern = "BDeletePost*" })
 
   -- LuaSnip Snippet History Fix
   autocmd("ModeChanged", function()
-      if ((vim.v.event.old_mode == 's' and vim.v.event.new_mode == 'n') or vim.v.event.old_mode == 'i')
-          and require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
-          and not require('luasnip').session.jump_active
-      then
-          require('luasnip').unlink_current()
-      end
+    if
+      ((vim.v.event.old_mode == "s" and vim.v.event.new_mode == "n") or vim.v.event.old_mode == "i")
+      and require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
+      and not require("luasnip").session.jump_active
+    then
+      require("luasnip").unlink_current()
     end
-  )
+  end)
 
-  autocmd("FileType", 'lua vim.opt.conceallevel = 0',
-    {pattern = { "help" }}
-  )
+  autocmd("FileType", "lua vim.opt.conceallevel = 0", { pattern = { "help" } })
 end)
 
 -- Autocommands to change "commentstring" for specific filetypes. TODO: Create lua version.
@@ -136,4 +128,3 @@ autocmd!
     autocmd BufFilePost *.fish :lua vim.api.nvim_buf_set_option(0, "commentstring", "# %s")
 augroup END
 ]])
-

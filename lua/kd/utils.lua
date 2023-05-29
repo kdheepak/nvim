@@ -23,7 +23,6 @@ function M.autocmd(name, cmd, opts)
   vim.api.nvim_create_autocmd(name, opts)
 end
 
-
 function M.cnoremap(lhs, rhs, opts)
   opts = opts or {}
   return M.cmap(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
@@ -103,7 +102,6 @@ function M.map(mode, lhs, rhs, opts)
   end
 end
 
-
 local options = {
   colorcolumn = { scope = "window", type = "string" },
   concealcursor = { scope = "window", type = "string" },
@@ -141,7 +139,6 @@ function M.join(tbl, delimiter)
   end
   return result
 end
-
 
 function M.command(name, cmd, opts)
   opts = opts or {}
@@ -405,7 +402,7 @@ M.icons = {
     Unit = " ",
     Value = " ",
     Variable = " ",
-  }
+  },
 }
 
 return M

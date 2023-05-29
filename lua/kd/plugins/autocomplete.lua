@@ -66,7 +66,7 @@ return {
             if cmp.visible() then
               cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
             elseif require("luasnip").jumpable(-1) then
-             require("luasnip").jump(-1)
+              require("luasnip").jump(-1)
             else
               fallback()
             end

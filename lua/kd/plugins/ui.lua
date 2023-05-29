@@ -32,12 +32,16 @@ return {
   },
   {
     "rcarriga/nvim-notify",
-    opts = { on_open = function(win) vim.api.nvim_win_set_config(win, { zindex = 1000 }) end },
+    opts = {
+      on_open = function(win)
+        vim.api.nvim_win_set_config(win, { zindex = 1000 })
+      end,
+    },
     config = function(_, opts)
-      local notify = require "notify"
+      local notify = require("notify")
       notify.setup(opts)
       vim.notify = notify
-    end
+    end,
   },
   {
     "stevearc/dressing.nvim",
@@ -56,34 +60,35 @@ return {
     "NvChad/nvim-colorizer.lua",
     config = function()
       require("colorizer").setup({
-          filetypes = {
-              "lua", "css",
-          },
+        filetypes = {
+          "lua",
+          "css",
+        },
 
-          user_default_options = {
-              RRGGBB = true, -- #RRGGBB hex codes
-              RRGGBBAA = true, -- #RRGGBBAA hex codes
-              AARRGGBB = false, -- 0xAARRGGBB hex codes
-              RGB = false, -- #RGB hex codes
-              names = false, -- `Name` codes like Blue or blue
-              rgb_fn = false, -- CSS rgb() and rgba() functions
-              hsl_fn = false, -- CSS hsl() and hsla() functions
-              css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-              css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-              -- Available modes for `mode`: foreground, background,  virtualtext
-              mode = "virtualtext", -- Set the display mode.
-              -- Available methods are false / true / "normal" / "lsp" / "both"
-              -- True is same as normal
-              tailwind = false, -- Enable tailwind colors
-              -- parsers can contain values used in |user_default_options|
-              sass = { enable = false, parsers = { css }, }, -- Enable sass colors
-              virtualtext = "■",
-          },
+        user_default_options = {
+          RRGGBB = true, -- #RRGGBB hex codes
+          RRGGBBAA = true, -- #RRGGBBAA hex codes
+          AARRGGBB = false, -- 0xAARRGGBB hex codes
+          RGB = false, -- #RGB hex codes
+          names = false, -- `Name` codes like Blue or blue
+          rgb_fn = false, -- CSS rgb() and rgba() functions
+          hsl_fn = false, -- CSS hsl() and hsla() functions
+          css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+          css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+          -- Available modes for `mode`: foreground, background,  virtualtext
+          mode = "virtualtext", -- Set the display mode.
+          -- Available methods are false / true / "normal" / "lsp" / "both"
+          -- True is same as normal
+          tailwind = false, -- Enable tailwind colors
+          -- parsers can contain values used in |user_default_options|
+          sass = { enable = false, parsers = { css } }, -- Enable sass colors
+          virtualtext = "■",
+        },
 
-          -- all the sub-options of filetypes apply to buftypes
-          buftypes = {},
+        -- all the sub-options of filetypes apply to buftypes
+        buftypes = {},
       })
-    end
+    end,
   },
   {
     "lukas-reineke/indent-blankline.nvim",
@@ -154,7 +159,7 @@ return {
           lsp_doc_border = false, -- add a border to hover docs and signature help
         },
         messages = {
-          enabled = false
+          enabled = false,
         },
         routes = {
           {
@@ -179,6 +184,6 @@ return {
       --   `nvim-notify` is only needed, if you want to use the notification view.
       --   If not available, we use `mini` as the fallback
       "rcarriga/nvim-notify",
-      }
-  }
+    },
+  },
 }

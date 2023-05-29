@@ -35,4 +35,3 @@ highlight("default", "link", "gitLgDate", "gitDate")
 highlight("default", "link", "gitLgRefs", "gitReference")
 
 highlight("default", "link", "gitLgIdentity", "gitIdentity")
-
