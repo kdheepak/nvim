@@ -55,11 +55,11 @@ return {
           nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
           nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-          nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+          -- nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
           nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
           nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-          nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-          nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+          -- nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+          -- nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
           -- See `:help K` for why this keymap
           nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -130,22 +130,17 @@ return {
   },
   -- formatters
   {
-    "jose-elias-alvarez/null-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = { "mason.nvim" },
-    opts = function()
-      local nls = require("null-ls")
-      return {
-        root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
-        sources = {
-          nls.builtins.formatting.fish_indent,
-          nls.builtins.diagnostics.fish,
-          nls.builtins.formatting.stylua,
-          nls.builtins.formatting.shfmt,
-          -- nls.builtins.diagnostics.flake8,
-        },
-      }
-    end,
+      "jay-babu/mason-null-ls.nvim",
+      event = { "BufReadPre", "BufNewFile" },
+      dependencies = {
+        "williamboman/mason.nvim",
+        "jose-elias-alvarez/null-ls.nvim",
+      },
+      config = function()
+        require("mason-null-ls").setup({
+            ensure_installed = { "stylua", "jq" }
+        })
+      end,
   },
 }
 

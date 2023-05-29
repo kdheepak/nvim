@@ -47,7 +47,7 @@ return {
         win_options = { winhighlight = "Normal:Normal,NormalNC:Normal" },
       },
       select = {
-        backend = { "telescope", "builtin" },
+        -- backend = { "telescope", "builtin" },
         builtin = { win_options = { winhighlight = "Normal:Normal,NormalNC:Normal" } },
       },
     },
