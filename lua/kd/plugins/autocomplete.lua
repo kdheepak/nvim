@@ -138,13 +138,6 @@ return {
     end,
   },
 
-  -- auto pairs
-  {
-    "echasnovski/mini.pairs",
-    event = "VeryLazy",
-    opts = {},
-  },
-
   -- surround
   {
     "echasnovski/mini.surround",
@@ -201,7 +194,7 @@ return {
     --   { "i", mode = { "x", "o" } },
     -- },
     event = "VeryLazy",
-    dependencies = { "nvim-treesitter-textobjects" },
+    dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
     opts = function()
       local ai = require("mini.ai")
       return {
