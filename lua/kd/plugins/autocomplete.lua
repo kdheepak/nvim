@@ -30,10 +30,6 @@ return {
     opts = function()
       local cmp = require("cmp")
       return {
-        preselect = cmp.PreselectMode.None,
-        completion = {
-          completeopt = "menu,menuone,noinsert",
-        },
         snippet = {
           expand = function(args)
             require("luasnip").lsp_expand(args.body)
@@ -88,11 +84,6 @@ return {
             item.menu = cmp_icons[entry.source.name]
             return item
           end,
-        },
-        experimental = {
-          ghost_text = {
-            hl_group = "LspCodeLens",
-          },
         },
       }
     end,

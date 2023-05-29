@@ -26,7 +26,7 @@ return {
       symbol_map = require("kd/utils").icons.kinds,
     },
     enabled = vim.g.icons_enabled,
-    config = function()
+    config = function(_, opts)
       require("lspkind").init(opts)
     end,
   },
