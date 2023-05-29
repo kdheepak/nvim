@@ -79,6 +79,27 @@ return {
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
           }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif luasnip.expand_or_locally_jumpable() then
+              luasnip.expand_or_jump()
+            elseif has_words_before() then
+              cmp.complete()
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
         }),
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
@@ -87,11 +108,24 @@ return {
           { name = "path" },
         }),
         formatting = {
-          format = function(_, item)
-            local icons = require("kd.utils").icons.kinds
+          format = function(entry, item)
+            local icons = require("kd/utils").icons.kinds
             if icons[item.kind] then
               item.kind = icons[item.kind] .. item.kind
             end
+            item.menu = ({
+              calc = "±",
+              emoji = "☺",
+              latex_symbols = "λ",
+              nvim_lsp = "ﲳ",
+              nvim_lua = "",
+              treesitter = "",
+              path = "ﱮ",
+              buffer = "﬘",
+              zsh = "",
+              luasnip = "",
+              spell = "暈",
+            })[entry.source.name]
             return item
           end,
         },
