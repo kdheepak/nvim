@@ -2,6 +2,15 @@ return {
   {
     -- LSP Configuration & Plugins
     "neovim/nvim-lspconfig",
+    config = function()
+      local lspconfig = require("lspconfig")
+      lspconfig.lua_ls.setup({
+        on_attach = function(client)
+          -- Disable formatting with sumneko_lua. Use stylua in efm instead
+          client.server_capabilities.documentFormattingProvider = false
+        end,
+      })
+    end,
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
       {
@@ -73,6 +82,9 @@ return {
             tsserver = {},
             lua_ls = {
               Lua = {
+                completion = {
+                  callSnippet = "Replace",
+                },
                 diagnostics = {
                   globals = { "vim" },
                 },
@@ -135,6 +147,16 @@ return {
               "black",
               "eslint_lsp",
               "prettierd",
+            },
+          })
+          local styluaConfig = {
+            extra_args = { "--config-path", vim.fn.expand("~/gitrepos/dotfiles/.stylua.toml") },
+          }
+          require("null-ls").setup({
+            on_attach = require("lsp-format").on_attach,
+            border = "single",
+            sources = {
+              require("null-ls").builtins.formatting.stylua.with(styluaConfig),
             },
           })
         end,
