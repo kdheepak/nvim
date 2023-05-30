@@ -23,7 +23,7 @@ return {
     "onsails/lspkind.nvim",
     opts = {
       mode = "symbol",
-      symbol_map = require("kd/utils").icons.kinds,
+      symbol_map = require("kd.utils").icons.kinds,
     },
     enabled = vim.g.icons_enabled,
     config = function(_, opts)
@@ -186,7 +186,7 @@ return {
     opts = {
       icons = {
         kinds = {
-          symbols = require("kd/utils").icons.kinds,
+          symbols = require("kd.utils").icons.kinds,
         },
       },
     },

@@ -54,7 +54,7 @@ return {
               cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
             elseif require("luasnip").expand_or_locally_jumpable() then
               require("luasnip").expand_or_jump()
-            elseif require("kd/utils").has_words_before() then
+            elseif require("kd.utils").has_words_before() then
               cmp.complete()
             else
               fallback()
@@ -80,8 +80,8 @@ return {
         }),
         formatting = {
           format = function(entry, item)
-            local icons = require("kd/utils").icons.kinds
-            local cmp_icons = require("kd/utils").icons.cmp
+            local icons = require("kd.utils").icons.kinds
+            local cmp_icons = require("kd.utils").icons.cmp
             if icons[item.kind] then
               item.kind = icons[item.kind] .. item.kind
             end

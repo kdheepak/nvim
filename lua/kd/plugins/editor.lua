@@ -154,7 +154,7 @@ return {
       },
       on_attach = function(buffer)
         local function map(mode, l, r, desc)
-          require("kd/utils").map(mode, l, r, { buffer = buffer, desc = desc })
+          require("kd.utils").map(mode, l, r, { buffer = buffer, desc = desc })
         end
         local gs = package.loaded.gitsigns
         map("n", "]h", gs.next_hunk, "Next Hunk")

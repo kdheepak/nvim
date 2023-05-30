@@ -3,7 +3,7 @@ return {
     "junegunn/fzf",
     build = ":call fzf#install()",
   },
-  require("kd/utils").os.is_windows and {
+  require("kd.utils").os.is_windows and {
     "junegunn/fzf.vim",
     dependencies = { "junegunn/fzf" },
     config = function()
