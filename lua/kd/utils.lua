@@ -281,7 +281,7 @@ M.os = {
   name = OS,
   is_macos = OS == "Darwin",
   is_windows = OS:match("Windows"),
-  is_linux = ~(OS == "Darwin" and OS:match("Windows")),
+  is_linux = not (OS == "Darwin" and OS:match("Windows")),
 }
 
 M.icons = {
