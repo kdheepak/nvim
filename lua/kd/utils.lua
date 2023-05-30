@@ -145,48 +145,6 @@ function M.command(name, cmd, opts)
   vim.api.nvim_create_user_command(name, cmd, opts)
 end
 
-function M.setlocal(name, ...)
-  local args = { ... }
-  local operator = nil
-  local value = nil
-  if #args == 0 then
-    operator = "="
-    value = true
-  elseif #args == 1 then
-    operator = "="
-    value = args[1]
-  elseif #args == 2 then
-    operator = args[1]
-    value = args[2]
-  else
-    return vim.api.nvim_err_writeln("setlocal(): expects 1 or 2 arguments, got " .. #args)
-  end
-
-  local option = options[name]
-  if option == nil then
-    return vim.api.nvim_err_writeln("setlocal(): unsupported option: " .. name)
-  end
-
-  local get = option.scope == "buffer" and vim.api.nvim_buf_get_option or vim.api.nvim_win_get_option
-
-  local set = option.scope == "buffer" and vim.api.nvim_buf_set_option or vim.api.nvim_win_set_option
-
-  if operator == "=" then
-    set(0, name, value)
-  elseif operator == "-=" then
-    if option.type ~= "list" then
-      return vim.api.nvim_err_writeln("setlocal(): operator \"-=\" requires list type but got " .. option.type)
-    end
-    local current = vim.split(get(0, name), ",")
-    local new = vim.tbl_filter(function(item)
-      return item ~= value
-    end, current)
-    set(0, name, M.join(new, ","))
-  else
-    return vim.api.nvim_err_writeln("setlocal(): unsupported operator: " .. operator)
-  end
-end
-
 function M.strip_trailing_slash(dir)
   if string.sub(dir, -1, -1) == "/" then
     dir = string.sub(dir, 1, -2)
@@ -316,6 +274,15 @@ function M.P(...)
   print(unpack(objects))
 end
 _G.P = M.P
+
+local OS = vim.loop.os_uname().sysname
+
+M.os = {
+  name = OS,
+  is_macos = OS == "Darwin",
+  is_windows = OS:match("Windows"),
+  is_linux = ~(OS == "Darwin" and OS:match("Windows")),
+}
 
 M.icons = {
   dap = {
