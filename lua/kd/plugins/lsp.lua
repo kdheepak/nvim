@@ -6,7 +6,7 @@ return {
       local lspconfig = require("lspconfig")
       lspconfig.lua_ls.setup({
         on_attach = function(client)
-          -- Disable formatting with sumneko_lua. Use stylua in efm instead
+          -- Disable formatting with sumneko_lua. Use stylua in null-ls instead
           client.server_capabilities.documentFormattingProvider = false
         end,
       })
@@ -70,10 +70,6 @@ return {
           end
 
           -- Enable the following language servers
-          --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-          --
-          --  Add any additional override configuration in the following tables. They will be passed to
-          --  the `settings` field of the server config. You must look up that documentation yourself.
           local servers = {
             clangd = {},
             pyright = {},
@@ -126,7 +122,8 @@ return {
 
       -- project local configuration
       { "folke/neoconf.nvim", cmd = "Neoconf" },
-      -- formatters
+
+      -- null-ls
       {
         "jay-babu/mason-null-ls.nvim",
         event = { "BufReadPre", "BufNewFile" },
@@ -154,7 +151,6 @@ return {
           }
           require("null-ls").setup({
             on_attach = require("lsp-format").on_attach,
-            border = "single",
             sources = {
               require("null-ls").builtins.formatting.stylua.with(styluaConfig),
             },
