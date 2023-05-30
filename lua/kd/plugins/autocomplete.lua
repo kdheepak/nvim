@@ -15,7 +15,6 @@ return {
       delete_check_events = "TextChanged",
     },
   },
-  { "lukas-reineke/lsp-format.nvim" },
   -- auto completion
   {
     "hrsh7th/nvim-cmp",

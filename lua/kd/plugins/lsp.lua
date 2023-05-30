@@ -28,11 +28,16 @@ return {
       },
       {
         "williamboman/mason-lspconfig.nvim",
+        dependencies = {
+          "lukas-reineke/lsp-format.nvim",
+        },
         config = function()
           --  This function gets run when an LSP connects to a particular buffer.
-          local on_attach = function(_, bufnr)
+          local on_attach = function(client, bufnr)
             -- In this case, we create a function that lets us more easily define mappings specific
             -- for LSP related items. It sets the mode, buffer and description for us each time.
+            require("lsp-format").on_attach(client)
+
             local nmap = function(keys, func, desc)
               if desc then
                 desc = "LSP: " .. desc
