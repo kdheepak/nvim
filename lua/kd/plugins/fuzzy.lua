@@ -6,4 +6,6 @@ return {
       require("kd.plugins.configs.fzf-lua")
     end,
   },
+  { "junegunn/fzf.vim" },
+  { "junegunn/fzf", dir = "~/.fzf", build = "./install --all" },
 }
