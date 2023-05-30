@@ -6,43 +6,22 @@ return {
       -- Automatically install LSPs to stdpath for neovim
       {
         "williamboman/mason.nvim",
-        cmd = "Mason",
-        keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
+        build = ":MasonUpdate", -- :MasonUpdate updates registry contents
         opts = {
-          ensure_installed = {
-            "stylua",
-            "shfmt",
-            "flake8",
+          ui = {
+            icons = {
+              package_installed = "✓",
+              package_pending = "➜",
+              package_uninstalled = "✗",
+            },
           },
         },
-        config = function(_, opts)
-          require("mason").setup(opts)
-          local mr = require("mason-registry")
-          local function ensure_installed()
-            for _, tool in ipairs(opts.ensure_installed) do
-              local p = mr.get_package(tool)
-              if not p:is_installed() then
-                p:install()
-              end
-            end
-          end
-          if mr.refresh then
-            mr.refresh(ensure_installed)
-          else
-            ensure_installed()
-          end
-        end,
       },
       {
         "williamboman/mason-lspconfig.nvim",
         config = function()
-          -- [[ Configure LSP ]]
           --  This function gets run when an LSP connects to a particular buffer.
           local on_attach = function(_, bufnr)
-            -- NOTE: Remember that lua is a real programming language, and as such it is possible
-            -- to define small helper and utility functions so you don't have to repeat yourself
-            -- many times.
-            --
             -- In this case, we create a function that lets us more easily define mappings specific
             -- for LSP related items. It sets the mode, buffer and description for us each time.
             local nmap = function(keys, func, desc)
@@ -53,30 +32,30 @@ return {
               vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
             end
 
-            nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-            nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+            nmap("<leader>lr", vim.lsp.buf.rename, "[R]e[n]ame")
+            nmap("<leader>lca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
-            nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
+            nmap("<leader>ld", vim.lsp.buf.definition, "[G]oto [D]efinition")
+            nmap("<leader>li", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
+            nmap("<leader>lt", vim.lsp.buf.type_definition, "Type [D]efinition")
             -- nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-            nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
-            nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
             -- nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
             -- nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
             -- See `:help K` for why this keymap
-            nmap("K", vim.lsp.buf.hover, "Hover Documentation")
-            nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
+            nmap("<leader>lh", vim.lsp.buf.hover, "Hover Documentation")
+            nmap("<leader>lH", vim.lsp.buf.signature_help, "Signature Documentation")
 
             -- Lesser used LSP functionality
-            nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-            nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
-            nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
-            nmap("<leader>wl", function()
+            nmap("<leader>lD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+            nmap("<leader>lwa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
+            nmap("<leader>lwr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
+            nmap("<leader>lwl", function()
               print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
             end, "[W]orkspace [L]ist Folders")
 
-            -- Create a command `:Format` local to the LSP buffer
-            vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
+            -- Create a command `:LSPFormat` local to the LSP buffer
+            vim.api.nvim_buf_create_user_command(bufnr, "LSPFormat", function(_)
               vim.lsp.buf.format()
             end, { desc = "Format current buffer with LSP" })
           end
@@ -87,15 +66,22 @@ return {
           --  Add any additional override configuration in the following tables. They will be passed to
           --  the `settings` field of the server config. You must look up that documentation yourself.
           local servers = {
-            -- clangd = {},
-            -- gopls = {},
-            -- pyright = {},
-            -- rust_analyzer = {},
-            -- tsserver = {},
-
+            clangd = {},
+            pyright = {},
+            julials = {},
+            rust_analyzer = {},
+            tsserver = {},
             lua_ls = {
               Lua = {
-                workspace = { checkThirdParty = false },
+                diagnostics = {
+                  globals = { "vim" },
+                },
+                workspace = {
+                  checkThirdParty = false,
+                  library = {
+                    [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                  },
+                },
                 telemetry = { enable = false },
               },
             },
@@ -123,40 +109,36 @@ return {
         end,
       },
 
-      -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { "j-hui/fidget.nvim", opts = {} },
-
       -- init.lua and plugin development with full signature help, docs and completion for the nvim lua API.
       { "folke/neodev.nvim", opts = {} },
 
       -- project local configuration
       { "folke/neoconf.nvim", cmd = "Neoconf" },
-    },
-  },
-  -- formatters
-  {
-    "jay-babu/mason-null-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "williamboman/mason.nvim",
-      "jose-elias-alvarez/null-ls.nvim",
-      "nvim-lua/plenary.nvim",
-      "lukas-reineke/lsp-format.nvim",
-    },
-    config = function()
-      require("mason").setup()
-      require("mason-null-ls").setup({
-        automatic_setup = true,
-        ensure_installed = {
-          "stylua",
-          "jq",
-          "isort",
-          "black",
-          "eslint_lsp",
-          "prettierd",
+      -- formatters
+      {
+        "jay-babu/mason-null-ls.nvim",
+        event = { "BufReadPre", "BufNewFile" },
+        dependencies = {
+          "williamboman/mason.nvim",
+          "jose-elias-alvarez/null-ls.nvim",
+          "nvim-lua/plenary.nvim",
+          "lukas-reineke/lsp-format.nvim",
         },
-      })
-    end,
+        config = function()
+          require("mason").setup()
+          require("mason-null-ls").setup({
+            automatic_setup = true,
+            ensure_installed = {
+              "stylua",
+              "jq",
+              "isort",
+              "black",
+              "eslint_lsp",
+              "prettierd",
+            },
+          })
+        end,
+      },
+    },
   },
 }
