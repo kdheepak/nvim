@@ -102,6 +102,25 @@ augroup("KDAutocmds", function()
   end)
 
   autocmd("FileType", "lua vim.opt.conceallevel = 0", { pattern = { "help" } })
+
+  autocmd("VimEnter", function()
+    local should_skip = false
+    if vim.fn.argc() > 0 or vim.fn.line2byte(vim.fn.line("$")) ~= -1 or not vim.o.modifiable then
+      should_skip = true
+    else
+      for _, arg in pairs(vim.v.argv) do
+        if arg == "-b" or arg == "-c" or vim.startswith(arg, "+") or arg == "-S" then
+          should_skip = true
+          break
+        end
+      end
+    end
+    if not should_skip then
+      require("fzf-lua").files({})
+    end
+  end, {
+    desc = "Start Alpha when vim is opened with no arguments",
+  })
 end)
 
 -- Autocommands to change "commentstring" for specific filetypes. TODO: Create lua version.
