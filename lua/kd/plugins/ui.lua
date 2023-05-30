@@ -142,7 +142,7 @@ return {
       options = {
         try_as_border = true,
       },
-      symbol = "│" --  "▏", -- default ╎, -- alts: ┊│┆ ┊  ▎││ ▏▏
+      symbol = "│", --  "▏", -- default ╎, -- alts: ┊│┆ ┊  ▎││ ▏▏
     },
   },
   {
@@ -193,4 +193,5 @@ return {
       "rcarriga/nvim-notify",
     },
   },
+  -- { "Bekaboo/dropbar.nvim" },
 }
