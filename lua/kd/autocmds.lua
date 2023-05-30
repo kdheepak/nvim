@@ -119,7 +119,7 @@ augroup("KDAutocmds", function()
       require("fzf-lua").files({})
     end
   end, {
-    desc = "Start Alpha when vim is opened with no arguments",
+    desc = "Start fzf-lua when vim is opened with no arguments",
   })
 end)
 
