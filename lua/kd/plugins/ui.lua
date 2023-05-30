@@ -130,7 +130,19 @@ return {
       use_treesitter = true,
       char = "▏",
       context_char = "▏",
-      show_current_context = true,
+      show_current_context = false,
+    },
+  },
+  {
+    "echasnovski/mini.indentscope",
+    opts = {
+      draw = {
+        delay = 50,
+      },
+      options = {
+        try_as_border = true,
+      },
+      symbol = "│" --  "▏", -- default ╎, -- alts: ┊│┆ ┊  ▎││ ▏▏
     },
   },
   {
