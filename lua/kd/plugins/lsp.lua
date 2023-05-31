@@ -32,6 +32,29 @@ return {
           "lukas-reineke/lsp-format.nvim",
         },
         config = function()
+          -- Diagnostic signs
+          local diagnostic_signs = {
+            { name = "DiagnosticSignError", text = " " },
+            { name = "DiagnosticSignWarn", text = " " },
+            { name = "DiagnosticSignInfo", text = " " },
+            { name = "DiagnosticSignHint", text = "" },
+          }
+          for _, sign in ipairs(diagnostic_signs) do
+            vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
+          end
+
+          local diagnostic = {
+            virtual_text = false,
+            underline = true,
+            update_in_insert = false,
+            severity_sort = true,
+            float = {
+              focusable = false,
+              style = "minimal",
+              border = "rounded",
+            },
+          }
+          vim.diagnostic.config(diagnostic)
           --  This function gets run when an LSP connects to a particular buffer.
           local on_attach = function(client, bufnr)
             -- In this case, we create a function that lets us more easily define mappings specific
@@ -137,6 +160,8 @@ return {
           })
         end,
       },
+
+      { "j-hui/fidget.nvim", opts = {} },
 
       -- init.lua and plugin development with full signature help, docs and completion for the nvim lua API.
       { "folke/neodev.nvim", opts = {} },

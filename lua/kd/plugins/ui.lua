@@ -2,6 +2,7 @@ return {
   {
     "nvim-tree/nvim-web-devicons",
     enabled = vim.g.icons_enabled,
+    dependencies = { "MunifTanjim/nui.nvim",},
     opts = {
       override = {
         deb = { icon = "", name = "Deb" },
