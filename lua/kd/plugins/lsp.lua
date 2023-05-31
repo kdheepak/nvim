@@ -153,6 +153,7 @@ return {
           "jose-elias-alvarez/null-ls.nvim",
           "nvim-lua/plenary.nvim",
           "lukas-reineke/lsp-format.nvim",
+          "davidmh/cspell.nvim",
         },
         config = function()
           require("mason").setup()
@@ -165,15 +166,34 @@ return {
               "black",
               "eslint_lsp",
               "prettierd",
+              "proselint",
+              "cspell",
+              "shellcheck",
+              "actionlint",
+              "alex",
+              "hadolint",
             },
           })
           local styluaConfig = {
             extra_args = { "--config-path", vim.fn.expand("~/gitrepos/dotfiles/.stylua.toml") },
           }
-          require("null-ls").setup({
+          local null_ls = require("null-ls")
+          null_ls.setup({
             on_attach = require("lsp-format").on_attach,
             sources = {
-              require("null-ls").builtins.formatting.stylua.with(styluaConfig),
+              null_ls.builtins.formatting.stylua.with(styluaConfig),
+              null_ls.builtins.code_actions.eslint,
+              null_ls.builtins.code_actions.eslint_d,
+              null_ls.builtins.code_actions.gitsigns,
+              null_ls.builtins.code_actions.proselint,
+              null_ls.builtins.code_actions.shellcheck,
+              null_ls.builtins.diagnostics.actionlint,
+              null_ls.builtins.diagnostics.alex,
+              null_ls.builtins.diagnostics.hadolint,
+              null_ls.builtins.formatting.just,
+              null_ls.builtins.formatting.prettierd,
+              null_ls.builtins.hover.dictionary,
+              null_ls.builtins.hover.printenv,
             },
           })
         end,

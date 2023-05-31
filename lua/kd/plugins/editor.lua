@@ -1,5 +1,5 @@
 return {
-
+  { "m4xshen/smartcolumn.nvim", opts = { colorcolumn = 121 } },
   -- file explorer
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -8,7 +8,7 @@ return {
       {
         "<leader>fe",
         function()
-          require("neo-tree.command").execute({ toggle = true, dir = require("kd.util").get_root() })
+          require("neo-tree.command").execute({ toggle = true, dir = require("kd.utils").get_root() })
         end,
         desc = "Explorer NeoTree (root dir)",
       },
@@ -52,9 +52,18 @@ return {
           expander_expanded = "",
           expander_highlight = "NeoTreeExpander",
         },
+        git_status = {
+          symbols = require("kd.utils").icons.git,
+        },
       },
     },
     config = function(_, opts)
+      vim.g.neo_tree_remove_legacy_commands = 1
+      -- If you want icons for diagnostic errors, you'll need to define them somewhere:
+      vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
+      vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
+      vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
+      vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
       require("neo-tree").setup(opts)
       vim.api.nvim_create_autocmd("TermClose", {
         pattern = "*lazygit",

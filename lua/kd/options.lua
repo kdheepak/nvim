@@ -30,7 +30,6 @@ vim.o.wrap = true --  lines longer than the width of the window will not wrap
 vim.o.termguicolors = true --  enables 24bit colors
 vim.o.visualbell = false --  don't display visual bell
 vim.o.showmode = false --  don't show mode changes
-vim.o.colorcolumn = "121" --  add indicator for 120
 vim.o.diffopt = vim.o.diffopt .. ",vertical" --  Always use vertical diffs
 vim.o.diffopt = vim.o.diffopt .. ",algorithm:patience"
 vim.o.diffopt = vim.o.diffopt .. ",indent-heuristic"
