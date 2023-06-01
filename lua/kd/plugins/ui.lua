@@ -2,7 +2,7 @@ return {
   {
     "nvim-tree/nvim-web-devicons",
     enabled = vim.g.icons_enabled,
-    dependencies = { "MunifTanjim/nui.nvim",},
+    dependencies = { "MunifTanjim/nui.nvim" },
     opts = {
       override = {
         deb = { icon = "", name = "Deb" },
@@ -127,7 +127,7 @@ return {
         "import_statement",
         "operation_type",
       },
-      show_trailing_blankline_indent = false,
+      show_trailing_blankline_indent = true,
       use_treesitter = true,
       char = "▏",
       context_char = "▏",
