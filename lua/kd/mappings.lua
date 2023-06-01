@@ -403,9 +403,8 @@ nnoremap("<leader>lt", function()
 end, {
   desc = "Type definitions",
 })
--- nnoremap("<leader>la", function()
---   require("fzf-lua").lsp_code_actions({})
--- end, { desc = "Code actions" })
+nnoremap("<leader>lca", vim.lsp.buf.code_action, { desc = "Code Action" })
+
 nnoremap("<leader>lh", function()
   -- instead of vim.lsp.buf.hover()
   -- solves issue where line_diagnostics would hide hover info because of CursorHold autocmd
@@ -413,7 +412,7 @@ nnoremap("<leader>lh", function()
   vim.api.nvim_command("autocmd CursorMoved <buffer> ++once set eventignore=\"\"")
   vim.lsp.buf.hover()
 end, {
-  desc = "Hover Doc",
+  desc = "Hover Documentation",
 })
 nnoremap("<leader>lH", function()
   -- instead of vim.lsp.buf.signature_help()
@@ -422,7 +421,7 @@ nnoremap("<leader>lH", function()
   vim.api.nvim_command("autocmd CursorMoved <buffer> ++once set eventignore=\"\"")
   vim.lsp.buf.signature_help()
 end, {
-  desc = "Signature",
+  desc = "Signature Documentation",
 })
 nnoremap("<leader>lg", function()
   -- focus into diagnostic
@@ -436,6 +435,14 @@ nnoremap("<leader>lg", function()
 end, {
   desc = "Line Diagnostics",
 })
+
+-- Lesser used LSP functionality
+nnoremap("<leader>lwa", vim.lsp.buf.add_workspace_folder, { desc = "Workspace Add Folder" })
+nnoremap("<leader>lwr", vim.lsp.buf.remove_workspace_folder, { desc = "Workspace Remove Folder" })
+nnoremap("<leader>lwl", function()
+  print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+end, { desc = "Workspace List Folders" })
+
 nnoremap("<leader>lG", function()
   require("telescope.builtin").lsp_workspace_diagnostics({})
 end, {
@@ -445,8 +452,9 @@ nnoremap("<leader>l]", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", { desc = "
 nnoremap("<leader>l[", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", { desc = "Previous Diagnostic" })
 nnoremap("<leader>ll", "<cmd>Trouble<CR>", { desc = "Trouble" })
 nnoremap("<leader>lR", "<cmd>lua vim.lsp.buf.rename()<CR>", { desc = "Rename" })
+nnoremap("<leader>ld", "<cmd>lua vim.lsp.buf.definition()<CR>", { desc = "Definition" })
 nnoremap("<leader>lD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { desc = "Declaration" })
-nnoremap("<leader>lt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", { desc = "Type Definition" })
+
 nnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", { desc = "Formatting" })
 nnoremap("<leader>lF", "<cmd>lua vim.lsp.buf.format()<CR>", { desc = "Formatting" })
 -- nnoremap("<leader>lc", { desc = "+Calls" })

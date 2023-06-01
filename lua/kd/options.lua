@@ -11,9 +11,9 @@ vim.o.encoding = "utf-8" -- Default file encoding
 vim.o.autochdir = false --  Don't change dirs automatically
 vim.o.errorbells = false --  No sound
 
-vim.o.tabstop = 4 --  Number of spaces a <TAB> is
-vim.o.softtabstop = 4 --  Fine tunes the amount of white space to be added
-vim.o.shiftwidth = 4 --  Number of spaces for indentation
+vim.o.tabstop = 2 --  Number of spaces a <TAB> is
+vim.o.softtabstop = 2 --  Fine tunes the amount of white space to be added
+vim.o.shiftwidth = 2 --  Number of spaces for indentation
 vim.o.shiftround = true
 vim.o.expandtab = true --  Expand tab to spaces
 vim.o.timeoutlen = 500 --  Wait less time for mapped sequences
