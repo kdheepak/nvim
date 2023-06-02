@@ -155,7 +155,7 @@ nnoremap("<s-tab>", "<cmd>bprevious<CR>", { desc = "Jump to next buffer", silent
 nnoremap("<a-s-tab>", ":tabprevious<CR>", { desc = "Jump to next tab", silent = true })
 nnoremap("<a-tab>", ":tabnext<CR>", { desc = "Jump to next tab", silent = true })
 
-nnoremap("<bs>", ":b#<CR>", { desc = "Jump to alternate buffer", silent = true })
+nnoremap("<bs>", "<C-^>", { desc = "Jump to alternate buffer", silent = true })
 
 nnoremap("<Leader><Leader>", ":nohlsearch<CR>", { desc = "Clear Highlighting", silent = true })
 
