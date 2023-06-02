@@ -52,6 +52,9 @@ noremap("L", "$")
 vnoremap("J", ":m '>+1<CR>gv=gv")
 vnoremap("K", ":m '<-2<CR>gv=gv")
 
+nnoremap("J", "10jzz")
+nnoremap("K", "10kzz")
+
 -- copy to the end of line
 nnoremap("Y", "y$")
 
@@ -162,14 +165,6 @@ vnoremap("<leader>y", "\"+y", { desc = "Yank to clipboard" })
 vnoremap("<leader>Y", "\"+Y", { desc = "Yank line to clipboard" })
 
 vnoremap("<leader>d", "\"+ygvd", { desc = "Cut line to clipboard" })
-
-nnoremap("<leader>p", "\"+p", { desc = "Paste from clipboard" })
-
-nnoremap("<leader>P", "\"+P", { desc = "Paste from clipboard (before)" })
-
-nnoremap("<leader>y", "\"+y", { desc = "Yank to clipboard" })
-
-nnoremap("<leader>Y", "\"+Y", { desc = "Yank line to clipboard" })
 
 nnoremap("<C-w>/", "<cmd>split<CR>", { desc = "Split window horizontally" })
 nnoremap("<C-w>\\", "<cmd>vsplit<CR>", { desc = "Split window vertically" })
