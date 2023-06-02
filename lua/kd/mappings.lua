@@ -300,6 +300,7 @@ nnoremap("<leader>dro", "<cmd>lua require\"dap\".repl.open()<CR>", { desc = "REP
 nnoremap("<leader>drl", "<cmd>lua require\"dap\".repl.run_last()<CR>", { desc = "REPL run last" })
 
 -- nnoremap("<leader>f", { desc = "+Fuzzy" })
+nnoremap("<leader>fR;", "<cmd>lua require 'telescope.builtin'.resume()<cr>")
 nnoremap("<leader>fr", "<cmd>lua require 'telescope.builtin'.registers{}<CR>", {
   desc = "Registers",
 })
