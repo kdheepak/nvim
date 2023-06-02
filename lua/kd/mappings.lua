@@ -76,9 +76,6 @@ nnoremap("g.", "<C-i>")
 noremap("gf", "gF")
 noremap("gF", "gf")
 
-nnoremap("<a-s-tab>", ":tabprevious<CR>")
-nnoremap("<a-tab>", ":tabnext<CR>")
-
 -- Macros
 nnoremap("Q", "@q")
 vnoremap("Q", ":norm @@<CR>")
@@ -144,11 +141,15 @@ command(
   { nargs = "*" }
 )
 
-nnoremap("<Space>", "<NOP>", { silent = true })
+nnoremap("<space>", "<NOP>", { silent = true })
 
-nnoremap("<Tab>", "<cmd>bnext<CR>", { desc = "Jump to next buffer", silent = true })
+nnoremap("<tab>", "<cmd>bnext<CR>", { desc = "Jump to next buffer", silent = true })
+nnoremap("<s-tab>", "<cmd>bprevious<CR>", { desc = "Jump to next buffer", silent = true })
 
-nnoremap("<S-Tab>", "<cmd>bprevious<CR>", { desc = "Jump to next buffer", silent = true })
+nnoremap("<a-s-tab>", ":tabprevious<CR>", { desc = "Jump to next tab", silent = true })
+nnoremap("<a-tab>", ":tabnext<CR>", { desc = "Jump to next tab", silent = true })
+
+nnoremap("<bs>", ":b#<CR>", { desc = "Jump to alternate buffer", silent = true })
 
 nnoremap("<Leader><Leader>", ":nohlsearch<CR>", { desc = "Clear Highlighting", silent = true })
 
