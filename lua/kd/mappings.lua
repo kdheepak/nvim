@@ -87,6 +87,9 @@ nnoremap("q:", "<nop>")
 nnoremap("q/", "<nop>")
 nnoremap("q?", "<nop>")
 
+nnoremap("c", "\"ac")
+nnoremap("C", "\"aC")
+
 -- Select last paste
 nnoremap("gp", "'`['.strpart(getregtype(), 0, 1).'`]'", { expr = true })
 
@@ -157,13 +160,9 @@ nnoremap("<bs>", ":b#<CR>", { desc = "Jump to alternate buffer", silent = true }
 nnoremap("<Leader><Leader>", ":nohlsearch<CR>", { desc = "Clear Highlighting", silent = true })
 
 vnoremap("<leader>p", "\"+p", { desc = "Paste from clipboard" })
-
 vnoremap("<leader>P", "\"+P", { desc = "Paste from clipboard (before)" })
-
 vnoremap("<leader>y", "\"+y", { desc = "Yank to clipboard" })
-
 vnoremap("<leader>Y", "\"+Y", { desc = "Yank line to clipboard" })
-
 vnoremap("<leader>d", "\"+ygvd", { desc = "Cut line to clipboard" })
 
 nnoremap("<C-w>/", "<cmd>split<CR>", { desc = "Split window horizontally" })
