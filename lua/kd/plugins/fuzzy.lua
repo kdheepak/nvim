@@ -30,6 +30,18 @@ return {
           "sindrets/diffview.nvim",
         },
       },
+      {
+        "xiyaowong/telescope-emoji.nvim",
+        config = function()
+          require("telescope").load_extension("emoji")
+        end,
+      },
+      {
+        "tsakirist/telescope-lazy.nvim",
+        config = function()
+          require("telescope").load_extension("lazy")
+        end,
+      },
     },
     config = function()
       local actions = require("telescope.actions")
@@ -217,11 +229,9 @@ return {
   },
   {
     "nvim-telescope/telescope-fzf-native.nvim",
-    -- NOTE: If you are having trouble with this installation,
-    --       refer to the README for telescope-fzf-native for more instructions.
-    build = "make",
-    cond = function()
-      return vim.fn.executable("make") == 1
+    build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+    config = function()
+      require("telescope").load_extension("fzf")
     end,
   },
 }
