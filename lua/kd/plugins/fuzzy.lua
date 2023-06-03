@@ -18,7 +18,19 @@ return {
   -- },
   {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      {
+        "paopaol/telescope-git-diffs.nvim",
+        config = function()
+          require("telescope").load_extension("git_diffs")
+        end,
+        dependencies = {
+          "nvim-lua/plenary.nvim",
+          "sindrets/diffview.nvim",
+        },
+      },
+    },
     config = function()
       local actions = require("telescope.actions")
       local action_state = require("telescope.actions.state")

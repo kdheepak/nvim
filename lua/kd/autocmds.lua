@@ -122,16 +122,7 @@ augroup("KDAutocmds", function()
     desc = "Start fuzzy file search when vim is opened with no arguments",
   })
 
-  -- Function to check if a floating dialog exists and if not
-  -- then check for diagnostics under the cursor
-  -- Show diagnostics under the cursor when holding position
   autocmd("CursorHold", function()
-    for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
-      if vim.api.nvim_win_get_config(winid).zindex then
-        return
-      end
-    end
-    -- THIS IS FOR BUILTIN LSP
     vim.diagnostic.open_float(nil, {
       scope = "cursor",
       focusable = false,
@@ -144,7 +135,17 @@ augroup("KDAutocmds", function()
       },
     })
   end, {
+    desc = "Show diagnostics under the cursor when holding position",
     pattern = "*",
+  })
+
+  autocmd("BufWipeout", function()
+    vim.schedule(function()
+      require("bufferline.state").set_offset(0)
+    end)
+  end, {
+    desc = "Auto close NvimTree when a file is opened",
+    pattern = "NvimTree_*",
   })
 end)
 
