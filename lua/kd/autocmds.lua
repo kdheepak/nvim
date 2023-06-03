@@ -103,25 +103,6 @@ augroup("KDAutocmds", function()
 
   autocmd("FileType", "lua vim.opt.conceallevel = 0", { pattern = { "help" } })
 
-  autocmd("VimEnter", function()
-    local should_skip = false
-    if vim.fn.argc() > 0 or vim.fn.line2byte(vim.fn.line("$")) ~= -1 or not vim.o.modifiable then
-      should_skip = true
-    else
-      for _, arg in pairs(vim.v.argv) do
-        if arg == "-b" or arg == "-c" or vim.startswith(arg, "+") or arg == "-S" then
-          should_skip = true
-          break
-        end
-      end
-    end
-    if not should_skip then
-      require("telescope.builtin").find_files()
-    end
-  end, {
-    desc = "Start fuzzy file search when vim is opened with no arguments",
-  })
-
   autocmd("CursorHold", function()
     vim.diagnostic.open_float(nil, {
       scope = "cursor",
@@ -146,6 +127,43 @@ augroup("KDAutocmds", function()
   end, {
     desc = "Auto close NvimTree when a file is opened",
     pattern = "NvimTree_*",
+  })
+
+  autocmd("BufEnter", function()
+    local stats = vim.loop.fs_stat(vim.api.nvim_buf_get_name(0))
+    if stats and stats.type == "directory" then
+      require("neo-tree")
+    end
+  end, {
+    desc = "Open Neo-Tree on startup with directory",
+  })
+
+  autocmd("VimEnter", function()
+    local should_skip = false
+    if vim.fn.argc() > 0 or vim.fn.line2byte(vim.fn.line("$")) ~= -1 or not vim.o.modifiable then
+      should_skip = true
+    else
+      for _, arg in pairs(vim.v.argv) do
+        if arg == "-b" or arg == "-c" or vim.startswith(arg, "+") or arg == "-S" then
+          should_skip = true
+          break
+        end
+      end
+    end
+    if not should_skip then
+      require("telescope.builtin").find_files()
+    end
+  end, {
+    desc = "Start fuzzy file search when vim is opened with no arguments",
+  })
+
+  autocmd("TermClose", function()
+    if package.loaded["neo-tree.sources.git_status"] then
+      require("neo-tree.sources.git_status").refresh()
+    end
+  end, {
+    pattern = "*lazygit",
+    desc = "Refresh Neo-Tree git when closing lazygit",
   })
 end)
 

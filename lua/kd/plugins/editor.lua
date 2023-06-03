@@ -1,5 +1,5 @@
 return {
-  { "m4xshen/smartcolumn.nvim", opts = { colorcolumn = 121 } },
+  { "m4xshen/smartcolumn.nvim", opts = { colorcolumn = "121" } },
   -- file explorer
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -27,22 +27,22 @@ return {
     end,
     init = function()
       vim.g.neo_tree_remove_legacy_commands = 1
-      if vim.fn.argc() == 1 then
-        local stat = vim.loop.fs_stat(vim.fn.argv(0))
-        if stat and stat.type == "directory" then
-          require("neo-tree")
-        end
-      end
     end,
     opts = {
+      disable_netrw = true,
+      hijack_netrw = true,
+      close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
       filesystem = {
         bind_to_cwd = false,
         follow_current_file = true,
+        hijack_netrw_behavior = "open_current",
         use_libuv_file_watcher = true,
       },
       window = {
         mappings = {
           ["<space>"] = "none",
+          ["z"] = "close_all_nodes",
+          ["Z"] = "expand_all_nodes",
         },
       },
       default_component_configs = {
@@ -55,21 +55,16 @@ return {
         git_status = {
           symbols = require("kd.utils").icons.git,
         },
+        icon = {
+          folder_closed = require("kd.utils").icons.neo_tree.FolderClosed,
+          folder_open = require("kd.utils").icons.neo_tree.FolderOpen,
+          folder_empty = require("kd.utils").icons.neo_tree.FolderEmpty,
+          folder_empty_open = require("kd.utils").icons.neo_tree.FolderEmpty,
+          default = require("kd.utils").icons.neo_tree.DefaultFile,
+        },
+        modified = { symbol = require("kd.utils").icons.neo_tree.FileModified },
       },
     },
-    config = function(_, opts)
-      vim.g.neo_tree_remove_legacy_commands = 1
-
-      require("neo-tree").setup(opts)
-      vim.api.nvim_create_autocmd("TermClose", {
-        pattern = "*lazygit",
-        callback = function()
-          if package.loaded["neo-tree.sources.git_status"] then
-            require("neo-tree.sources.git_status").refresh()
-          end
-        end,
-      })
-    end,
   },
 
   -- search/replace in multiple files
