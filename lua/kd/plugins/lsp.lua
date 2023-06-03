@@ -12,6 +12,10 @@ return {
       })
     end,
     dependencies = {
+      {
+        "simrat39/symbols-outline.nvim",
+        opts = {},
+      },
       -- Automatically install LSPs to stdpath for neovim
       {
         "williamboman/mason.nvim",
