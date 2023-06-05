@@ -157,6 +157,21 @@ augroup("KDAutocmds", function()
     desc = "Start fuzzy file search when vim is opened with no arguments",
   })
 
+  autocmd("TermOpen", "setlocal listchars= nonumber norelativenumber nocursorline")
+  autocmd({ "WinEnter", "BufWinEnter", "TermOpen" }, function(args)
+    if vim.startswith(vim.api.nvim_buf_get_name(args.buf), "term://") then
+      vim.opt_local.wrap = true
+      vim.opt_local.spell = false
+      vim.cmd("startinsert")
+      local opts = { noremap = true }
+      vim.api.nvim_buf_set_keymap(args.buf, "t", "<esc>", [[<C-\><C-n>]], opts)
+      vim.api.nvim_buf_set_keymap(args.buf, "t", "<leader>wh", [[<C-\><C-n><C-W>h]], opts)
+      vim.api.nvim_buf_set_keymap(args.buf, "t", "<leader>wj>", [[<C-\><C-n><C-W>j]], opts)
+      vim.api.nvim_buf_set_keymap(args.buf, "t", "<leader>wk>", [[<C-\><C-n><C-W>k]], opts)
+      vim.api.nvim_buf_set_keymap(args.buf, "t", "<leader>wl>", [[<C-\><C-n><C-W>l]], opts)
+    end
+  end)
+
   autocmd("TermClose", function()
     if package.loaded["neo-tree.sources.git_status"] then
       require("neo-tree.sources.git_status").refresh()
