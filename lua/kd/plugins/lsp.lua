@@ -111,7 +111,7 @@ return {
             local f = assert(io.popen("quarto --paths", "r"))
             local s = assert(f:read("*a"))
             f:close()
-            return require("kd.utils").strsplit(s, "\n")[2]
+            return require("kd/utils").strsplit(s, "\n")[2]
           end
 
           local lua_library_files = vim.api.nvim_get_runtime_file("", true)

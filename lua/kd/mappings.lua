@@ -1,4 +1,4 @@
-local utils = require("kd.utils")
+local utils = require("kd/utils")
 local cnoremap = utils.cnoremap
 local noremap = utils.noremap
 local nnoremap = utils.nnoremap

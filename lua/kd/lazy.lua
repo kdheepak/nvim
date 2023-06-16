@@ -15,7 +15,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 require("lazy").setup({
-  spec = { { import = "kd.plugins" } },
+  spec = { { import = "kd/plugins" } },
   install = {
     -- try to load one of these colorschemes when starting an installation during startup
     colorscheme = { "catppuccin" },
