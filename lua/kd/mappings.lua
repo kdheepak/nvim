@@ -330,7 +330,6 @@ end, {
 })
 nnoremap("<leader>fg", function(opts)
   opts = opts or {}
-  opts.continue_last_search = true
   local function is_git_repo()
     vim.fn.system("git rev-parse --is-inside-work-tree")
 

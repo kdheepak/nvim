@@ -111,9 +111,9 @@ return {
               end
             end
 
-            if row and col then
-              pcall(vim.api.nvim_win_set_cursor, 0, { row, col })
-            end
+            -- if row and col then
+            --   pcall(vim.api.nvim_win_set_cursor, 0, { row, col })
+            -- end
           end
         else
           actions["select_" .. method](prompt_bufnr)
@@ -144,16 +144,6 @@ return {
         end
       end
 
-      local multi_open_mappings = {
-        i = {},
-        n = {
-          ["<C-v>"] = custom_actions.multi_selection_open_vertical,
-          ["<C-s>"] = custom_actions.multi_selection_open_horizontal,
-          ["<C-t>"] = custom_actions.multi_selection_open_tab,
-          ["<CR>"] = custom_actions.multi_selection_open,
-        },
-      }
-
       -- Clone the default Telescope configuration
       local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
 
@@ -177,6 +167,7 @@ return {
           },
           mappings = {
             i = {
+              ["q"] = actions.smart_send_to_qflist + actions.open_qflist,
               ["<esc>"] = actions.close,
               ["<c-d>"] = actions.delete_buffer + actions.move_to_top,
 
@@ -201,20 +192,18 @@ return {
               -- ["<C-t>"] = actions.select_tab,
               ["<tab>"] = actions.toggle_selection + actions.move_selection_next,
               ["<s-tab>"] = actions.toggle_selection + actions.move_selection_previous,
-              ["<C-space>"] = actions.toggle_selection,
               ["<C-v>"] = stopinsert(custom_actions.multi_selection_open_vertical),
               ["<C-s>"] = stopinsert(custom_actions.multi_selection_open_horizontal),
               ["<C-t>"] = stopinsert(custom_actions.multi_selection_open_tab),
-              ["<CR>"] = stopinsert(custom_actions.multi_selection_open),
+              ["<CR>"] = actions.smart_send_to_qflist + actions.open_qflist,
             },
             n = {
               ["<C-v>"] = custom_actions.multi_selection_open_vertical,
               ["<C-s>"] = custom_actions.multi_selection_open_horizontal,
               ["<C-t>"] = custom_actions.multi_selection_open_tab,
-              ["<C-space>"] = actions.toggle_selection,
               ["<tab>"] = actions.toggle_selection + actions.move_selection_next,
               ["<s-tab>"] = actions.toggle_selection + actions.move_selection_previous,
-              ["<CR>"] = custom_actions.multi_selection_open,
+              ["<CR>"] = actions.smart_send_to_qflist + actions.open_qflist,
             },
           },
         },
