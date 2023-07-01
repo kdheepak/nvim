@@ -7,7 +7,7 @@ _G.prequire = function(m)
   return err
 end
 
-local plenary_reload = pcall(require, "plenary.reload")
+local plenary_reload = prequire("plenary.reload")
 if plenary_reload then
   ---@diagnostic disable-next-line: undefined-field
   RELOADER = plenary_reload.reload_module
