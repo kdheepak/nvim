@@ -1,5 +1,3 @@
-require("kd/globals")
-
 require("kd/lazy")
 
 require("kd/mappings")

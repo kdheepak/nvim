@@ -1,5 +1,46 @@
 local M = {}
 
+function M.feedkeys(key, mode)
+  return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+end
+
+function M.T(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+_G.T = M.T
+
+function M.P(...)
+  local objects = vim.tbl_map(vim.inspect, { ... })
+  print(unpack(objects))
+end
+_G.P = M.P
+
+function M.prequire(m)
+  local ok, err = pcall(require, m)
+  if not ok then
+    return nil, err
+  end
+  -- if ok, err == m
+  return err
+end
+_G.prequire = M.prequire
+
+function M.RELOAD(...)
+  local plenary_reload = prequire("plenary.reload")
+  if plenary_reload then
+    return plenary_reload.reload_module(...)
+  else
+    return require(...)
+  end
+end
+_G.RELOAD = M.RELOAD
+
+function M.R(name)
+  RELOAD(name)
+  return require(name)
+end
+_G.R = M.R
+
 function M.augroup(name, callback)
   vim.api.nvim_create_augroup(name, { clear = true })
   M._current_autocmd_group_name = name
@@ -259,21 +300,6 @@ function M.check_lsp_client_active(name)
   end
   return false
 end
-
-function M.T(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
-_G.T = M.T
-
-function M.feedkeys(key, mode)
-  return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
-end
-
-function M.P(...)
-  local objects = vim.tbl_map(vim.inspect, { ... })
-  print(unpack(objects))
-end
-_G.P = M.P
 
 local OS = vim.loop.os_uname().sysname
 
