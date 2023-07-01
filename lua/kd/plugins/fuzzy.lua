@@ -152,7 +152,16 @@ return {
       -- I don't want to search in the `.git` directory.
       table.insert(vimgrep_arguments, "--glob")
       table.insert(vimgrep_arguments, "!**/.git/*")
-
+      local function auto_multi_selection_open_qflist(prompt_bufnr)
+        local picker = action_state.get_current_picker(prompt_bufnr)
+        local num_selections = #picker:get_multi_selection()
+        if num_selections > 1 then
+          actions.send_selected_to_qflist(prompt_bufnr)
+          actions.open_qflist(prompt_bufnr)
+        else
+          actions.select_default(prompt_bufnr)
+        end
+      end
       require("telescope").setup({
         defaults = {
           selection_caret = " ",
@@ -195,7 +204,7 @@ return {
               ["<C-v>"] = stopinsert(custom_actions.multi_selection_open_vertical),
               ["<C-s>"] = stopinsert(custom_actions.multi_selection_open_horizontal),
               ["<C-t>"] = stopinsert(custom_actions.multi_selection_open_tab),
-              ["<CR>"] = actions.smart_send_to_qflist + actions.open_qflist,
+              ["<CR>"] = auto_multi_selection_open_qflist,
             },
             n = {
               ["<C-v>"] = custom_actions.multi_selection_open_vertical,
@@ -203,7 +212,7 @@ return {
               ["<C-t>"] = custom_actions.multi_selection_open_tab,
               ["<tab>"] = actions.toggle_selection + actions.move_selection_next,
               ["<s-tab>"] = actions.toggle_selection + actions.move_selection_previous,
-              ["<CR>"] = actions.smart_send_to_qflist + actions.open_qflist,
+              ["<CR>"] = auto_multi_selection_open_qflist,
             },
           },
         },
