@@ -73,12 +73,7 @@ return {
         },
         config = function()
           -- Diagnostic signs
-          local diagnostic_signs = {
-            { name = "DiagnosticSignError", text = " " },
-            { name = "DiagnosticSignWarn", text = " " },
-            { name = "DiagnosticSignInfo", text = " " },
-            { name = "DiagnosticSignHint", text = "" },
-          }
+          local diagnostic_signs = require("kd/utils").icons.diagnostic_signs
           for _, sign in ipairs(diagnostic_signs) do
             vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
           end
