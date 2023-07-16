@@ -166,7 +166,7 @@ return {
         end,
       },
 
-      { "j-hui/fidget.nvim", opts = {} },
+      -- { "j-hui/fidget.nvim", opts = {} },
 
       -- init.lua and plugin development with full signature help, docs and completion for the nvim lua API.
       { "folke/neodev.nvim", opts = {} },
@@ -223,7 +223,7 @@ return {
               null_ls.builtins.formatting.stylua.with(styluaConfig),
               null_ls.builtins.code_actions.eslint,
               null_ls.builtins.code_actions.eslint_d,
-              null_ls.builtins.code_actions.gitsigns,
+              -- null_ls.builtins.code_actions.gitsigns,
               null_ls.builtins.code_actions.proselint,
               null_ls.builtins.code_actions.shellcheck,
               null_ls.builtins.diagnostics.actionlint,

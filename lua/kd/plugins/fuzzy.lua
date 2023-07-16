@@ -176,7 +176,6 @@ return {
           },
           mappings = {
             i = {
-              ["q"] = actions.smart_send_to_qflist + actions.open_qflist,
               ["<esc>"] = actions.close,
               ["<c-d>"] = actions.delete_buffer + actions.move_to_top,
 
@@ -207,6 +206,7 @@ return {
               ["<CR>"] = auto_multi_selection_open_qflist,
             },
             n = {
+              ["q"] = actions.smart_send_to_qflist + actions.open_qflist,
               ["<C-v>"] = custom_actions.multi_selection_open_vertical,
               ["<C-s>"] = custom_actions.multi_selection_open_horizontal,
               ["<C-t>"] = custom_actions.multi_selection_open_tab,
