@@ -174,6 +174,12 @@ return {
       -- project local configuration
       { "folke/neoconf.nvim", cmd = "Neoconf" },
 
+      -- {
+      --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+      --   config = function()
+      --     require("lsp_lines").setup()
+      --   end,
+      -- },
       -- null-ls
       {
         "jay-babu/mason-null-ls.nvim",

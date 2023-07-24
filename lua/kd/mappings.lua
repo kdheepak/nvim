@@ -439,7 +439,7 @@ nnoremap("<leader>lg", function()
   vim.api.nvim_command("autocmd CursorMoved <buffer> ++once set eventignore=\"\"")
   vim.diagnostic.open_float(nil, {
     focusable = true,
-    scope = "line",
+    scope = "cursor",
     close_events = { "CursorMoved", "CursorMovedI", "BufHidden", "InsertCharPre", "WinLeave" },
   })
 end, {

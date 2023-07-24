@@ -105,8 +105,8 @@ augroup("KDAutocmds", function()
 
   autocmd("CursorHold", function()
     vim.diagnostic.open_float(nil, {
-      scope = "cursor",
       focusable = false,
+      scope = "cursor",
       close_events = {
         "CursorMoved",
         "CursorMovedI",
