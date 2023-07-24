@@ -107,7 +107,11 @@ augroup("KDAutocmds", function()
     vim.diagnostic.open_float(nil, {
       focusable = false,
       scope = "cursor",
+      border = "rounded",
       close_events = {
+        "BufLeave",
+        "InsertEnter",
+        "FocusLost",
         "CursorMoved",
         "CursorMovedI",
         "BufHidden",
