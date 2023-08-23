@@ -129,4 +129,15 @@ return {
   },
   { "jbyuki/nabla.nvim", ft = "markdown" }, -- Take your scentific notes in Neovim.
   { "jbyuki/venn.nvim", event = "VeryLazy" }, -- Draw ASCII diagrams in Neovim.
+
+  {
+    "bennypowers/nvim-regexplainer",
+    config = function()
+      require("regexplainer").setup()
+    end,
+    requires = {
+      "nvim-treesitter/nvim-treesitter",
+      "MunifTanjim/nui.nvim",
+    },
+  },
 }

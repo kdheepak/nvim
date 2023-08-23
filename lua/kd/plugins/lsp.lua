@@ -6,7 +6,7 @@ return {
       local lspconfig = require("lspconfig")
       lspconfig.lua_ls.setup({
         on_attach = function(client)
-          -- Disable formatting with sumneko_lua. Use stylua in null-ls instead
+          -- Disable formatting with sumneko_lua. Use stylua instead
           client.server_capabilities.documentFormattingProvider = false
         end,
       })
@@ -174,85 +174,17 @@ return {
       -- project local configuration
       { "folke/neoconf.nvim", cmd = "Neoconf" },
 
-      -- {
-      --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-      --   config = function()
-      --     require("lsp_lines").setup()
-      --   end,
-      -- },
-      -- null-ls
       {
-        "jay-babu/mason-null-ls.nvim",
-        event = { "BufReadPre", "BufNewFile" },
-        dependencies = {
-          "williamboman/mason.nvim",
-          "jose-elias-alvarez/null-ls.nvim",
-          "nvim-lua/plenary.nvim",
-          "lukas-reineke/lsp-format.nvim",
-          "davidmh/cspell.nvim",
-        },
+        "elentok/format-on-save.nvim",
         config = function()
-          require("mason").setup()
-          require("mason-null-ls").setup({
-            automatic_setup = true,
-            ensure_installed = {
-              "stylua",
-              "jq",
-              "isort",
-              "black",
-              "eslint_lsp",
-              "prettierd",
-              "proselint",
-              "cspell",
-              "shellcheck",
-              "actionlint",
-              "alex",
-              "hadolint",
-            },
-          })
-          local styluaConfig = {
-            extra_args = { "--config-path", vim.fn.expand("~/gitrepos/dotfiles/.stylua.toml") },
-          }
-          local null_ls = require("null-ls")
+          local format_on_save = require("format-on-save")
+          local formatters = require("format-on-save.formatters")
 
-          local on_attach = function(client, bufnr)
-            require("lsp-format").on_attach(client)
-            -- Create a command `:LSPFormat` local to the LSP buffer
-            vim.api.nvim_buf_create_user_command(bufnr, "LSPFormat", function(_)
-              vim.lsp.buf.format()
-            end, { desc = "Format current buffer with LSP" })
-          end
-
-          null_ls.setup({
-            on_attach = on_attach,
-            sources = {
-              null_ls.builtins.formatting.stylua.with(styluaConfig),
-              null_ls.builtins.code_actions.eslint,
-              null_ls.builtins.code_actions.eslint_d,
-              -- null_ls.builtins.code_actions.gitsigns,
-              null_ls.builtins.code_actions.proselint,
-              null_ls.builtins.code_actions.shellcheck,
-              null_ls.builtins.diagnostics.actionlint,
-              null_ls.builtins.diagnostics.alex,
-              null_ls.builtins.diagnostics.hadolint,
-              null_ls.builtins.formatting.just,
-              null_ls.builtins.formatting.prettierd.with({
-                filetypes = {
-                  "javascript",
-                  "typescript",
-                  "css",
-                  "scss",
-                  "html",
-                  "json",
-                  "yaml",
-                  "markdown",
-                  "graphql",
-                  "md",
-                  "txt",
-                },
-              }),
-              null_ls.builtins.hover.dictionary,
-              null_ls.builtins.hover.printenv,
+          format_on_save.setup({
+            formatter_by_ft = {
+              json = formatters.prettierd,
+              lua = formatters.stylua,
+              markdown = formatters.prettierd,
             },
           })
         end,
