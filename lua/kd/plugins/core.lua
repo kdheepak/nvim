@@ -6,7 +6,7 @@ return {
     "haya14busa/vim-asterisk",
     config = function()
       vim.g["asterisk#keeppos"] = 1
-      local map = require("kd/utils").map
+      local map = require("kd.utils").map
       map("", "*", "<Plug>(asterisk-z*)")
       map("", "#", "<Plug>(asterisk-z#)")
       map("", "g*", "<Plug>(asterisk-gz*)")
@@ -40,7 +40,10 @@ return {
   { "godlygeek/tabular", event = "VeryLazy" },
   { "dhruvasagar/vim-table-mode", event = "VeryLazy" },
   { "chrisbra/unicode.vim", event = "VeryLazy" },
-  { "kevinhwang91/nvim-bqf", ft = "qf" },
+  {
+    "kevinhwang91/nvim-bqf",
+    ft = "qf",
+  },
   {
     "spywhere/detect-language.nvim",
     config = function()
@@ -50,7 +53,7 @@ return {
   {
     "akinsho/toggleterm.nvim",
     config = function()
-      local nnoremap = require("kd/utils").nnoremap
+      local nnoremap = require("kd.utils").nnoremap
       nnoremap("<leader>/", "<cmd>ToggleTerm direction=horizontal<CR>", { desc = "Split terminal horizontally" })
       nnoremap("<leader>\\", "<cmd>ToggleTerm direction=vertical<CR>", { desc = "Split terminal vertically" })
       require("toggleterm").setup({
@@ -110,8 +113,8 @@ return {
   {
     "Pocco81/HighStr.nvim",
     config = function()
-      local vnoremap = require("kd/utils").vnoremap
-      local nnoremap = require("kd/utils").nnoremap
+      local vnoremap = require("kd.utils").vnoremap
+      local nnoremap = require("kd.utils").nnoremap
       vnoremap("<leader>h1", ":<c-u>HSHighlight 1<CR>", { desc = "Highlight 1" })
       vnoremap("<leader>h2", ":<c-u>HSHighlight 2<CR>", { desc = "Highlight 2" })
       vnoremap("<leader>h3", ":<c-u>HSHighlight 3<CR>", { desc = "Highlight 3" })

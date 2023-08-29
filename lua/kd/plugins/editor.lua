@@ -8,7 +8,7 @@ return {
       {
         "<leader>fe",
         function()
-          require("neo-tree.command").execute({ toggle = true, dir = require("kd/utils").get_root() })
+          require("neo-tree.command").execute({ toggle = true, dir = require("kd.utils").get_root() })
         end,
         desc = "Explorer NeoTree (root dir)",
       },
@@ -53,16 +53,16 @@ return {
           expander_highlight = "NeoTreeExpander",
         },
         git_status = {
-          symbols = require("kd/utils").icons.git,
+          symbols = require("kd.utils").icons.git,
         },
         icon = {
-          folder_closed = require("kd/utils").icons.neo_tree.FolderClosed,
-          folder_open = require("kd/utils").icons.neo_tree.FolderOpen,
-          folder_empty = require("kd/utils").icons.neo_tree.FolderEmpty,
-          folder_empty_open = require("kd/utils").icons.neo_tree.FolderEmpty,
-          default = require("kd/utils").icons.neo_tree.DefaultFile,
+          folder_closed = require("kd.utils").icons.neo_tree.FolderClosed,
+          folder_open = require("kd.utils").icons.neo_tree.FolderOpen,
+          folder_empty = require("kd.utils").icons.neo_tree.FolderEmpty,
+          folder_empty_open = require("kd.utils").icons.neo_tree.FolderEmpty,
+          default = require("kd.utils").icons.neo_tree.DefaultFile,
         },
-        modified = { symbol = require("kd/utils").icons.neo_tree.FileModified },
+        modified = { symbol = require("kd.utils").icons.neo_tree.FileModified },
       },
     },
   },
@@ -154,7 +154,7 @@ return {
       },
       on_attach = function(buffer)
         local function map(mode, l, r, desc)
-          require("kd/utils").map(mode, l, r, { buffer = buffer, desc = desc })
+          require("kd.utils").map(mode, l, r, { buffer = buffer, desc = desc })
         end
         local gs = package.loaded.gitsigns
         map("n", "]h", gs.next_hunk, "Next Hunk")

@@ -46,7 +46,7 @@ return {
           },
           lsp_blacklist = {},
           symbol_blacklist = {},
-          symbols = require("kd/utils").icons.document_symbols,
+          symbols = require("kd.utils").icons.document_symbols,
         },
         keys = {
           { "<Leader>o", "<cmd>SymbolsOutline<CR>", desc = "Symbols Outline" },
@@ -73,7 +73,7 @@ return {
         },
         config = function()
           -- Diagnostic signs
-          local diagnostic_signs = require("kd/utils").icons.diagnostic_signs
+          local diagnostic_signs = require("kd.utils").icons.diagnostic_signs
           for _, sign in ipairs(diagnostic_signs) do
             vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
           end
@@ -106,7 +106,7 @@ return {
             local f = assert(io.popen("quarto --paths", "r"))
             local s = assert(f:read("*a"))
             f:close()
-            return require("kd/utils").strsplit(s, "\n")[2]
+            return require("kd.utils").strsplit(s, "\n")[2]
           end
 
           local lua_library_files = vim.api.nvim_get_runtime_file("", true)
@@ -121,7 +121,7 @@ return {
             clangd = {},
             pyright = {},
             julials = {},
-            rust_analyzer = {},
+            rust_analyzer = require("kd.plugins.lsp.config.rust"),
             tsserver = {},
             lua_ls = {
               Lua = {
@@ -147,8 +147,11 @@ return {
           -- Ensure the servers above are installed
           local mason_lspconfig = require("mason-lspconfig")
 
+          local ensure_installed = vim.tbl_keys(servers)
+          ensure_installed[#ensure_installed + 1] = "rust_analyzer@nightly"
+          ensure_installed["rust_analyzer"] = nil
           mason_lspconfig.setup({
-            ensure_installed = vim.tbl_keys(servers),
+            ensure_installed = ensure_installed,
           })
 
           mason_lspconfig.setup_handlers({
@@ -182,9 +185,27 @@ return {
 
           format_on_save.setup({
             formatter_by_ft = {
+              css = formatters.lsp,
+              html = formatters.lsp,
+              java = formatters.lsp,
+              javascript = formatters.lsp,
               json = formatters.prettierd,
+              toml = formatters.prettierd,
               lua = formatters.stylua,
               markdown = formatters.prettierd,
+              python = formatters.black,
+              rust = formatters.lsp,
+              sh = formatters.shfmt,
+              scss = formatters.lsp,
+              typescript = formatters.prettierd,
+              typescriptreact = formatters.prettierd,
+              yaml = formatters.lsp,
+            },
+            -- Optional: fallback formatter to use when no formatters match the current filetype
+            fallback_formatter = {
+              formatters.remove_trailing_whitespace,
+              -- formatters.remove_trailing_newlines,
+              -- formatters.prettierd,
             },
           })
         end,

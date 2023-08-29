@@ -4,14 +4,14 @@ return {
     enabled = vim.g.icons_enabled,
     dependencies = { "MunifTanjim/nui.nvim" },
     opts = {
-      override = require("kd/utils").icons.web_dev_icons,
+      override = require("kd.utils").icons.web_dev_icons,
     },
   },
   {
     "onsails/lspkind.nvim",
     opts = {
       mode = "symbol",
-      symbol_map = require("kd/utils").icons.kinds,
+      symbol_map = require("kd.utils").icons.kinds,
     },
     enabled = vim.g.icons_enabled,
     config = function(_, opts)
@@ -122,13 +122,13 @@ return {
   --   },
   -- },
   {
-   "Bekaboo/dropbar.nvim",
-   opts = {
-     icons = {
-       kinds = {
-         symbols = require("kd/utils").icons.kinds,
-       },
-     },
-   },
+    "Bekaboo/dropbar.nvim",
+    opts = {
+      icons = {
+        kinds = {
+          symbols = require("kd.utils").icons.kinds,
+        },
+      },
+    },
   },
 }

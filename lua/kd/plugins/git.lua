@@ -46,7 +46,7 @@ return {
       require("git-conflict").setup({
         default_mappings = false,
       })
-      local utils = require("kd/utils")
+      local utils = require("kd.utils")
       local nnoremap = utils.nnoremap
       nnoremap("<leader>gco", "<Plug>(git-conflict-ours)", { desc = "Git choose ours" })
       nnoremap("<leader>gct", "<Plug>(git-conflict-theirs)", { desc = "Git choose theirs" })

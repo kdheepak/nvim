@@ -1,4 +1,4 @@
-local utils = require("kd/utils")
+local utils = require("kd.utils")
 local syntax = utils.syntax
 local highlight = utils.highlight
 
