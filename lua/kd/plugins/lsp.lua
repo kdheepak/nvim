@@ -102,46 +102,15 @@ return {
             end, { desc = "Format current buffer with LSP" })
           end
 
-          local function get_quarto_resource_path()
-            local f = assert(io.popen("quarto --paths", "r"))
-            local s = assert(f:read("*a"))
-            f:close()
-            return require("kd.utils").strsplit(s, "\n")[2]
-          end
-
-          local lua_library_files = vim.api.nvim_get_runtime_file("", true)
-          local resource_path = get_quarto_resource_path()
-          table.insert(lua_library_files, resource_path .. "/lua-types")
-          table.insert(lua_library_files, vim.fn.expand("$VIMRUNTIME/lua"))
-          local lua_plugin_paths = {}
-          table.insert(lua_plugin_paths, resource_path .. "/lua-plugin/plugin.lua")
-
           -- Enable the following language servers
           local servers = {
             clangd = {},
             pyright = {},
             julials = {},
+            jsonls = require("kd.plugins.lsp.config.jsonls"),
             rust_analyzer = require("kd.plugins.lsp.config.rust"),
             tsserver = {},
-            lua_ls = {
-              Lua = {
-                completion = {
-                  callSnippet = "Replace",
-                },
-                runtime = {
-                  version = "LuaJIT",
-                  plugin = lua_plugin_paths,
-                },
-                diagnostics = {
-                  globals = { "vim", "quarto", "pandoc", "io", "string", "print", "require", "table" },
-                },
-                workspace = {
-                  checkThirdParty = false,
-                  library = lua_library_files,
-                },
-                telemetry = { enable = false },
-              },
-            },
+            lua_ls = require("kd.plugins.lsp.config.lua_ls"),
           }
 
           -- Ensure the servers above are installed
