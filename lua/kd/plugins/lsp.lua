@@ -159,7 +159,7 @@ return {
               java = formatters.lsp,
               javascript = formatters.lsp,
               json = formatters.prettierd,
-              toml = formatters.prettierd,
+              -- toml = formatters.prettierd,
               lua = formatters.stylua,
               markdown = formatters.prettierd,
               python = formatters.black,
