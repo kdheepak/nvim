@@ -1,10 +1,6 @@
 return {
   settings = {
     ["rust-analyzer"] = {
-      imports = {
-        ["granularity.group"] = "module",
-        prefix = "self",
-      },
       cargo = {
         ["buildScripts.enable"] = true,
       },
@@ -30,7 +26,7 @@ return {
 
       ["updates.channel"] = "nightly",
       rustfmt = {
-        extraArgs = { "--all", "--", "--check" },
+        extraArgs = { "+nightly" },
       },
       checkOnSave = {
         command = "clippy",

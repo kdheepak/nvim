@@ -90,49 +90,55 @@ return {
             },
           }
           vim.diagnostic.config(diagnostic)
+
+          -- Enable the following language servers
+          local ensure_installed = {
+            "clangd",
+            "pyright",
+            "julials",
+            "jsonls",
+            "rust_analyzer@nightly",
+            "tsserver",
+            "lua_ls",
+          }
+
+          -- Ensure the servers above are installed
+          require("mason-lspconfig").setup({
+            ensure_installed = ensure_installed,
+          })
+
           --  This function gets run when an LSP connects to a particular buffer.
           local on_attach = function(client, bufnr)
             -- In this case, we create a function that lets us more easily define mappings specific
             -- for LSP related items. It sets the mode, buffer and description for us each time.
             require("lsp-format").on_attach(client)
-
             -- Create a command `:LSPFormat` local to the LSP buffer
             vim.api.nvim_buf_create_user_command(bufnr, "LSPFormat", function(_)
               vim.lsp.buf.format()
             end, { desc = "Format current buffer with LSP" })
           end
 
-          -- Enable the following language servers
-          local servers = {
-            clangd = {},
-            pyright = {},
-            julials = {},
-            jsonls = require("kd.plugins.lsp.config.jsonls"),
-            rust_analyzer = require("kd.plugins.lsp.config.rust"),
-            tsserver = {},
-            lua_ls = require("kd.plugins.lsp.config.lua_ls"),
-          }
+          local capabilities = vim.lsp.protocol.make_client_capabilities()
+          capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-          -- Ensure the servers above are installed
-          local mason_lspconfig = require("mason-lspconfig")
+          local lspconfig = require("lspconfig")
 
-          local ensure_installed = vim.tbl_keys(servers)
-          ensure_installed[#ensure_installed + 1] = "rust_analyzer@nightly"
-          ensure_installed["rust_analyzer"] = nil
-          mason_lspconfig.setup({
-            ensure_installed = ensure_installed,
-          })
-
-          mason_lspconfig.setup_handlers({
+          require("mason-lspconfig").setup_handlers({
             function(server_name)
               -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-              local capabilities = vim.lsp.protocol.make_client_capabilities()
-              capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-              require("lspconfig")[server_name].setup({
+              lspconfig[server_name].setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
-                settings = servers[server_name],
               })
+            end,
+            ["rust_analyzer"] = function()
+              lspconfig.rust_analyzer.setup(require("kd.plugins.lsp.config.rust"))
+            end,
+            ["lua_ls"] = function()
+              lspconfig.lua_ls.setup(require("kd.plugins.lsp.config.lua_ls"))
+            end,
+            ["jsonls"] = function()
+              lspconfig.jsonls.setup(require("kd.plugins.lsp.config.jsonls"))
             end,
           })
         end,
