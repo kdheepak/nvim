@@ -12,6 +12,7 @@ return {
       })
     end,
     dependencies = {
+      { "simrat39/rust-tools.nvim" },
       {
         "simrat39/symbols-outline.nvim",
         cmd = "SymbolsOutline",
@@ -132,13 +133,47 @@ return {
               })
             end,
             ["rust_analyzer"] = function()
-              lspconfig.rust_analyzer.setup(require("kd.plugins.lsp.config.rust"))
+              require("rust-tools").setup({
+                tools = {
+                  runnables = {
+                    use_telescope = true,
+                  },
+                  hover_actions = {
+                    auto_focus = false,
+                  },
+                  inlay_hints = {
+                    only_current_line = true,
+                  },
+                },
+                -- all the opts to send to nvim-lspconfig
+                -- these override the defaults set by rust-tools.nvim
+                -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
+                server = {
+                  settings = {
+                    ["rust-analyzer"] = {
+                      cargo = {
+                        allFeatures = true,
+                      },
+                      ["updates.channel"] = "nightly",
+                      rustfmt = {
+                        extraArgs = { "+nightly" },
+                      },
+                    },
+                  },
+                },
+              })
             end,
             ["lua_ls"] = function()
-              lspconfig.lua_ls.setup(require("kd.plugins.lsp.config.lua_ls"))
+              local opts = require("kd.plugins.lsp.config.lua_ls")
+              opts["capabilities"] = capabilities
+              opts["on_attach"] = on_attach
+              lspconfig.lua_ls.setup(opts)
             end,
             ["jsonls"] = function()
-              lspconfig.jsonls.setup(require("kd.plugins.lsp.config.jsonls"))
+              local opts = require("kd.plugins.lsp.config.jsonls")
+              opts["capabilities"] = capabilities
+              opts["on_attach"] = on_attach
+              lspconfig.jsonls.setup(opts)
             end,
           })
         end,
