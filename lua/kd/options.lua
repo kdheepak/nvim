@@ -19,7 +19,7 @@ vim.o.expandtab = true --  Expand tab to spaces
 vim.o.timeoutlen = 500 --  Wait less time for mapped sequences
 vim.o.smarttab = true --  <TAB> in front of line inserts blanks according to shiftwidth
 vim.o.autoindent = true --  copy indent from current line
-vim.o.smartindent = true --  do smart indenting when starting a new line
+vim.o.smartindent = false --  do smart indenting when starting a new line
 -- vim.o.backspace=indent,eol,start -- allow backspacing over autoindent, line breaks, the start of insert
 
 vim.o.showbreak = "↪ " --  string to put at the start of lines that have been wrapped

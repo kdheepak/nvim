@@ -96,7 +96,6 @@ return {
           local ensure_installed = {
             "clangd",
             "pyright",
-            "julials",
             "jsonls",
             "rust_analyzer@nightly",
             "tsserver",
