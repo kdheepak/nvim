@@ -215,7 +215,7 @@ return {
               }
               opts["capabilities"] = capabilities
               opts["on_attach"] = on_attach
-              -- lspconfig.lua_ls.setup(opts)
+              lspconfig.lua_ls.setup(opts)
             end,
             ["jsonls"] = function()
               local opts = {}
@@ -227,7 +227,6 @@ return {
         end,
       },
 
-      -----------------------------------------------------------------------------
       {
         "mhartington/formatter.nvim",
         event = { "BufReadPre", "BufNewFile" },
@@ -277,10 +276,10 @@ return {
       -- { "j-hui/fidget.nvim", opts = {} },
 
       -- init.lua and plugin development with full signature help, docs and completion for the nvim lua API.
-      { "folke/neodev.nvim", opts = {} },
+      { "folke/neodev.nvim",       opts = {} },
 
       -- project local configuration
-      { "folke/neoconf.nvim", cmd = "Neoconf" },
+      { "folke/neoconf.nvim",      cmd = "Neoconf" },
     },
   },
 }
