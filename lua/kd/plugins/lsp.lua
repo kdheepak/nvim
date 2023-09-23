@@ -2,17 +2,9 @@ return {
   {
     -- LSP Configuration & Plugins
     "neovim/nvim-lspconfig",
-    config = function()
-      local lspconfig = require("lspconfig")
-      lspconfig.lua_ls.setup({
-        on_attach = function(client)
-          -- Disable formatting with sumneko_lua. Use stylua instead
-          client.server_capabilities.documentFormattingProvider = false
-        end,
-      })
-    end,
     dependencies = {
       { "simrat39/rust-tools.nvim" },
+
       {
         "simrat39/symbols-outline.nvim",
         cmd = "SymbolsOutline",
@@ -71,6 +63,13 @@ return {
         "williamboman/mason-lspconfig.nvim",
         dependencies = {
           "lukas-reineke/lsp-format.nvim",
+          config = function()
+            require("lsp-format").setup({
+              lua = {
+                exclude = { "lua_ls" }, -- to let only null_ls with stylua to format
+              },
+            })
+          end,
         },
         config = function()
           -- Diagnostic signs
@@ -107,21 +106,14 @@ return {
             ensure_installed = ensure_installed,
           })
 
-          --  This function gets run when an LSP connects to a particular buffer.
-          local on_attach = function(client, bufnr)
-            -- In this case, we create a function that lets us more easily define mappings specific
-            -- for LSP related items. It sets the mode, buffer and description for us each time.
-            require("lsp-format").on_attach(client)
-            -- Create a command `:LSPFormat` local to the LSP buffer
-            vim.api.nvim_buf_create_user_command(bufnr, "LSPFormat", function(_)
-              vim.lsp.buf.format()
-            end, { desc = "Format current buffer with LSP" })
-          end
-
           local capabilities = vim.lsp.protocol.make_client_capabilities()
           capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
           local lspconfig = require("lspconfig")
+
+          local function on_attach(client, bufnr)
+            require("lsp-format").on_attach(client, bufnr)
+          end
 
           require("mason-lspconfig").setup_handlers({
             function(server_name)
@@ -163,17 +155,121 @@ return {
               })
             end,
             ["lua_ls"] = function()
-              local opts = require("kd.plugins.lsp.config.lua_ls")
+              local function get_quarto_resource_path()
+                local f = assert(io.popen("quarto --paths", "r"))
+                local s = assert(f:read("*a"))
+                f:close()
+                return require("kd.utils").strsplit(s, "\n")[2]
+              end
+
+              local resource_path = get_quarto_resource_path()
+
+              local lua_library_files = vim.api.nvim_get_runtime_file("", true)
+              table.insert(lua_library_files, resource_path .. "/lua-types")
+              table.insert(lua_library_files, vim.fn.expand("$VIMRUNTIME/lua"))
+
+              local runtime_path = vim.split(package.path, ";")
+              table.insert(runtime_path, "lua/?.lua")
+              table.insert(runtime_path, "lua/?/init.lua")
+              table.insert(runtime_path, "?.lua")
+              table.insert(runtime_path, "?/init.lua")
+              table.insert(runtime_path, resource_path .. "/lua-plugin/plugin.lua")
+
+              local opts = {
+                settings = {
+                  Lua = {
+                    runtime = {
+                      special = {
+                        req = "require",
+                      },
+                      version = "LuaJIT",
+                      path = runtime_path,
+                    },
+                    diagnostics = {
+                      globals = {
+                        "vim",
+                        "require",
+                        "rocks",
+                      },
+                    },
+                    workspace = {
+                      -- Make the server aware of Neovim runtime files
+                      library = lua_library_files,
+                      ignoreDir = "tmp/",
+                      useGitIgnore = false,
+                      maxPreload = 100000000,
+                      preloadFileSize = 500000,
+                      checkThirdParty = false,
+                    },
+                    -- Do not send telemetry data containing a randomized but unique identifier
+                    telemetry = {
+                      enable = false,
+                    },
+                  },
+                },
+
+                server_capabilities = {
+                  definition = true,
+                  typeDefinition = true,
+                },
+              }
               opts["capabilities"] = capabilities
               opts["on_attach"] = on_attach
-              lspconfig.lua_ls.setup(opts)
+              -- lspconfig.lua_ls.setup(opts)
             end,
             ["jsonls"] = function()
-              local opts = require("kd.plugins.lsp.config.jsonls")
+              local opts = {}
               opts["capabilities"] = capabilities
               opts["on_attach"] = on_attach
               lspconfig.jsonls.setup(opts)
             end,
+          })
+        end,
+      },
+
+      -----------------------------------------------------------------------------
+      {
+        "mhartington/formatter.nvim",
+        event = { "BufReadPre", "BufNewFile" },
+        dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
+        opts = function(_, opts)
+          opts = opts or {}
+          local defaults = {
+            logging = true,
+            log_level = vim.log.levels.WARN,
+            filetype = {
+              lua = { require("formatter.filetypes.lua").stylua },
+            },
+          }
+          opts = vim.tbl_extend("keep", opts, defaults)
+          return opts
+        end,
+        config = function(opts)
+          require("formatter").setup(opts)
+          vim.api.nvim_create_autocmd("BufWritePost", {
+            pattern = {
+              "*.js",
+              "*.mjs",
+              "*.cjs",
+              "*.jsx",
+              "*.ts",
+              "*.tsx",
+              "*.css",
+              "*.scss",
+              "*.md",
+              "*.html",
+              "*.lua",
+              "*.json",
+              "*.jsonc",
+              "*.vue",
+              "*.py",
+              "*.gql",
+              "*.graphql",
+              "*.go",
+              "*.rs",
+              "*.astro",
+            },
+            command = "FormatWrite",
           })
         end,
       },
@@ -185,40 +281,6 @@ return {
 
       -- project local configuration
       { "folke/neoconf.nvim", cmd = "Neoconf" },
-
-      {
-        "elentok/format-on-save.nvim",
-        config = function()
-          local format_on_save = require("format-on-save")
-          local formatters = require("format-on-save.formatters")
-
-          format_on_save.setup({
-            formatter_by_ft = {
-              css = formatters.lsp,
-              html = formatters.lsp,
-              java = formatters.lsp,
-              javascript = formatters.lsp,
-              json = formatters.prettierd,
-              -- toml = formatters.prettierd,
-              lua = formatters.stylua,
-              markdown = formatters.prettierd,
-              python = formatters.black,
-              rust = formatters.lsp,
-              sh = formatters.shfmt,
-              scss = formatters.lsp,
-              typescript = formatters.prettierd,
-              typescriptreact = formatters.prettierd,
-              yaml = formatters.lsp,
-            },
-            -- Optional: fallback formatter to use when no formatters match the current filetype
-            fallback_formatter = {
-              formatters.remove_trailing_whitespace,
-              -- formatters.remove_trailing_newlines,
-              -- formatters.prettierd,
-            },
-          })
-        end,
-      },
     },
   },
 }
