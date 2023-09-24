@@ -72,6 +72,21 @@ return {
           end,
         },
         config = function()
+          local border = {
+            { "╭", "FloatBorder" },
+            { "─", "FloatBorder" },
+            { "╮", "FloatBorder" },
+            { "│", "FloatBorder" },
+            { "╯", "FloatBorder" },
+            { "─", "FloatBorder" },
+            { "╰", "FloatBorder" },
+            { "│", "FloatBorder" },
+          }
+          local handlers = {
+            ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
+            ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
+          }
+
           -- Diagnostic signs
           local diagnostic_signs = require("kd.utils").icons.diagnostic_signs
           for _, sign in ipairs(diagnostic_signs) do
@@ -121,6 +136,7 @@ return {
               lspconfig[server_name].setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
+                handlers = handlers,
               })
             end,
             ["rust_analyzer"] = function()
@@ -215,12 +231,14 @@ return {
               }
               opts["capabilities"] = capabilities
               opts["on_attach"] = on_attach
+              opts["handlers"] = handlers
               lspconfig.lua_ls.setup(opts)
             end,
             ["jsonls"] = function()
               local opts = {}
               opts["capabilities"] = capabilities
               opts["on_attach"] = on_attach
+              opts["handlers"] = handlers
               lspconfig.jsonls.setup(opts)
             end,
           })
