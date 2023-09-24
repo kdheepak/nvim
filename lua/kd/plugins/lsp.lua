@@ -66,7 +66,7 @@ return {
           config = function()
             require("lsp-format").setup({
               lua = {
-                exclude = { "lua_ls" }, -- to let only null_ls with stylua to format
+                exclude = { "lua_ls" }, -- to let only stylua
               },
             })
           end,
@@ -229,22 +229,23 @@ return {
 
       {
         "mhartington/formatter.nvim",
-        event = { "BufReadPre", "BufNewFile" },
-        dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
-        opts = function(_, opts)
-          opts = opts or {}
-          local defaults = {
+        config = function(opts)
+          require("formatter").setup({
             logging = true,
             log_level = vim.log.levels.WARN,
             filetype = {
               lua = { require("formatter.filetypes.lua").stylua },
+              python = { require("formatter.filetypes.python").black },
+              javascript = { require("formatter.defaults").prettierd },
+              vue = { require("formatter.defaults").prettierd },
+              javascriptreact = { require("formatter.defaults").prettierd },
+              svelte = { require("formatter.defaults").prettierd },
+              typescript = { require("formatter.defaults").prettierd },
+              typescriptreact = { require("formatter.defaults").prettierd },
+              json = { require("formatter.defaults").prettierd },
+              html = { require("formatter.defaults").prettierd },
             },
-          }
-          opts = vim.tbl_extend("keep", opts, defaults)
-          return opts
-        end,
-        config = function(opts)
-          require("formatter").setup(opts)
+          })
           vim.api.nvim_create_autocmd("BufWritePost", {
             pattern = {
               "*.js",
@@ -273,13 +274,21 @@ return {
         end,
       },
 
-      -- { "j-hui/fidget.nvim", opts = {} },
+      {
+        "j-hui/fidget.nvim",
+        event = "BufEnter",
+        config = function()
+          require("fidget").setup()
+        end,
+        tag = "legacy",
+        dependencies = { "neovim/nvim-lspconfig" },
+      },
 
       -- init.lua and plugin development with full signature help, docs and completion for the nvim lua API.
-      { "folke/neodev.nvim",       opts = {} },
+      { "folke/neodev.nvim", opts = {} },
 
       -- project local configuration
-      { "folke/neoconf.nvim",      cmd = "Neoconf" },
+      { "folke/neoconf.nvim", cmd = "Neoconf" },
     },
   },
 }
