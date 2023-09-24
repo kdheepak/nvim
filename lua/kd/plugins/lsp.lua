@@ -139,37 +139,6 @@ return {
                 handlers = handlers,
               })
             end,
-            ["rust_analyzer"] = function()
-              require("rust-tools").setup({
-                tools = {
-                  runnables = {
-                    use_telescope = true,
-                  },
-                  hover_actions = {
-                    auto_focus = false,
-                  },
-                  inlay_hints = {
-                    only_current_line = true,
-                  },
-                },
-                -- all the opts to send to nvim-lspconfig
-                -- these override the defaults set by rust-tools.nvim
-                -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
-                server = {
-                  settings = {
-                    ["rust-analyzer"] = {
-                      cargo = {
-                        allFeatures = true,
-                      },
-                      ["updates.channel"] = "nightly",
-                      rustfmt = {
-                        extraArgs = { "+nightly" },
-                      },
-                    },
-                  },
-                },
-              })
-            end,
             ["lua_ls"] = function()
               local function get_quarto_resource_path()
                 local f = assert(io.popen("quarto --paths", "r"))
