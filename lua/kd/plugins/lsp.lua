@@ -1,4 +1,5 @@
 return {
+  { "rhaiscript/vim-rhai" },
   {
     -- LSP Configuration & Plugins
     "neovim/nvim-lspconfig",
@@ -123,6 +124,7 @@ return {
 
           local capabilities = vim.lsp.protocol.make_client_capabilities()
           capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+          capabilities.textDocument.completion.completionItem.snippetSupport = true
 
           local lspconfig = require("lspconfig")
 
@@ -137,6 +139,20 @@ return {
                 capabilities = capabilities,
                 on_attach = on_attach,
                 handlers = handlers,
+              })
+            end,
+            ["rust_analyzer"] = function()
+              lspconfig.rust_analyzer.setup({
+                capabilities = capabilities,
+                on_attach = on_attach,
+                settings = {
+                  ["rust-analyzer"] = {
+                    ["updates.channel"] = "nightly",
+                    rustfmt = {
+                      extraArgs = { "+nightly" },
+                    },
+                  },
+                },
               })
             end,
             ["lua_ls"] = function()
@@ -231,6 +247,7 @@ return {
               typescriptreact = { require("formatter.defaults").prettierd },
               json = { require("formatter.defaults").prettierd },
               html = { require("formatter.defaults").prettierd },
+              markdown = { require("formatter.defaults").prettierd },
             },
           })
           vim.api.nvim_create_autocmd("BufWritePost", {

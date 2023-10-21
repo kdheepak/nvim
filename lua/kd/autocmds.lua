@@ -36,7 +36,7 @@ augroup("KDAutocmds", function()
     require("vim.highlight").on_yank({ higroup = "Search", timeout = 500 })
   end)
 
-  autocmd("BufNewFile,BufRead", function()
+  autocmd({ "BufWinEnter", "BufRead", "BufNewFile" }, function()
     if vim.fn.getline(1) == "#!/usr/bin/env julia" then
       vim.cmd("setfiletype julia")
     end
