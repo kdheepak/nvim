@@ -115,6 +115,7 @@ return {
             "rust_analyzer@nightly",
             "tsserver",
             "lua_ls",
+            "julials",
           }
 
           -- Ensure the servers above are installed
