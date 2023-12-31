@@ -9,6 +9,15 @@ return {
       vim.g.gh_line_blame_map = "<leader>gb"
     end,
   },
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim", -- required
+      "sindrets/diffview.nvim", -- optional - Diff integration
+      "ibhagwan/fzf-lua", -- optional
+    },
+    config = true,
+  },
   -- {
   --   "whiteinge/diffconflicts",
   --   config = function()
