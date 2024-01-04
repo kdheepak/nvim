@@ -1,20 +1,4 @@
 return {
-  {
-    "L3MON4D3/LuaSnip",
-    build = (not jit.os:find("Windows"))
-        and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
-      or nil,
-    dependencies = {
-      "rafamadriz/friendly-snippets",
-      config = function()
-        require("luasnip.loaders.from_vscode").lazy_load()
-      end,
-    },
-    opts = {
-      history = true,
-      delete_check_events = "TextChanged",
-    },
-  },
   -- auto completion
   {
     "hrsh7th/nvim-cmp",
@@ -26,7 +10,6 @@ return {
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/cmp-cmdline",
-      "saadparwaiz1/cmp_luasnip",
       "nvim-lua/plenary.nvim",
       "petertriho/cmp-git",
     },
@@ -62,11 +45,11 @@ return {
 
       return {
         preselect = cmp.PreselectMode.None,
-        snippet = {
-          expand = function(args)
-            require("luasnip").lsp_expand(args.body)
-          end,
-        },
+        -- snippet = {
+        --   expand = function(args)
+        --     require("luasnip").lsp_expand(args.body)
+        --   end,
+        -- },
         mapping = cmp.mapping.preset.insert({
           ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
           ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
@@ -81,8 +64,6 @@ return {
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-            elseif require("luasnip").expand_or_locally_jumpable() then
-              require("luasnip").expand_or_jump()
             elseif require("kd.utils").has_words_before() then
               cmp.complete()
             else
@@ -92,8 +73,6 @@ return {
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
-            elseif require("luasnip").jumpable(-1) then
-              require("luasnip").jump(-1)
             else
               fallback()
             end
@@ -101,7 +80,6 @@ return {
         }),
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
-          { name = "luasnip" },
           { name = "buffer" },
           { name = "path" },
           { name = "git" },
