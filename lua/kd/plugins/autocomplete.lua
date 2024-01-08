@@ -14,6 +14,7 @@ return {
       "hrsh7th/cmp-cmdline",
       "nvim-lua/plenary.nvim",
       "petertriho/cmp-git",
+      "nvim-tree/nvim-web-devicons",
     },
     opts = function()
       local cmp = require("cmp")

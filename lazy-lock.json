@@ -50,6 +50,7 @@
   "nvim-bqf": { "branch": "main", "commit": "bdc2a4e5bb670b3c0e33ada9c0eec636d93a0748" },
   "nvim-cmp": { "branch": "main", "commit": "538e37ba87284942c1d76ed38dd497e54e65b891" },
   "nvim-colorizer.lua": { "branch": "master", "commit": "85855b38011114929f4058efc97af1059ab3e41d" },
+  "nvim-fzf": { "branch": "master", "commit": "bd095495146a2a827774ad3ad1ef0cc843b5e257" },
   "nvim-lspconfig": { "branch": "master", "commit": "ce0e625df61be77abe1340fbc9afe9ad39b31dd8" },
   "nvim-notify": { "branch": "master", "commit": "ebcdd8219e2a2cbc0a4bef68002f6867f1fde269" },
   "nvim-regexplainer": { "branch": "main", "commit": "78fff711edcb986a05a03253c28a90e32c4ce31f" },

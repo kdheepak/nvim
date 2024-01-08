@@ -9,9 +9,10 @@ return {
   --   config = function()
   --     require("kd.plugins/configs/fzf-vim")
   --   end,
-  -- } or {
+  -- }
+  -- {
   --   "ibhagwan/fzf-lua",
-  --   dependencies = { "junegunn/fzf", "vijaymarupudi/nvim-fzf" },
+  --   dependencies = { "junegunn/fzf", "vijaymarupudi/nvim-fzf", "nvim-tree/nvim-web-devicons" },
   --   config = function()
   --     require("kd.plugins/configs/fzf-lua")
   --   end,
