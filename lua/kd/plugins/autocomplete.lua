@@ -6,6 +6,8 @@ return {
     version = false, -- last release is way too old
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-vsnip",
+      "hrsh7th/vim-vsnip",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-nvim-lsp-signature-help",
@@ -45,11 +47,11 @@ return {
 
       return {
         preselect = cmp.PreselectMode.None,
-        -- snippet = {
-        --   expand = function(args)
-        --     require("luasnip").lsp_expand(args.body)
-        --   end,
-        -- },
+        snippet = {
+          expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body)
+          end,
+        },
         mapping = cmp.mapping.preset.insert({
           ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
           ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
@@ -80,6 +82,7 @@ return {
         }),
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
+          { name = "vsnip" },
           { name = "buffer" },
           { name = "path" },
           { name = "git" },
