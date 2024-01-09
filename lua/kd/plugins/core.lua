@@ -109,7 +109,7 @@ return {
   },
   { "GutenYe/json5.vim", ft = "json" },
   { "GCBallesteros/jupytext.vim", ft = { "ipynb", "python", "markdown" } },
-  { "sindrets/diffview.nvim", event = "VeryLazy" },
+  { "sindrets/diffview.nvim" },
   {
     "Pocco81/HighStr.nvim",
     config = function()
