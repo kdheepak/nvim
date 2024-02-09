@@ -230,7 +230,12 @@ return {
           })
         end,
       },
-
+      {
+        "robitx/gp.nvim",
+        config = function()
+          require("gp").setup()
+        end,
+      },
       {
         "mhartington/formatter.nvim",
         config = function(opts)
