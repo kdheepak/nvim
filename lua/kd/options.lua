@@ -11,16 +11,10 @@ vim.o.encoding = "utf-8" -- Default file encoding
 vim.o.autochdir = false --  Don't change dirs automatically
 vim.o.errorbells = false --  No sound
 
-vim.o.tabstop = 2 --  Number of spaces a <TAB> is
-vim.o.softtabstop = 2 --  Fine tunes the amount of white space to be added
-vim.o.shiftwidth = 2 --  Number of spaces for indentation
 vim.o.shiftround = true
 vim.o.expandtab = true --  Expand tab to spaces
 vim.o.timeoutlen = 500 --  Wait less time for mapped sequences
 vim.o.smarttab = true --  <TAB> in front of line inserts blanks according to shiftwidth
-vim.o.autoindent = true --  copy indent from current line
-vim.o.smartindent = false --  do smart indenting when starting a new line
--- vim.o.backspace=indent,eol,start -- allow backspacing over autoindent, line breaks, the start of insert
 
 vim.o.showbreak = "↪ " --  string to put at the start of lines that have been wrapped
 vim.o.breakindent = true --  every wrapped line will continue visually indented

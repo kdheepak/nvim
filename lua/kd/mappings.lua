@@ -8,25 +8,11 @@ local nmap = utils.nmap
 local map = utils.map
 local command = utils.command
 
-cnoremap("<C-k>", "pumvisible() ? \"<C-p>\"  : \"<Up>\"")
-cnoremap("<C-j>", "pumvisible() ? \"<C-n>\"  : \"<Down>\"")
-
--- Use virtual replace mode all the time
-nnoremap("r", "gr")
-nnoremap("R", "gR")
-
 -- visual shifting (does not exit Visual mode)
 vnoremap("<", "<gv")
 vnoremap(">", ">gv")
 nnoremap(">", ">>_")
 nnoremap("<", ">>_")
-
--- highlight last inserted text
-nnoremap("gV", "`[v`]")
-
--- better up/down
-nmap("j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-nmap("k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
 -- Move to window using the <ctrl> hjkl keys
 map("n", "<C-h>", "<C-w>h", { desc = "Go to left window", remap = true })
@@ -48,12 +34,16 @@ noremap("H", "^")
 -- move to end of the line
 noremap("L", "$")
 
+-- better up/down
+nmap("j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+nmap("k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+
 -- Move visual block
 vnoremap("J", ":m '>+1<CR>gv=gv")
 vnoremap("K", ":m '<-2<CR>gv=gv")
 
-nnoremap("J", "10jzz")
-nnoremap("K", "10kzz")
+nnoremap("J", "j")
+nnoremap("K", "k")
 
 -- copy to the end of line
 nnoremap("Y", "y$")
@@ -65,11 +55,11 @@ noremap("gk", "gg")
 noremap("gi", "0")
 noremap("gh", "^")
 noremap("gl", "$")
-noremap("ga", "<C-^>")
 
--- move through wrapped lines
-nnoremap("j", "gj")
-nnoremap("k", "gk")
+-- highlight last inserted text
+nnoremap("gV", "`[v`]")
+-- Select last paste
+nnoremap("gp", "'`['.strpart(getregtype(), 0, 1).'`]'", { expr = true })
 
 -- Navigate jump list
 nnoremap("g,", "<C-o>")
@@ -86,12 +76,6 @@ vnoremap("Q", ":norm @@<CR>")
 nnoremap("q:", "<nop>")
 nnoremap("q/", "<nop>")
 nnoremap("q?", "<nop>")
-
-nnoremap("c", "\"ac")
-nnoremap("C", "\"aC")
-
--- Select last paste
-nnoremap("gp", "'`['.strpart(getregtype(), 0, 1).'`]'", { expr = true })
 
 -- redo
 nnoremap("U", "<C-R>")
@@ -155,7 +139,7 @@ nnoremap("<s-tab>", "<cmd>bprevious<CR>", { desc = "Jump to next buffer", silent
 nnoremap("<a-s-tab>", ":tabprevious<CR>", { desc = "Jump to next tab", silent = true })
 nnoremap("<a-tab>", ":tabnext<CR>", { desc = "Jump to next tab", silent = true })
 
-nnoremap("<bs>", "<C-^>", { desc = "Jump to alternate buffer", silent = true })
+-- nnoremap("<bs>", "<C-^>", { desc = "Jump to alternate buffer", silent = true })
 
 nnoremap("<Leader><Leader>", ":nohlsearch<CR>", { desc = "Clear Highlighting", silent = true })
 
@@ -189,9 +173,6 @@ nnoremap("<leader>wj", "<C-w>j", { desc = "Go to the down window" })
 
 -- nnoremap("<leader>q", { desc = "+Format" })
 nnoremap("<leader>qt", "<cmd>Tabularize<CR>", { desc = "Tabularize" })
-nnoremap("<leader>qq", function()
-  require("telescope.builtin").quickfix()
-end, { desc = "Quickfix" })
 
 -- nnoremap("<leader>b", { desc = "+Buffers" })
 nnoremap("<leader>bd", "<cmd>Bdelete<CR>", { desc = "Delete buffer" })
