@@ -5,7 +5,6 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = {
       { "simrat39/rust-tools.nvim" },
-
       {
         "simrat39/symbols-outline.nvim",
         cmd = "SymbolsOutline",

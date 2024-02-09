@@ -54,6 +54,8 @@ return {
           end,
         },
         mapping = cmp.mapping.preset.insert({
+          ["<C-j>"] = cmp.mapping.select_next_item(),
+          ["<C-k>"] = cmp.mapping.select_prev_item(),
           ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
           ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
           ["<C-b>"] = cmp.mapping.scroll_docs(-4),
@@ -61,12 +63,13 @@ return {
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
           ["<CR>"] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace,
             select = false,
-          }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          }),
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
-              cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+              cmp.select_next_item()
+            elseif vim.fn["vsnip#available"](1) == 1 then
+              require("kd.utils").feedkey("<Plug>(vsnip-expand-or-jump)", "")
             elseif require("kd.utils").has_words_before() then
               cmp.complete()
             else
@@ -76,6 +79,8 @@ return {
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+            elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+              require("kd.utils").feedkey("<Plug>(vsnip-jump-prev)", "")
             else
               fallback()
             end
@@ -84,10 +89,11 @@ return {
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
           { name = "vsnip" },
+          { name = "nvim_lsp_signature_help" },
+        }, {
           { name = "buffer" },
           { name = "path" },
           { name = "git" },
-          { name = "nvim_lsp_signature_help" },
         }),
         formatting = {
           format = function(entry, item)
