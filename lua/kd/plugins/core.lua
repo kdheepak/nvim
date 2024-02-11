@@ -38,7 +38,6 @@ return {
   { "Konfekt/vim-CtrlXA", event = "VeryLazy" }, -- Increment and decrement and toggle keywords
   { "dhruvasagar/vim-zoom", event = "VeryLazy" },
   { "godlygeek/tabular", event = "VeryLazy" },
-  -- { "dhruvasagar/vim-table-mode", event = "VeryLazy" },
   { "chrisbra/unicode.vim", event = "VeryLazy" },
   {
     "kevinhwang91/nvim-bqf",
