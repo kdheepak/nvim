@@ -55,10 +55,39 @@ return {
     config = function()
       local nnoremap = require("kd.utils").nnoremap
       local tnoremap = require("kd.utils").tnoremap
-      nnoremap("<leader>/", "<cmd>ToggleTerm direction=horizontal<CR>", { desc = "Split terminal horizontally" })
-      nnoremap("<leader>\\", "<cmd>ToggleTerm direction=vertical<CR>", { desc = "Split terminal vertically" })
-      nnoremap("<Leader>tt", "<cmd>ToggleTerm<CR>", { desc = "Toggle display" })
+      local toggleterm = require("toggleterm")
+      local terminal = require("toggleterm.terminal")
+
+      local function open_new_terminal(direction)
+        if #terminal.get_all() ~= 0 then
+          if direction == "horizontal" then
+            direction = "vertical"
+          else
+            direction = "horizontal"
+          end
+        end
+        local term = terminal.Terminal:new({ id = #terminal.get_all() + 1, direction = direction, size = 0.5 })
+        term:toggle()
+      end
+
+      local function toggle_or_open_new_terminal(direction)
+        open_new_terminal(direction)
+      end
+
+      nnoremap("<leader>/", function()
+        toggle_or_open_new_terminal("horizontal")
+      end, { desc = "Split terminal horizontally" })
+      nnoremap("<leader>\\", function()
+        toggle_or_open_new_terminal("vertical")
+      end, { desc = "Split terminal vertically" })
+
+      vim.keymap.set("n", "<leader>tf", ":ToggleTerm direction=float<cr>")
+      vim.keymap.set("n", "<leader>th", ":ToggleTerm direction=horizontal<cr>")
+
+      nnoremap("<Leader>tt", "<cmd>ToggleTerm<CR>", { desc = "Toggle terminal" })
+
       tnoremap("<ESC><ESC>", "<C-\\><C-n>", { desc = "ESC to normal mode" })
+
       require("toggleterm").setup({
         -- size can be a number or function which is passed the current terminal
         size = function(term)

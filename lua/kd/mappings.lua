@@ -180,12 +180,6 @@ nnoremap("<leader>bj", "<cmd>TablineBufferNext<CR>", { desc = "Next buffer" })
 nnoremap("<leader>bk", "<cmd>TablineBufferPrevious<CR>", { desc = "Previous buffer" })
 nnoremap("<leader>bw", "<cmd>BufferWipeout<CR>", { desc = "Previous buffer" })
 
--- nnoremap("<leader>t", { desc = "+Tabs" })
-nnoremap("<leader>tn", "<cmd>TablineTabNew<CR>", { desc = "New tab" })
-nnoremap("<leader>td", "<cmd>tabclose<CR>", { desc = "delete current tab" })
-nnoremap("<leader>tj", "<cmd>tabnext<CR>", { desc = "Next tab" })
-nnoremap("<leader>tk", "<cmd>tabprevious<CR>", { desc = "Prev tab" })
-
 -- nnoremap("<leader>g", { desc = "+Git" })
 nnoremap("<leader>gj", "&diff ? ']c' : '<cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'", { desc = "Next Hunk" })
 nnoremap("<leader>gk", "&diff ? ']c' : '<cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'", { desc = "Prev Hunk" })
