@@ -88,7 +88,7 @@ return {
         -- size can be a number or function which is passed the current terminal
         size = function(term)
           if term.direction == "horizontal" then
-            return vim.o.rows * 0.5
+            return vim.o.lines * 0.5
           elseif term.direction == "vertical" then
             return vim.o.columns * 0.5
           end
@@ -98,7 +98,7 @@ return {
         shade_terminals = false,
         start_in_insert = true,
         insert_mappings = false, -- whether or not the open mapping applies in insert mode
-        persist_size = true,
+        persist_size = false,
         direction = "float",
         close_on_exit = true, -- close the terminal window when the process exits
         -- This field is only relevant if direction is set to 'float'
