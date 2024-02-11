@@ -239,49 +239,33 @@ return {
         end,
       },
       {
-        "mhartington/formatter.nvim",
-        config = function(opts)
-          require("formatter").setup({
-            logging = true,
-            log_level = vim.log.levels.WARN,
-            filetype = {
-              lua = { require("formatter.filetypes.lua").stylua },
-              python = { require("formatter.filetypes.python").black },
-              javascript = { require("formatter.defaults").prettierd },
-              vue = { require("formatter.defaults").prettierd },
-              javascriptreact = { require("formatter.defaults").prettierd },
-              svelte = { require("formatter.defaults").prettierd },
-              typescript = { require("formatter.defaults").prettierd },
-              typescriptreact = { require("formatter.defaults").prettierd },
-              json = { require("formatter.defaults").prettierd },
-              html = { require("formatter.defaults").prettierd },
-              markdown = { require("formatter.defaults").prettierd },
+        "stevearc/conform.nvim",
+        opts = {},
+        config = function()
+          require("conform").setup({
+            formatters_by_ft = {
+              lua = { "stylua" },
+              -- Conform will run multiple formatters sequentially
+              python = { "isort", "black" },
+              -- Use a sub-list to run only the first available formatter
+              javascript = { { "prettierd", "prettier" } },
+              -- Use a sub-list to run only the first available formatter
+              markdown = { { "prettierd", "prettier" } },
             },
-          })
-          vim.api.nvim_create_autocmd("BufWritePost", {
-            pattern = {
-              "*.js",
-              "*.mjs",
-              "*.cjs",
-              "*.jsx",
-              "*.ts",
-              "*.tsx",
-              "*.css",
-              "*.scss",
-              "*.md",
-              "*.html",
-              "*.lua",
-              "*.json",
-              "*.jsonc",
-              "*.vue",
-              "*.py",
-              "*.gql",
-              "*.graphql",
-              "*.go",
-              "*.rs",
-              "*.astro",
+            -- If this is set, Conform will run the formatter on save.
+            -- It will pass the table to conform.format().
+            -- This can also be a function that returns the table.
+            format_on_save = {
+              -- I recommend these options. See :help conform.format for details.
+              lsp_fallback = true,
+              timeout_ms = 500,
             },
-            command = "FormatWrite",
+            -- If this is set, Conform will run the formatter asynchronously after save.
+            -- It will pass the table to conform.format().
+            -- This can also be a function that returns the table.
+            format_after_save = {
+              lsp_fallback = true,
+            },
           })
         end,
       },

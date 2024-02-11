@@ -38,7 +38,7 @@ return {
   { "Konfekt/vim-CtrlXA", event = "VeryLazy" }, -- Increment and decrement and toggle keywords
   { "dhruvasagar/vim-zoom", event = "VeryLazy" },
   { "godlygeek/tabular", event = "VeryLazy" },
-  { "dhruvasagar/vim-table-mode", event = "VeryLazy" },
+  -- { "dhruvasagar/vim-table-mode", event = "VeryLazy" },
   { "chrisbra/unicode.vim", event = "VeryLazy" },
   {
     "kevinhwang91/nvim-bqf",
@@ -54,8 +54,11 @@ return {
     "akinsho/toggleterm.nvim",
     config = function()
       local nnoremap = require("kd.utils").nnoremap
+      local tnoremap = require("kd.utils").tnoremap
       nnoremap("<leader>/", "<cmd>ToggleTerm direction=horizontal<CR>", { desc = "Split terminal horizontally" })
       nnoremap("<leader>\\", "<cmd>ToggleTerm direction=vertical<CR>", { desc = "Split terminal vertically" })
+      nnoremap("<Leader>tt", "<cmd>ToggleTerm<CR>", { desc = "Toggle display" })
+      tnoremap("<ESC><ESC>", "<C-\\><C-n>", { desc = "ESC to normal mode" })
       require("toggleterm").setup({
         -- size can be a number or function which is passed the current terminal
         size = function(term)
@@ -66,7 +69,6 @@ return {
           end
         end,
         -- size can be a number or function which is passed the current terminal
-        open_mapping = [[<c-\><c-\>]],
         hide_numbers = true, -- hide the number column in toggleterm buffers
         shade_terminals = false,
         start_in_insert = true,
@@ -113,7 +115,6 @@ return {
       nnoremap("<leader>gg", lazygit_toggle, { desc = "LazyGit Toggle" })
       nnoremap("<leader>gl", lazygit_log_toggle, { desc = "LazyGit Log" })
     end,
-    event = "VeryLazy",
   },
   { "GutenYe/json5.vim", ft = "json" },
   { "GCBallesteros/jupytext.vim", ft = { "ipynb", "python", "markdown" } },

@@ -65,7 +65,6 @@ augroup("KDAutocmds", function()
       "help",
       "man",
       "notify",
-      "null-ls-info",
       "qf",
       "PlenaryTestPopup",
       "startuptime",
@@ -78,17 +77,6 @@ augroup("KDAutocmds", function()
   -- show cursorline only in active window
   autocmd({ "InsertLeave", "WinEnter" }, "set cursorline")
   autocmd({ "InsertEnter", "WinLeave" }, "set nocursorline")
-
-  autocmd("User", function(event)
-    local fallback_name = vim.api.nvim_buf_get_name(event.buf)
-    local fallback_ft = vim.api.nvim_buf_get_option(event.buf, "filetype")
-    local fallback_on_empty = fallback_name == "" and fallback_ft == ""
-
-    if fallback_on_empty then
-      vim.api.nvim_command("Alpha")
-      vim.api.nvim_command(event.buf .. "bwipeout")
-    end
-  end, { pattern = "BDeletePost*" })
 
   -- -- LuaSnip Snippet History Fix
   -- autocmd("ModeChanged", function()

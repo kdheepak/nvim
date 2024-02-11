@@ -79,6 +79,11 @@ function M.nnoremap(lhs, rhs, opts)
   return M.nmap(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
 end
 
+function M.tnoremap(lhs, rhs, opts)
+  opts = opts or {}
+  return M.tmap(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
+end
+
 function M.vnoremap(lhs, rhs, opts)
   opts = opts or {}
   return M.vmap(lhs, rhs, vim.tbl_extend("force", opts, { noremap = true }))
@@ -112,6 +117,11 @@ end
 function M.nmap(lhs, rhs, opts)
   opts = opts or {}
   return M.map("n", lhs, rhs, opts)
+end
+
+function M.tmap(lhs, rhs, opts)
+  opts = opts or {}
+  return M.map("t", lhs, rhs, opts)
 end
 
 function M.xmap(lhs, rhs, opts)
