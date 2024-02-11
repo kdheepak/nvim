@@ -81,9 +81,6 @@ return {
         toggle_or_open_new_terminal("vertical")
       end, { desc = "Split terminal vertically" })
 
-      vim.keymap.set("n", "<leader>tf", ":ToggleTerm direction=float<cr>")
-      vim.keymap.set("n", "<leader>th", ":ToggleTerm direction=horizontal<cr>")
-
       nnoremap("<Leader>tt", "<cmd>ToggleTerm<CR>", { desc = "Toggle terminal" })
 
       tnoremap("<ESC><ESC>", "<C-\\><C-n>", { desc = "ESC to normal mode" })
@@ -92,7 +89,7 @@ return {
         -- size can be a number or function which is passed the current terminal
         size = function(term)
           if term.direction == "horizontal" then
-            return 15
+            return vim.o.rows * 0.5
           elseif term.direction == "vertical" then
             return vim.o.columns * 0.5
           end
