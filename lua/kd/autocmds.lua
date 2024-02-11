@@ -167,12 +167,8 @@ augroup("KDAutocmds", function()
       vim.opt_local.wrap = true
       vim.opt_local.spell = false
       vim.cmd("startinsert")
-      local opts = { noremap = true }
-      vim.api.nvim_buf_set_keymap(args.buf, "t", "<esc>", [[<C-\><C-n>]], opts)
-      vim.api.nvim_buf_set_keymap(args.buf, "t", "<leader>wh", [[<C-\><C-n><C-W>h]], opts)
-      vim.api.nvim_buf_set_keymap(args.buf, "t", "<leader>wj>", [[<C-\><C-n><C-W>j]], opts)
-      vim.api.nvim_buf_set_keymap(args.buf, "t", "<leader>wk>", [[<C-\><C-n><C-W>k]], opts)
-      vim.api.nvim_buf_set_keymap(args.buf, "t", "<leader>wl>", [[<C-\><C-n><C-W>l]], opts)
+      -- local opts = { noremap = true }
+      -- vim.api.nvim_buf_set_keymap(args.buf, "t", "<esc>", [[<C-\><C-n>]], opts)
     end
   end)
 
