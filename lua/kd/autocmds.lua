@@ -154,9 +154,6 @@ augroup("KDAutocmds", function()
     if vim.startswith(vim.api.nvim_buf_get_name(args.buf), "term://") then
       vim.opt_local.wrap = true
       vim.opt_local.spell = false
-      vim.cmd("startinsert")
-      -- local opts = { noremap = true }
-      -- vim.api.nvim_buf_set_keymap(args.buf, "t", "<esc>", [[<C-\><C-n>]], opts)
     end
   end)
 
