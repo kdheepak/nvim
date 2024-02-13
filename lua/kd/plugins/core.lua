@@ -83,6 +83,7 @@ return {
       nnoremap("<Leader>tt", "<cmd>ToggleTerm<CR>", { desc = "Toggle terminal" })
 
       tnoremap("<ESC><ESC>", "<C-\\><C-n>", { desc = "ESC to normal mode" })
+      tnoremap("<S-Space>", "<Space>")
 
       require("toggleterm").setup({
         -- size can be a number or function which is passed the current terminal

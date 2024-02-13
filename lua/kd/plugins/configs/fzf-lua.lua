@@ -1,3 +1,8 @@
+local fzf_lua = require("fzf-lua")
+local fzf_helpers = require("fzf.helpers")
+local core = require("fzf-lua.core")
+local path = require("fzf-lua.path")
+local config = require("fzf-lua.config")
 local actions = require("fzf-lua.actions")
 
 local function should_qf(selected)
@@ -72,49 +77,4 @@ require("fzf-lua").setup({
   },
 })
 
-local fzf_lua = require("fzf-lua")
-local fzf = require("fzf")
-local fzf_helpers = require("fzf.helpers")
-local core = require("fzf-lua.core")
-local path = require("fzf-lua.path")
-local utils = require("fzf-lua.utils")
-local config = require("fzf-lua.config")
-local actions = require("fzf-lua.actions")
-
 fzf_lua.register_ui_select()
-
-config.globals.git_history = {
-  prompt = "Git History> ",
-  input_prompt = "Search For> ",
-  preview = "git show --pretty='%Cred%H%n%Cblue%an%n%Cgreen%s' --color {1}",
-  cmd = "git log --pretty --oneline",
-  actions = {
-    ["default"] = actions.git_checkout,
-  },
-}
-
-local git_history = function(opts)
-  opts = config.normalize_opts(opts, config.globals.git_history)
-  if not opts then
-    return
-  end
-
-  opts.cwd = path.git_root(opts.cwd)
-
-  if not opts.search then
-    opts.search = vim.fn.input(opts.input_prompt) or ""
-  end
-
-  opts.cmd = opts.cmd .. " -S'" .. opts.search .. "'"
-  opts.preview = vim.fn.shellescape(path.git_cwd(opts.preview, opts.cwd))
-  coroutine.wrap(function()
-    local fzf_fn = fzf_helpers.cmd_line_transformer({ cmd = opts.cmd, cwd = opts.cwd }, function(x)
-      return x
-    end)
-    local selected = core.fzf(opts, fzf_fn)
-    if not selected then
-      return
-    end
-    actions.act(opts.actions, selected, opts)
-  end)()
-end

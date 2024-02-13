@@ -20,19 +20,8 @@ return {
   },
   {
     "akinsho/git-conflict.nvim",
-    config = function()
-      require("git-conflict").setup({
-        default_mappings = false,
-      })
-      local utils = require("kd.utils")
-      local nnoremap = utils.nnoremap
-      nnoremap("<leader>gco", "<Plug>(git-conflict-ours)", { desc = "Git choose ours" })
-      nnoremap("<leader>gct", "<Plug>(git-conflict-theirs)", { desc = "Git choose theirs" })
-      nnoremap("<leader>gcb", "<Plug>(git-conflict-both)", { desc = "Git choose both" })
-      nnoremap("<leader>gcn", "<Plug>(git-conflict-none)", { desc = "Git choose ignore both" })
-      nnoremap("]c", "<Plug>(git-conflict-next-conflict)", { desc = "Jump to next git conflict" })
-      nnoremap("[c", "<Plug>(git-conflict-prev-conflict)", { desc = "Jump to previous git conflict" })
-    end,
+    version = "*",
+    config = true,
   },
   {
     "ruifm/gitlinker.nvim",
@@ -42,7 +31,6 @@ return {
     "pwntester/octo.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
       "nvim-tree/nvim-web-devicons",
     },
     cmd = {

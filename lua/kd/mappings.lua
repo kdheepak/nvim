@@ -1,5 +1,4 @@
 local utils = require("kd.utils")
-local cnoremap = utils.cnoremap
 local noremap = utils.noremap
 local nnoremap = utils.nnoremap
 local vnoremap = utils.vnoremap
@@ -208,19 +207,19 @@ nnoremap("<leader>ghb", "<cmd>lua require\"gitsigns\".blame_line(true)<CR>", { d
 
 -- nnoremap("<leader>gf", { desc = "Fuzzy" })
 nnoremap("<leader>gfs", function()
-  require("telescope.builtin").git_status({})
+  require("fzf-lua").git_status({})
 end, { desc = "Git Status" })
 nnoremap("<leader>gfS", function()
-  require("telescope.builtin").git_stash({})
+  require("fzf-lua").git_stash({})
 end, { desc = "Git Stash" })
 nnoremap("<leader>gfc", function()
-  require("telescope.builtin").git_commits({})
+  require("fzf-lua").git_commits({})
 end, { desc = "Git Commits" })
 nnoremap("<leader>gfb", function()
-  require("telescope.builtin").git_bcommits({})
+  require("fzf-lua").git_bcommits({})
 end, { desc = "Git Buffer Commits" })
 nnoremap("<leader>gfr", function()
-  require("telescope.builtin").git_branches({})
+  require("fzf-lua").git_branches({})
 end, {
   desc = "Git Branches",
 })
@@ -265,20 +264,20 @@ nnoremap("<leader>dro", "<cmd>lua require\"dap\".repl.open()<CR>", { desc = "REP
 nnoremap("<leader>drl", "<cmd>lua require\"dap\".repl.run_last()<CR>", { desc = "REPL run last" })
 
 -- nnoremap("<leader>f", { desc = "+Fuzzy" })
-nnoremap("<leader>f.", "<cmd>lua require 'telescope.builtin'.resume()<cr>")
-nnoremap("<leader>fr", "<cmd>lua require 'telescope.builtin'.registers{}<CR>", {
+nnoremap("<leader>f.", "<cmd>lua require 'fzf-lua'.resume()<cr>")
+nnoremap("<leader>fr", "<cmd>lua require 'fzf-lua'.registers{}<CR>", {
   desc = "Registers",
 })
-nnoremap("<leader>fk", "<cmd>lua require 'telescope.builtin'.keymaps{}<CR>", {
+nnoremap("<leader>fk", "<cmd>lua require 'fzf-lua'.keymaps{}<CR>", {
   desc = "Keymaps",
 })
 nnoremap("<leader>fB", function()
-  require("telescope.builtin").blines({})
+  require("fzf-lua").blines({})
 end, {
   desc = "Current Buffer",
 })
 nnoremap("<Leader>fb", function()
-  require("telescope.builtin").buffers({
+  require("fzf-lua").buffers({
     -- attach_mappings = function(_, map)
     --   map("i", "<C-d>", actions.delete_buffer)
     --   return true
@@ -289,13 +288,13 @@ end, {
 })
 nnoremap("<leader>ff", function(opts)
   opts = opts or {}
-  require("telescope.builtin").find_files(opts)
+  require("fzf-lua").files(opts)
 end, {
   desc = "Files",
   silent = true,
 })
 nnoremap("<leader>f:", function()
-  require("telescope.builtin").command_history({})
+  require("fzf-lua").command_history({})
 end, {
   desc = "Command History",
   silent = true,
@@ -318,74 +317,83 @@ nnoremap("<leader>fg", function(opts)
       cwd = get_git_root(),
     }
   end
-  require("telescope.builtin").live_grep(opts)
+  require("fzf-lua").live_grep(opts)
 end, {
   desc = "Live Grep",
   silent = true,
 })
 vnoremap("<leader>fw", function(opts)
   opts = opts or {}
-  require("telescope.builtin").grep_string(opts)
+  require("fzf-lua").grep_visual(opts)
 end, {
   desc = "Grep String",
   silent = true,
 })
 nnoremap("<leader>fw", function(opts)
   opts = opts or {}
-  require("telescope.builtin").grep_string(opts)
+  require("fzf-lua").grep_cword(opts)
+end, {
+  desc = "Grep String",
+  silent = true,
+})
+nnoremap("<leader>fW", function(opts)
+  opts = opts or {}
+  require("fzf-lua").grep_cWORD(opts)
 end, {
   desc = "Grep String",
   silent = true,
 })
 nnoremap("<leader>fh", function()
-  require("telescope.builtin").help_tags()
+  require("fzf-lua").help_tags()
 end, {
   desc = "Help Tags",
 })
 nnoremap("<leader>fm", function()
-  require("telescope.builtin").man_pages({ sections = { "ALL" } })
+  require("fzf-lua").man_pages({ sections = { "ALL" } })
 end, {
   desc = "Man pages",
 })
 nnoremap("<leader>fs", function()
-  require("telescope.builtin").spell_suggest()
+  require("fzf-lua").spell_suggest()
 end, {
   desc = "Spell suggest",
 })
 
 -- nnoremap("<leader>l", { desc = "+LSP" })
 nnoremap("<leader>lr", function()
-  require("telescope.builtin").lsp_references({})
+  require("fzf-lua").lsp_references({})
 end, { desc = "LSP References" })
 nnoremap("<leader>ld", function()
-  require("telescope.builtin").lsp_definitions({})
+  require("fzf-lua").lsp_definitions({})
 end, {
   desc = "LSP Definitions",
 })
 nnoremap("<leader>lD", function()
-  require("telescope.builtin").lsp_declarations({})
+  require("fzf-lua").lsp_declarations({})
 end, {
   desc = "LSP Declarations",
 })
 nnoremap("<leader>li", function()
-  require("telescope.builtin").lsp_implementations({})
+  require("fzf-lua").lsp_implementations({})
 end, { desc = "Implementation" })
 nnoremap("<leader>ls", function()
-  require("telescope.builtin").lsp_document_symbols({})
-end, {
-  desc = "Document Symbols",
-})
-nnoremap("<leader>lS", function()
-  require("telescope.builtin").lsp_workspace_symbols({})
+  require("fzf-lua").lsp_workspace_symbols({})
 end, {
   desc = "Workspace Symbols",
 })
+nnoremap("<leader>lS", function()
+  require("fzf-lua").lsp_live_workspace_symbols({})
+end, {
+  desc = "Live Workspace Symbols",
+})
 nnoremap("<leader>lt", function()
-  require("telescope.builtin").lsp_type_definitions({})
+  require("fzf-lua").lsp_typedefs({})
 end, {
   desc = "Type definitions",
 })
-nnoremap("<leader>lca", vim.lsp.buf.code_action, { desc = "Code Action" })
+nnoremap("<leader>lca", function()
+  require("fzf-lua").lsp_code_actions({})
+end, { desc = "Code Action" })
 
 nnoremap("<leader>lh", function()
   -- instead of vim.lsp.buf.hover()
@@ -426,18 +434,19 @@ nnoremap("<leader>lwl", function()
 end, { desc = "Workspace List Folders" })
 
 nnoremap("<leader>lG", function()
-  require("telescope.builtin").lsp_workspace_diagnostics({})
+  require("fzf-lua").lsp_workspace_diagnostics({})
 end, {
   desc = "Workspace Diagnostics",
 })
-nnoremap("<leader>l]", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", { desc = "Next Diagnostic" })
-nnoremap("<leader>l[", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", { desc = "Previous Diagnostic" })
+-- nnoremap("<leader>l]", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", { desc = "Next Diagnostic" })
+-- nnoremap("<leader>l[", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", { desc = "Previous Diagnostic" })
 nnoremap("<leader>ll", "<cmd>Trouble<CR>", { desc = "Trouble" })
 nnoremap("<leader>lR", "<cmd>lua vim.lsp.buf.rename()<CR>", { desc = "Rename" })
-nnoremap("<leader>ld", "<cmd>lua vim.lsp.buf.definition()<CR>", { desc = "Definition" })
-nnoremap("<leader>lD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { desc = "Declaration" })
 
-nnoremap("<leader>lf", "<cmd>lua vim.lsp.buf.format()<CR>", { desc = "Formatting" })
+nnoremap("<leader>lf", function()
+  require("fzf-lua").lsp_finder({})
+end, { desc = "LSP Finder" })
+
 -- nnoremap("<leader>lc", { desc = "+Calls" })
 nnoremap("<leader>lco", "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", { desc = "Outgoing calls" })
 nnoremap("<leader>lci", "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", { desc = "Incoming calls" })
@@ -448,10 +457,10 @@ nnoremap("<leader>ve", "<cmd>e $MYVIMRC<CR>", { desc = "Open VIMRC" })
 nnoremap("<leader>vs", "<cmd>luafile $MYVIMRC<CR>", { desc = "Source VIMRC" })
 nnoremap("<leader>vz", "<cmd>e ~/.zshrc<CR>", { desc = "Open ZSHRC" })
 nnoremap("<leader>v:", function()
-  require("telescope.builtin").commands()
+  require("fzf-lua").commands()
 end, { desc = "Vim commands" })
 nnoremap("<Leader>vv", function()
-  require("telescope.builtin").find_files({
+  require("fzf-lua").files({
     cwd = "~/.config/nvim",
   })
 end, {
@@ -459,7 +468,7 @@ end, {
   silent = true,
 })
 nnoremap("<Leader>v.", function()
-  require("telescope.builtin").find_files({
+  require("fzf-lua").files({
     cwd = "~/gitrepos/dotfiles",
   })
 end, {
@@ -467,7 +476,7 @@ end, {
   silent = true,
 })
 nnoremap("<Leader>vg", function()
-  require("telescope.builtin").files({
+  require("fzf-lua").files({
     cwd = "~/gitrepos",
   })
 end, {
