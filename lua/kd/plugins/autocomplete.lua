@@ -5,9 +5,24 @@ return {
     lazy = false,
     version = false, -- last release is way too old
     dependencies = {
+      -- Snippet Engine & its associated nvim-cmp source
+      {
+        "L3MON4D3/LuaSnip",
+        build = (function()
+          -- Build Step is needed for regex support in snippets
+          -- This step is not supported in many windows environments
+          -- Remove the below condition to re-enable on windows
+          if vim.fn.has("win32") == 1 then
+            return
+          end
+          return "make install_jsregexp"
+        end)(),
+      },
+      "saadparwaiz1/cmp_luasnip",
+      -- Adds LSP completion capabilities
       "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-vsnip",
-      "hrsh7th/vim-vsnip",
+      -- Adds a number of user-friendly snippets
+      "rafamadriz/friendly-snippets",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-nvim-lsp-signature-help",
@@ -46,41 +61,69 @@ return {
         }),
       })
 
+      -- See `:help cmp`
+      local luasnip = require("luasnip")
+      require("luasnip.loaders.from_vscode").lazy_load()
+      luasnip.config.setup({})
+
+      vim.api.nvim_create_autocmd("ModeChanged", {
+        pattern = "*",
+        callback = function()
+          if
+            ((vim.v.event.old_mode == "s" and vim.v.event.new_mode == "n") or vim.v.event.old_mode == "i")
+            and require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
+            and not require("luasnip").session.jump_active
+          then
+            require("luasnip").unlink_current()
+          end
+        end,
+      })
+
+      -- luasnip.config.set_config({
+      --   region_check_events = "InsertEnter",
+      --   delete_check_events = "TextChanged,InsertLeave",
+      -- })
+
       return {
         preselect = cmp.PreselectMode.None,
         snippet = {
           expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body)
+            luasnip.lsp_expand(args.body)
           end,
         },
         mapping = cmp.mapping.preset.insert({
-          ["<C-j>"] = cmp.mapping.select_next_item(),
-          ["<C-k>"] = cmp.mapping.select_prev_item(),
-          ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-          ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
           ["<C-b>"] = cmp.mapping.scroll_docs(-4),
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-Space>"] = cmp.mapping.complete(),
-          ["<C-e>"] = cmp.mapping.abort(),
-          ["<CR>"] = cmp.mapping.confirm({
-            select = false,
+          ["<C-x>"] = cmp.mapping.abort(),
+          ["<C-e>"] = cmp.mapping.close(),
+          ["<CR>"] = cmp.mapping({
+            i = function(fallback)
+              if cmp.visible() and cmp.get_active_entry() then
+                cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+              else
+                fallback()
+              end
+            end,
+            s = cmp.mapping.confirm({ select = false }),
           }),
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
-            elseif vim.fn["vsnip#available"](1) == 1 then
-              require("kd.utils").feedkeys("<Plug>(vsnip-expand-or-jump)", "")
+            elseif luasnip.expand_or_locally_jumpable() then
+              luasnip.expand_or_jump()
             elseif require("kd.utils").has_words_before() then
               cmp.complete()
             else
               fallback()
             end
           end, { "i", "s" }),
+
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
-              cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
-            elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-              require("kd.utils").feedkeys("<Plug>(vsnip-jump-prev)", "")
+              cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+              luasnip.jump(-1)
             else
               fallback()
             end

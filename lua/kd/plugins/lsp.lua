@@ -235,7 +235,9 @@ return {
       {
         "robitx/gp.nvim",
         config = function()
-          require("gp").setup()
+          require("gp").setup({
+            chat_conceal_model_params = false,
+          })
         end,
       },
       {

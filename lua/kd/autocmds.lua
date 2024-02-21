@@ -78,18 +78,19 @@ augroup("KDAutocmds", function()
   autocmd({ "InsertLeave", "WinEnter" }, "set cursorline")
   autocmd({ "InsertEnter", "WinLeave" }, "set nocursorline")
 
-  -- -- LuaSnip Snippet History Fix
-  -- autocmd("ModeChanged", function()
-  --   if
-  --     ((vim.v.event.old_mode == "s" and vim.v.event.new_mode == "n") or vim.v.event.old_mode == "i")
-  --     and require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
-  --     and not require("luasnip").session.jump_active
-  --   then
-  --     require("luasnip").unlink_current()
-  --   end
-  -- end)
-  --
-  autocmd("FileType", "lua vim.opt.conceallevel = 0", { pattern = { "help" } })
+  vim.api.nvim_create_autocmd("BufEnter", {
+    pattern = "*",
+    callback = function()
+      vim.wo.conceallevel = 0
+    end,
+  })
+
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = "*",
+    callback = function()
+      vim.wo.conceallevel = 0
+    end,
+  })
 
   autocmd("CursorHold", function()
     vim.diagnostic.open_float(nil, {
