@@ -144,7 +144,7 @@ augroup("KDAutocmds", function()
       end
     end
     if not should_skip then
-      require("telescope.builtin").find_files()
+      require("fzf-lua").files({})
     end
   end, {
     desc = "Start fuzzy file search when vim is opened with no arguments",
