@@ -122,15 +122,6 @@ augroup("KDAutocmds", function()
     pattern = "NvimTree_*",
   })
 
-  autocmd("BufEnter", function()
-    local stats = vim.loop.fs_stat(vim.api.nvim_buf_get_name(0))
-    if stats and stats.type == "directory" then
-      require("neo-tree")
-    end
-  end, {
-    desc = "Open Neo-Tree on startup with directory",
-  })
-
   autocmd("VimEnter", function()
     local should_skip = false
     if vim.fn.argc() > 0 or vim.fn.line2byte(vim.fn.line("$")) ~= -1 or not vim.o.modifiable then
@@ -151,12 +142,17 @@ augroup("KDAutocmds", function()
   })
 
   autocmd("TermOpen", "setlocal listchars= nonumber norelativenumber nocursorline")
-  autocmd({ "WinEnter", "BufWinEnter", "TermOpen" }, function(args)
-    if vim.startswith(vim.api.nvim_buf_get_name(args.buf), "term://") then
-      vim.opt_local.wrap = true
-      vim.opt_local.spell = false
-    end
-  end)
+
+  vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter", "BufWinEnter", "WinEnter" }, {
+    pattern = { "*" },
+    callback = function()
+      if vim.opt.buftype:get() == "terminal" then
+        vim.opt_local.wrap = true
+        vim.opt_local.spell = false
+        vim.cmd(":startinsert")
+      end
+    end,
+  })
 
   autocmd("TermClose", function()
     if package.loaded["neo-tree.sources.git_status"] then
