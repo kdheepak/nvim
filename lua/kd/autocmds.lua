@@ -122,37 +122,16 @@ augroup("KDAutocmds", function()
     pattern = "NvimTree_*",
   })
 
-  autocmd("VimEnter", function()
-    local should_skip = false
-    if vim.fn.argc() > 0 or vim.fn.line2byte(vim.fn.line("$")) ~= -1 or not vim.o.modifiable then
-      should_skip = true
-    else
-      for _, arg in pairs(vim.v.argv) do
-        if arg == "-b" or arg == "-c" or vim.startswith(arg, "+") or arg == "-S" then
-          should_skip = true
-          break
-        end
-      end
-    end
-    if not should_skip then
-      require("fzf-lua").files({})
-    end
-  end, {
-    desc = "Start fuzzy file search when vim is opened with no arguments",
-  })
-
   autocmd("TermOpen", "setlocal listchars= nonumber norelativenumber nocursorline")
 
-  vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter", "BufWinEnter", "WinEnter" }, {
-    pattern = { "*" },
-    callback = function()
-      if vim.opt.buftype:get() == "terminal" then
-        vim.opt_local.wrap = true
-        vim.opt_local.spell = false
-        vim.cmd(":startinsert")
-      end
-    end,
-  })
+  autocmd({ "TermOpen", "BufEnter", "BufWinEnter", "WinEnter" }, function()
+    if vim.opt.buftype:get() == "terminal" then
+      vim.opt_local.wrap = true
+      vim.opt_local.spell = false
+      vim.opt_local.signcolumn = "no"
+      vim.cmd(":startinsert")
+    end
+  end)
 
   autocmd("TermClose", function()
     if package.loaded["neo-tree.sources.git_status"] then
