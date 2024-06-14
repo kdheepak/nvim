@@ -18,7 +18,7 @@ require("lazy").setup({
   spec = { { import = "kd/plugins" } },
   install = {
     -- try to load one of these colorschemes when starting an installation during startup
-    colorscheme = { "catppuccin" },
+    colorscheme = { "rose-pine" },
   },
   change_detection = {
     -- automatically check for config file changes and reload the ui
