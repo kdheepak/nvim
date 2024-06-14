@@ -141,6 +141,13 @@ augroup("KDAutocmds", function()
     pattern = "*lazygit",
     desc = "Refresh Neo-Tree git when closing lazygit",
   })
+
+  vim.api.nvim_create_autocmd("BufWritePost", {
+    pattern = { "cargo.toml" },
+    callback = function()
+      vim.cmd("LspRestart")
+    end,
+  })
 end)
 
 -- Autocommands to change "commentstring" for specific filetypes. TODO: Create lua version.
