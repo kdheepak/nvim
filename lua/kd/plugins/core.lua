@@ -73,14 +73,32 @@ return {
         open_new_terminal(direction)
       end
 
-      nnoremap("<leader>/", function()
-        toggle_or_open_new_terminal("horizontal")
-      end, { desc = "Split terminal horizontally" })
-      nnoremap("<leader>\\", function()
-        toggle_or_open_new_terminal("vertical")
-      end, { desc = "Split terminal vertically" })
+      local zellij_new_vertical = function()
+        local cmd = "zellij action new-pane -d right"
+        vim.fn.system(cmd)
+      end
 
-      nnoremap("<Leader>tt", "<cmd>ToggleTerm<CR>", { desc = "Toggle terminal" })
+      local zellij_new_horizontal = function()
+        local cmd = "zellij action new-pane -d down"
+        vim.fn.system(cmd)
+      end
+
+      local zellij_new_floating = function()
+        local cmd = "zellij action new-pane -f"
+        vim.fn.system(cmd)
+      end
+
+      nnoremap("<leader>/", zellij_new_horizontal, { desc = "Split terminal horizontally" })
+      nnoremap("<leader>\\", zellij_new_vertical, { desc = "Split terminal vertically" })
+
+      -- nnoremap("<leader>/", function()
+      --   toggle_or_open_new_terminal("horizontal")
+      -- end, { desc = "Split terminal horizontally" })
+      -- nnoremap("<leader>\\", function()
+      --   toggle_or_open_new_terminal("vertical")
+      -- end, { desc = "Split terminal vertically" })
+
+      nnoremap("<Leader>tt", zellij_new_floating, { desc = "Toggle terminal" })
 
       tnoremap("<ESC><ESC>", "<C-\\><C-n>", { desc = "ESC to normal mode" })
       tnoremap("<S-Space>", "<Space>")
@@ -190,5 +208,23 @@ return {
       "nvim-treesitter/nvim-treesitter",
       "MunifTanjim/nui.nvim",
     },
+  },
+  {
+    "https://git.sr.ht/~swaits/zellij-nav.nvim",
+    lazy = true,
+    event = "VeryLazy",
+    keys = {
+      { "<c-h>", "<cmd>ZellijNavigateLeft<cr>", { silent = true, desc = "navigate left" } },
+      { "<c-j>", "<cmd>ZellijNavigateDown<cr>", { silent = true, desc = "navigate down" } },
+      { "<c-k>", "<cmd>ZellijNavigateUp<cr>", { silent = true, desc = "navigate up" } },
+      { "<c-l>", "<cmd>ZellijNavigateRight<cr>", { silent = true, desc = "navigate right" } },
+    },
+    opts = {},
+  },
+  {
+    "hiasr/vim-zellij-navigator.nvim",
+    config = function()
+      require("vim-zellij-navigator").setup()
+    end,
   },
 }
