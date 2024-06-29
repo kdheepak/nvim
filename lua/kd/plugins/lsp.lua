@@ -6,7 +6,7 @@ return {
     dependencies = {
       { "simrat39/rust-tools.nvim" },
       {
-        "simrat39/symbols-outline.nvim",
+        "hedyhli/outline.nvim",
         cmd = "SymbolsOutline",
         opts = {
           highlight_hovered_item = true,
