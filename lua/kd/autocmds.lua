@@ -8,7 +8,7 @@ augroup("KDAutocmds", function()
   -- Enable spell checking for certain file types
   autocmd({ "BufRead", "BufNewFile" }, function()
     vim.opt.spell = true
-    vim.opt.spelllang = "en,fr"
+    vim.opt.spelllang = "en"
   end, { pattern = { "*.txt", "*.md", "*.qmd", "*.tex" } })
 
   autocmd("FileType", "setlocal spell", { pattern = "gitcommit" })
