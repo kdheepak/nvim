@@ -335,18 +335,20 @@ M.icons = {
     xz = { icon = "", name = "Xz" },
     zip = { icon = "", name = "Zip" },
   },
-  diagnostic_signs = {
-    { name = "DiagnosticSignError", text = " " },
-    { name = "DiagnosticSignWarn", text = " " },
-    { name = "DiagnosticSignInfo", text = " " },
-    { name = "DiagnosticSignHint", text = " " },
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = " ",
+      [vim.diagnostic.severity.WARN] = " ",
+      [vim.diagnostic.severity.INFO] = " ",
+      [vim.diagnostic.severity.HINT] = " ",
+    },
   },
   dap = {
-    Stopped = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
-    Breakpoint = " ",
-    BreakpointCondition = " ",
-    BreakpointRejected = { " ", "DiagnosticError" },
-    LogPoint = ".>",
+    { name = "DapBreakpoint", text = "" },
+    { name = "DapBreakpointCondition", text = "" },
+    { name = "DapBreakpointRejected", text = "" },
+    { name = "DapLogPoint", text = ".>" },
+    { name = "DapStopped", text = "󰁕" },
   },
   diagnostics = {
     Error = " ", -- U+EA87

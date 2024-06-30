@@ -33,6 +33,14 @@ return {
   { "tpope/vim-eunuch", event = "VeryLazy" }, -- vim sugar for UNIX shell commands like :Rename
   { "tpope/vim-sleuth", event = "VeryLazy" }, -- This plugin automatically adjusts 'shiftwidth' and 'expandtab' heuristically based on the current file
   { "tpope/vim-dadbod" }, -- Database interface
+  {
+    "rbong/vim-flog",
+    lazy = true,
+    cmd = { "Flog", "Flogsplit", "Floggit" },
+    dependencies = {
+      "tpope/vim-fugitive",
+    },
+  },
   { "kristijanhusak/vim-dadbod-ui" }, -- UI Database interface
   { "inkarkat/vim-visualrepeat", event = "VeryLazy" }, -- repetition of vim built-in normal mode commands via . for visual mode
   { "Konfekt/vim-CtrlXA", event = "VeryLazy" }, -- Increment and decrement and toggle keywords

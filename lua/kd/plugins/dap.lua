@@ -6,15 +6,20 @@ return {
       "theHamsta/nvim-dap-virtual-text",
       "nvim-neotest/nvim-nio",
       "williamboman/mason.nvim",
+      { dir = "~/gitrepos/nvim-dap-julia" },
     },
     config = function()
+      for _, sign in ipairs(require("kd.utils").icons.dap) do
+        vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
+      end
       local dap = require("dap")
       local ui = require("dapui")
 
       require("dapui").setup()
+      require("nvim-dap-julia").setup()
 
       vim.keymap.set("n", "<space>b", dap.toggle_breakpoint)
-      vim.keymap.set("n", "<space>gb", dap.run_to_cursor)
+      vim.keymap.set("n", "<space>B", dap.run_to_cursor)
 
       -- Eval var under cursor
       vim.keymap.set("n", "<space>?", function()

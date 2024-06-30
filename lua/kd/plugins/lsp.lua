@@ -87,16 +87,11 @@ return {
             ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
           }
 
-          -- Diagnostic signs
-          local diagnostic_signs = require("kd.utils").icons.diagnostic_signs
-          for _, sign in ipairs(diagnostic_signs) do
-            vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
-          end
-
           local diagnostic = {
             virtual_text = false,
             underline = true,
             update_in_insert = false,
+            signs = require("kd.utils").icons.signs,
             severity_sort = true,
             float = {
               focusable = false,
