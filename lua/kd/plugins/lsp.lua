@@ -231,14 +231,14 @@ return {
           })
         end,
       },
-      {
-        "robitx/gp.nvim",
-        config = function()
-          require("gp").setup({
-            chat_conceal_model_params = false,
-          })
-        end,
-      },
+      -- {
+      --   "robitx/gp.nvim",
+      --   config = function()
+      --     require("gp").setup({
+      --       chat_conceal_model_params = false,
+      --     })
+      --   end,
+      -- },
       {
         "stevearc/conform.nvim",
         opts = {},
