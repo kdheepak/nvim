@@ -15,17 +15,18 @@ return {
   },
   { "moll/vim-bbye", event = "VeryLazy" },
   {
-    "kylechui/nvim-surround",
-    version = "*", -- Use for stability; omit to use `main` branch for the latest features
-    event = "VeryLazy",
+    "echasnovski/mini.nvim",
+    version = false,
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
-      require("nvim-surround").setup({
-        -- Configuration here, or leave empty to use defaults
-      })
+      require("mini.ai").setup()
+      require("mini.operators").setup()
+      require("mini.indentscope").setup()
+      require("mini.align").setup()
+      require("mini.bracketed").setup()
     end,
   },
   { "mbbill/undotree", event = "VeryLazy" },
-  { "tpope/vim-unimpaired", event = "VeryLazy" }, -- complementary pairs of mappings
   { "tpope/vim-abolish", event = "VeryLazy" }, -- convert camel to snake
   { "tpope/vim-surround", event = "VeryLazy" }, -- all about surroundings: parentheses, brackets, quotes, XML tags, and more.
   { "tpope/vim-repeat", event = "VeryLazy" }, -- repeat.vim remaps . in a way that plugins can tap into it.
@@ -217,7 +218,6 @@ return {
       "MunifTanjim/nui.nvim",
     },
   },
-  { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
   {
     "xemptuous/sqlua.nvim",
     lazy = true,
