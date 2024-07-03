@@ -7,6 +7,7 @@ return {
       "nvim-neotest/nvim-nio",
       "williamboman/mason.nvim",
       { dir = "~/gitrepos/nvim-dap-julia" },
+      "jbyuki/one-small-step-for-vimkind",
     },
     config = function()
       for _, sign in ipairs(require("kd.utils").icons.dap) do
@@ -32,6 +33,18 @@ return {
       vim.keymap.set("n", "<F4>", dap.step_out)
       vim.keymap.set("n", "<F5>", dap.step_back)
       vim.keymap.set("n", "<F12>", dap.restart)
+
+      dap.configurations.lua = {
+        {
+          type = "nlua",
+          request = "attach",
+          name = "Attach to running Neovim instance",
+        },
+      }
+
+      dap.adapters.nlua = function(callback, config)
+        callback({ type = "server", host = config.host or "127.0.0.1", port = config.port or 8086 })
+      end
 
       dap.listeners.before.attach.dapui_config = function()
         ui.open()

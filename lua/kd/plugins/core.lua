@@ -217,4 +217,13 @@ return {
       "MunifTanjim/nui.nvim",
     },
   },
+  { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
+  {
+    "xemptuous/sqlua.nvim",
+    lazy = true,
+    cmd = "SQLua",
+    config = function()
+      require("sqlua").setup()
+    end,
+  },
 }

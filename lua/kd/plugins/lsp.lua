@@ -164,7 +164,9 @@ return {
               local resource_path = get_quarto_resource_path()
 
               local lua_library_files = vim.api.nvim_get_runtime_file("", true)
-              table.insert(lua_library_files, resource_path .. "/lua-types")
+              if resource_path then
+                table.insert(lua_library_files, resource_path .. "/lua-types")
+              end
               table.insert(lua_library_files, vim.fn.expand("$VIMRUNTIME/lua"))
 
               local runtime_path = vim.split(package.path, ";")
@@ -172,7 +174,9 @@ return {
               table.insert(runtime_path, "lua/?/init.lua")
               table.insert(runtime_path, "?.lua")
               table.insert(runtime_path, "?/init.lua")
-              table.insert(runtime_path, resource_path .. "/lua-plugin/plugin.lua")
+              if resource_path then
+                table.insert(runtime_path, resource_path .. "/lua-plugin/plugin.lua")
+              end
 
               local opts = {
                 settings = {
