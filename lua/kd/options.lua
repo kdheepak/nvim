@@ -19,7 +19,7 @@ vim.o.smarttab = true --  <TAB> in front of line inserts blanks according to shi
 vim.o.showbreak = "↪ " --  string to put at the start of lines that have been wrapped
 vim.o.breakindent = true --  every wrapped line will continue visually indented
 vim.o.linebreak = true --  wrap long lines at a character in breakat
-vim.o.wrap = true --  lines longer than the width of the window will not wrap
+vim.o.wrap = false --  lines longer than the width of the window will not wrap
 
 vim.o.termguicolors = true --  enables 24bit colors
 vim.o.visualbell = false --  don't display visual bell

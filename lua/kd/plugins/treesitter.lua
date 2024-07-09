@@ -30,7 +30,7 @@ return {
       end,
     },
     incremental_selection = { enable = true },
-    indent = { enable = true },
+    -- indent = { enable = true },
     autotag = { enable = true },
     context_commentstring = { enable = true, enable_autocmd = false },
   },
@@ -45,7 +45,7 @@ return {
       auto_install = false,
 
       highlight = { enable = true },
-      indent = { enable = true, disable = { "python" } },
+      -- indent = { enable = true, disable = { "python" } },
       incremental_selection = {
         enable = true,
         keymaps = {
