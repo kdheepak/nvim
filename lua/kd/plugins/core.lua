@@ -73,7 +73,7 @@ return {
   { "Konfekt/vim-CtrlXA", event = "VeryLazy" }, -- Increment and decrement and toggle keywords
   { "dhruvasagar/vim-zoom", event = "VeryLazy" },
   { "godlygeek/tabular", event = "VeryLazy" },
-  { "chrisbra/unicode.vim", event = "VeryLazy" },
+  -- { "chrisbra/unicode.vim", event = "VeryLazy" },
   {
     "kevinhwang91/nvim-bqf",
     ft = "qf",
@@ -234,16 +234,16 @@ return {
   { "jbyuki/nabla.nvim", ft = "markdown" }, -- Take your scentific notes in Neovim.
   { "jbyuki/venn.nvim", event = "VeryLazy" }, -- Draw ASCII diagrams in Neovim.
 
-  {
-    "bennypowers/nvim-regexplainer",
-    config = function()
-      require("regexplainer").setup()
-    end,
-    requires = {
-      "nvim-treesitter/nvim-treesitter",
-      "MunifTanjim/nui.nvim",
-    },
-  },
+  -- {
+  --   "bennypowers/nvim-regexplainer",
+  --   config = function()
+  --     require("regexplainer").setup()
+  --   end,
+  --   requires = {
+  --     "nvim-treesitter/nvim-treesitter",
+  --     "MunifTanjim/nui.nvim",
+  --   },
+  -- },
   {
     "xemptuous/sqlua.nvim",
     lazy = true,
