@@ -20,7 +20,6 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons", "nvim-treesitter/nvim-treesitter-textobjects" },
     config = function()
       require("mini.ai").setup()
-      require("mini.operators").setup()
       require("mini.indentscope").setup()
       require("mini.align").setup()
       require("mini.bracketed").setup()
@@ -53,6 +52,7 @@ return {
       require("mini.surround").setup()
     end,
   },
+  -- https://google.com
   { "mbbill/undotree", event = "VeryLazy" },
   { "tpope/vim-abolish", event = "VeryLazy" }, -- convert camel to snake
   { "tpope/vim-repeat", event = "VeryLazy" }, -- repeat.vim remaps . in a way that plugins can tap into it.
