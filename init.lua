@@ -1,32 +1,17 @@
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.notify("Bootstrapping lazy.nvim...", vim.log.levels.INFO)
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
+---@param plugin string
+local function bootstrap(plugin)
+  local _, _, name = string.find(plugin, [[%S+/(%S+)]])
+  local path = vim.fn.stdpath("data") .. "/lazy/" .. name
+
+  if not vim.loop.fs_stat(path) then
+    vim.print(string.format("Bootstraping '%s' to %s", name, path))
+    vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/" .. plugin, path })
+    vim.cmd([[redraw]])
+  end
+  vim.opt.runtimepath:prepend(path)
 end
 
-local hotpotpath = vim.fn.stdpath("data") .. "/lazy/hotpot.nvim"
-if not vim.loop.fs_stat(hotpotpath) then
-  vim.notify("Bootstrapping hotpot.nvim...", vim.log.levels.INFO)
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "--single-branch",
-    "--branch=v0.12.0",
-    "https://github.com/rktjmp/hotpot.nvim.git",
-    hotpotpath,
-  })
-end
-
--- As per lazy's install instructions, but insert hotpots path at the front
-vim.opt.runtimepath:prepend({ hotpotpath, lazypath })
+bootstrap("folke/lazy.nvim")
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
