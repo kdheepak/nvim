@@ -103,13 +103,35 @@ return {
 
           -- Enable the following language servers
           local ensure_installed = {
+            "bashls",
             "clangd",
-            "pyright",
+            "cmake",
             "jsonls",
+            "lua_ls",
+            "marksman",
+            "pyright",
             "rust_analyzer@nightly",
             "tsserver",
-            "lua_ls",
+            -- "actionlint",
+            -- "black",
+            -- "commitlint",
+            -- "cspell",
+            -- "eslint-lsp",
+            -- "isort",
+            -- "jq",
+            -- "json-lsp",
             -- "julials",
+            -- "markdownlint",
+            -- "prettier",
+            -- "prettierd",
+            -- "proselint",
+            -- "shellcheck",
+            -- "shfmt",
+            -- "stylua",
+            -- "svelte-language-server",
+            -- "tailwindcss-language-server",
+            -- "tree-sitter-cli",
+            -- "yamlfmt",
           }
 
           -- Ensure the servers above are installed
