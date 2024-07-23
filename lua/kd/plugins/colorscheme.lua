@@ -16,6 +16,7 @@ return {
         },
         highlight_groups = {
           Comment = { italic = true },
+          ["@markup.italic"] = { italic = true },
         },
       })
       -- load the colorscheme here
