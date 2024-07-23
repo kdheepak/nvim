@@ -28,53 +28,6 @@ local function edit_or_qf(selected, opts)
   end
 end
 
-require("fzf-lua").setup({
-  fzf_layout = "reverse", -- fzf '--layout='
-  previewers = {
-    bat = {
-      config = vim.fn.expand("~/.config/bat/config"),
-    },
-    builtin = {
-      extensions = {
-        ["png"] = { "catimg", "-w", "80" },
-        ["jpeg"] = { "catimg", "-w", "80" },
-        ["jpg"] = { "catimg", "-w", "80" },
-      },
-    },
-  },
-  files = {
-    actions = {
-      ["default"] = edit_or_qf,
-    },
-  },
-  git = {
-    files = {
-      actions = {
-        ["default"] = edit_or_qf,
-      },
-    },
-  },
-  grep = {
-    rg_opts = "--hidden --column --line-number --sort-files --no-heading --color=always --smart-case -g '!{.git,node_modules}/*'",
-    actions = {
-      ["default"] = edit_or_qf,
-    },
-  },
-  buffers = {
-    actions = {
-      ["default"] = edit_or_qf,
-    },
-  },
-  blines = {
-    actions = {
-      ["default"] = edit_or_qf,
-    },
-  },
-  lsp = {
-    actions = {
-      ["default"] = edit_or_qf,
-    },
-  },
-})
+require("fzf-lua").setup({ "default" })
 
 fzf_lua.register_ui_select()

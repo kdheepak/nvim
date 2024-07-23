@@ -7,8 +7,7 @@ return {
     "ibhagwan/fzf-lua",
     dependencies = { "junegunn/fzf", "vijaymarupudi/nvim-fzf", "nvim-tree/nvim-web-devicons" },
     config = function()
-      local actions = require("fzf-lua.actions")
-      require("fzf-lua").setup({})
+      require("kd.plugins.configs.fzf-lua")
     end,
   },
 }
