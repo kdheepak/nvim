@@ -81,14 +81,14 @@ augroup("KDAutocmds", function()
   vim.api.nvim_create_autocmd("BufEnter", {
     pattern = "*",
     callback = function()
-      vim.wo.conceallevel = 0
+      -- vim.wo.conceallevel = 0
     end,
   })
 
   vim.api.nvim_create_autocmd("FileType", {
     pattern = "*",
     callback = function()
-      vim.wo.conceallevel = 0
+      -- vim.wo.conceallevel = 0
     end,
   })
 

@@ -32,11 +32,6 @@
 
 ((string) @keyword (#match? @keyword "^:"))
 
-([
-  "("
-  ")"
-] @comment (#set! "priority" 105))
-
 ;; {:variable.member something}
 (table_pair
   key: (string) @variable.member)
