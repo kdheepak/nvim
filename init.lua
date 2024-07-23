@@ -12,6 +12,9 @@ local function bootstrap(plugin)
 end
 
 bootstrap("folke/lazy.nvim")
+bootstrap("rktjmp/hotpot.nvim")
+
+require("hotpot")
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
