@@ -270,6 +270,7 @@ return {
               lua = { "stylua" },
               -- Conform will run multiple formatters sequentially
               -- python = { "isort", "black" },
+              fennel = { "fnlfmt" },
               -- Use a sub-list to run only the first available formatter
               javascript = { { "prettierd", "prettier" } },
               -- Use a sub-list to run only the first available formatter
