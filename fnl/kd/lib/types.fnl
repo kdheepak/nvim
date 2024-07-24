@@ -22,5 +22,9 @@
 (fn ->bool [x]
   (if x true false))
 
-{: nil? : str? : num? : bool? : fn? : tbl? : ->str : ->bool}
+(fn begins-with? [chars str]
+  "Return whether str begins with chars."
+  (->bool (str:match (.. "^" chars))))
+
+{: nil? : str? : num? : bool? : fn? : tbl? : ->str : ->bool : begins-with?}
 
