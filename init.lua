@@ -12,25 +12,9 @@ local function bootstrap(plugin)
 end
 
 bootstrap("folke/lazy.nvim")
-bootstrap("rktjmp/hotpot.nvim")
+bootstrap("udayvir-singh/tangerine.nvim")
 
-require("hotpot").setup({
-  provide_require_fennel = true,
-  enable_hotpot_diagnostics = false,
-  compiler = {
-    modules = {
-      correlate = true,
-      env = "_COMPILER",
-      compilerEnv = _G,
-      allowedGlobals = true,
-    },
-    macros = {
-      env = "_COMPILER",
-      compilerEnv = _G,
-      allowedGlobals = true,
-    },
-  },
-})
+require("tangerine").setup({})
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -52,3 +36,4 @@ require("kd.mappings")
 require("kd.highlights")
 require("kd.options")
 require("kd.autocmds")
+require("kd.config")
