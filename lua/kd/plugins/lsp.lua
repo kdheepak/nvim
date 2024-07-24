@@ -202,6 +202,12 @@ return {
 
               local opts = {
                 settings = {
+                  tinymist = {
+                    settings = {
+                      exportPdf = "onType",
+                      outputPath = "$root/target/$dir/$name",
+                    },
+                  },
                   Lua = {
                     runtime = {
                       special = {
