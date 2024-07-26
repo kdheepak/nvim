@@ -103,7 +103,7 @@ return {
 
           -- Enable the following language servers
           local ensure_installed = {
-            "bashls",
+            -- "bashls",
             "clangd",
             "cmake",
             "jsonls",
@@ -279,8 +279,9 @@ return {
               fennel = { "fnlfmt" },
               -- Use a sub-list to run only the first available formatter
               javascript = { { "prettierd", "prettier" } },
-              -- Use a sub-list to run only the first available formatter
               markdown = { { "prettierd", "prettier" } },
+              sh = { "shfmt" },
+              json = { "jq" },
             },
             -- If this is set, Conform will run the formatter on save.
             -- It will pass the table to conform.format().
@@ -297,6 +298,8 @@ return {
               lsp_fallback = true,
             },
           })
+          require("conform").formatters.shfmt =
+            { prepend_args = { "--indent", "4", "--case-indent", "--space-redirects", "--simplify" } }
         end,
       },
 

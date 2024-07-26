@@ -15,6 +15,7 @@ vim.o.shiftround = true
 vim.o.expandtab = true --  Expand tab to spaces
 vim.o.timeoutlen = 500 --  Wait less time for mapped sequences
 vim.o.smarttab = true --  <TAB> in front of line inserts blanks according to shiftwidth
+vim.o.shiftwidth = 4
 
 vim.o.showbreak = "↪ " --  string to put at the start of lines that have been wrapped
 vim.o.breakindent = true --  every wrapped line will continue visually indented
