@@ -1,6 +1,21 @@
 return {
   { "rhaiscript/vim-rhai" },
   {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    dependencies = {
+      { "justinsgithub/wezterm-types", lazy = true },
+      { "Bilal2453/luvit-meta", lazy = true },
+    },
+    opts = {
+      library = {
+        "lazy.nvim",
+        { path = "luvit-meta/library", words = { "vim%.uv" } },
+        { path = "wezterm-types", mods = { "wezterm" } },
+      },
+    },
+  },
+  {
     -- LSP Configuration & Plugins
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -313,9 +328,6 @@ return {
         tag = "legacy",
         dependencies = { "neovim/nvim-lspconfig" },
       },
-
-      -- init.lua and plugin development with full signature help, docs and completion for the nvim lua API.
-      { "folke/neodev.nvim", opts = {} },
 
       -- project local configuration
       { "folke/neoconf.nvim", cmd = "Neoconf" },
