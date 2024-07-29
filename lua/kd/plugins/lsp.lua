@@ -127,6 +127,7 @@ return {
             "pyright",
             "rust_analyzer@nightly",
             "tsserver",
+            "fennel_ls",
             -- "actionlint",
             -- "black",
             -- "commitlint",
@@ -171,6 +172,11 @@ return {
                 capabilities = capabilities,
                 on_attach = on_attach,
                 handlers = handlers,
+              })
+            end,
+            ["fennel_ls"] = function()
+              lspconfig.fennel_ls.setup({
+                init_options = { ["fennel-ls"] = { ["extra-globals"] = "vim" } },
               })
             end,
             ["rust_analyzer"] = function()

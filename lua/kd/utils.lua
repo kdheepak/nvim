@@ -153,30 +153,6 @@ function M.map(mode, lhs, rhs, opts)
   end
 end
 
-local options = {
-  colorcolumn = { scope = "window", type = "string" },
-  concealcursor = { scope = "window", type = "string" },
-  expandtab = { scope = "buffer", type = "boolean" },
-  foldenable = { scope = "window", type = "boolean" },
-  formatprg = { scope = "buffer", type = "string" },
-  iskeyword = { scope = "buffer", type = "list" },
-  list = { scope = "window", type = "boolean" },
-  modifiable = { scope = "buffer", type = "boolean" },
-  omnifunc = { scope = "buffer", type = "string" },
-  readonly = { scope = "buffer", type = "boolean" },
-  shiftwidth = { scope = "buffer", type = "number" },
-  smartindent = { scope = "buffer", type = "boolean" },
-  spell = { scope = "window", type = "boolean" },
-  spellfile = { scope = "buffer", type = "string" },
-  spelllang = { scope = "buffer", type = "string" },
-  statusline = { scope = "window", type = "string" },
-  synmaxcol = { scope = "buffer", type = "number" },
-  tabstop = { scope = "buffer", type = "number" },
-  textwidth = { scope = "buffer", type = "number" },
-  wrap = { scope = "window", type = "boolean" },
-  wrapmargin = { scope = "buffer", type = "number" },
-}
-
 function M.join(tbl, delimiter)
   delimiter = delimiter or ""
   local result = ""
