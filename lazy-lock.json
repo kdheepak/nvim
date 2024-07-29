@@ -26,7 +26,7 @@
   "github-nvim-theme": { "branch": "main", "commit": "b17b727a5a55adab787a54b1b5ffe0d28123d4de" },
   "gitlinker.nvim": { "branch": "master", "commit": "cc59f732f3d043b626c8702cb725c82e54d35c25" },
   "gitsigns.nvim": { "branch": "main", "commit": "f074844b60f9e151970fbcdbeb8a2cd52b6ef25a" },
-  "gp.nvim": { "branch": "main", "commit": "ffefa453ac9d9d54192d2f99649aad13d5556289" },
+  "gp.nvim": { "branch": "main", "commit": "df7eb5bd0f85689eac2ce42f0252157a0fd389f3" },
   "gx-extended.nvim": { "branch": "main", "commit": "e132a827224c2ef242a998733dd5bd5a6d86308c" },
   "hotpot.nvim": { "branch": "master", "commit": "5462d3eb5c191ab380ca911e1e931836d27f6a79" },
   "json5.vim": { "branch": "master", "commit": "29af1618015157caf2ac68813ec37cbf8982a049" },
