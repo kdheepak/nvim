@@ -12,9 +12,6 @@ local function bootstrap(plugin)
 end
 
 bootstrap("folke/lazy.nvim")
-bootstrap("udayvir-singh/tangerine.nvim")
-
-require("tangerine").setup({})
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
