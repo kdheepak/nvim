@@ -300,8 +300,8 @@ return {
               fennel = { "fnlfmt" },
               typst = { "typstyle" },
               -- Use a sub-list to run only the first available formatter
-              javascript = { { "prettierd", "prettier" } },
-              markdown = { { "prettierd", "prettier" } },
+              javascript = { "prettierd" },
+              markdown = { "prettierd" },
               sh = { "shfmt" },
               json = { "jq" },
             },
