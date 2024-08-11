@@ -1,3 +1,6 @@
+vim.api.nvim_create_user_command("GitGraph", function()
+  return require("gitgraph").draw({}, { all = true, max_count = 5000 })
+end, {})
 return {
   "isakbm/gitgraph.nvim",
   ---@type I.GGConfig
