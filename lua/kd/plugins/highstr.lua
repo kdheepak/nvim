@@ -3,6 +3,8 @@ return {
   config = function()
     local vnoremap = require("kd.utils").vnoremap
     local nnoremap = require("kd.utils").nnoremap
+    local wk = require("which-key")
+    wk.add({ { "<leader>h", group = "+highlight" } })
     vnoremap("<leader>h1", ":<c-u>HSHighlight 1<CR>", { desc = "Highlight 1" })
     vnoremap("<leader>h2", ":<c-u>HSHighlight 2<CR>", { desc = "Highlight 2" })
     vnoremap("<leader>h3", ":<c-u>HSHighlight 3<CR>", { desc = "Highlight 3" })

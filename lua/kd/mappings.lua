@@ -141,7 +141,11 @@ nnoremap("<a-tab>", ":tabnext<CR>", { desc = "Jump to next tab", silent = true }
 
 -- nnoremap("<bs>", "<C-^>", { desc = "Jump to alternate buffer", silent = true })
 
-nnoremap("<Leader><Leader>", ":nohlsearch<CR>", { desc = "Clear Highlighting", silent = true })
+nnoremap(
+  "<Leader><Leader>",
+  ":nohlsearch<CR>:<c-u>HSRmHighlight rm_all<CR>",
+  { desc = "Clear Highlighting", silent = true }
+)
 
 vnoremap("<leader>p", "\"+p", { desc = "Paste from clipboard" })
 vnoremap("<leader>P", "\"+P", { desc = "Paste from clipboard (before)" })
