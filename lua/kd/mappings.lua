@@ -1,3 +1,4 @@
+local wk = require("which-key")
 local utils = require("kd.utils")
 local noremap = utils.noremap
 local nnoremap = utils.nnoremap
@@ -152,6 +153,9 @@ nnoremap("<C-w>/", "<cmd>split<CR>", { desc = "Split window horizontally" })
 nnoremap("<C-w>\\", "<cmd>vsplit<CR>", { desc = "Split window vertically" })
 nnoremap("<C-w>z", "<cmd>call zoom#toggle()<CR>", { desc = "Zoom toggle" })
 
+wk.add({
+  { "<leader>w", group = "+windows" },
+})
 nnoremap("<leader>w/", "<cmd>split<CR>", { desc = "Split window horizontally" })
 nnoremap("<leader>w\\", "<cmd>vsplit<CR>", { desc = "Split window vertically" })
 nnoremap("<leader>wz", "<cmd>call zoom#toggle()<CR>", { desc = "Zoom toggle" })
@@ -170,16 +174,22 @@ nnoremap("<leader>wl", "<C-w>l", { desc = "Go to the right window" })
 nnoremap("<leader>wk", "<C-w>k", { desc = "Go to the up window" })
 nnoremap("<leader>wj", "<C-w>j", { desc = "Go to the down window" })
 
--- nnoremap("<leader>q", { desc = "+Format" })
+wk.add({
+  { "<leader>q", group = "+format" },
+})
 nnoremap("<leader>qt", "<cmd>Tabularize<CR>", { desc = "Tabularize" })
 
--- nnoremap("<leader>b", { desc = "+Buffers" })
+wk.add({
+  { "<leader>b", group = "+buffers" },
+})
 nnoremap("<leader>bd", "<cmd>Bdelete<CR>", { desc = "Delete buffer" })
 nnoremap("<leader>bj", "<cmd>TablineBufferNext<CR>", { desc = "Next buffer" })
 nnoremap("<leader>bk", "<cmd>TablineBufferPrevious<CR>", { desc = "Previous buffer" })
 nnoremap("<leader>bw", "<cmd>BufferWipeout<CR>", { desc = "Previous buffer" })
 
--- nnoremap("<leader>g", { desc = "+Git" })
+wk.add({
+  { "<leader>g", group = "+git" },
+})
 nnoremap("<leader>gj", "&diff ? ']c' : '<cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'", { desc = "Next Hunk" })
 nnoremap("<leader>gk", "&diff ? ']c' : '<cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'", { desc = "Prev Hunk" })
 nnoremap("<leader>gb", "<Plug>(git-messenger)", { desc = "Git Messanger Blame" })
@@ -190,14 +200,19 @@ nnoremap("<leader>gr", "<cmd>GRemove<CR>", { desc = "Git Remove" })
 nnoremap("<leader>gC", "<cmd>Git commit<CR>", { desc = "Git commit" })
 nnoremap("<leader>gs", "<cmd>Git<CR>", { desc = "Git Status" })
 nnoremap("<leader>gw", "<cmd>Gwrite<CR>", { desc = "Stage" })
-
--- nnoremap("<leader>gd", { desc = "Diff" })
 nnoremap("<leader>gD", "<cmd>Gdiffsplit<CR>", { desc = "Diff" })
-nnoremap("<leader>gd", "<cmd>DiffviewOpen<CR>", { desc = "Diff ALL" })
+
+wk.add({
+  { "<leader>gd", group = "+git diff" },
+})
+nnoremap("<leader>gdo", "<cmd>DiffviewOpen<CR>", { desc = "Diff ALL" })
+nnoremap("<leader>gdh", "<cmd>DiffviewFileHistory<cr>", { desc = "Repo history" })
 nnoremap("<leader>gdu", ":diffupdate<CR>", { desc = "Diff update" })
 nnoremap("<leader>gdc", [[/\v^[<=>]{7}( .*\|$)<CR>]], { desc = "Show commit markers" })
 
--- nnoremap("<leader>gh", { desc = "Hunk" })
+wk.add({
+  { "<leader>gh", group = "+git hunk" },
+})
 nnoremap("<leader>ghs", "<cmd>lua require\"gitsigns\".stage_hunk()<CR>", { desc = "Stage Hunk" })
 nnoremap("<leader>ghu", "<cmd>lua require\"gitsigns\".undo_stage_hunk()<CR>", { desc = "Undo Stage Hunk" })
 nnoremap("<leader>ghr", "<cmd>lua require\"gitsigns\".reset_hunk()<CR>", { desc = "Reset Hunk" })
@@ -205,7 +220,9 @@ nnoremap("<leader>ghR", "<cmd>lua require\"gitsigns\".reset_buffer()<CR>", { des
 nnoremap("<leader>ghp", "<cmd>lua require\"gitsigns\".preview_hunk()<CR>", { desc = "Preview Hunk" })
 nnoremap("<leader>ghb", "<cmd>lua require\"gitsigns\".blame_line(true)<CR>", { desc = "Blame line" })
 
--- nnoremap("<leader>gf", { desc = "Fuzzy" })
+wk.add({
+  { "<leader>gf", group = "+git fuzzy" },
+})
 nnoremap("<leader>gfs", function()
   require("fzf-lua").git_status({})
 end, { desc = "Git Status" })
@@ -224,18 +241,27 @@ end, {
   desc = "Git Branches",
 })
 
--- nnoremap("<leader>s", { desc = "+Session" })
+wk.add({
+  { "<leader>s", group = "+sessions" },
+})
 nnoremap("<leader>ss", ":SaveSession<CR>", { desc = "Save Session" })
 nnoremap("<leader>sL", ":SearchSession<CR>", { desc = "Search Session" })
 nnoremap("<leader>sl", ":silent! bufdo Bdelete<CR>:silent! RestoreSession<CR>", { desc = "Load Session" })
 
--- nnoremap("<leader>d", { desc = "Debug Adapter" })
--- nnoremap("<leader>ds", { desc = "+Step" })
+wk.add({
+  { "<leader>d", group = "+debug" },
+})
+wk.add({
+  { "<leader>ds", group = "+debug step" },
+})
 nnoremap("<leader>dsu", "<cmd>lua require\"dap\".step_over()<CR>", { desc = "Step Over" })
 nnoremap("<leader>dsi", "<cmd>lua require\"dap\".step_into()<CR>", { desc = "Step Into" })
 nnoremap("<leader>dso", "<cmd>lua require\"dap\".step_out()<CR>", { desc = "Step Out" })
 nnoremap("<leader>dsv", "<cmd>lua require\"dap.ui.variables\".scopes()<CR>", { desc = "Variable Scopes" })
--- nnoremap("<leader>dsb", { desc = "+Breakpoint" })
+
+wk.add({
+  { "<leader>dsb", group = "+debug step breakpoint" },
+})
 nnoremap(
   "<leader>dsbr",
   "<cmd>lua require\"dap\".set_breakpoint(vim.fn.input(\"Breakpoint condition: \"))<CR>",
@@ -249,7 +275,9 @@ nnoremap(
 )
 nnoremap("<leader>dsbt", "<cmd>lua require\"dap\".toggle_breakpoint()<CR>", { desc = "Toggle Breakpoint" })
 
--- nnoremap("<leader>dh", { desc = "+Hover" })
+wk.add({
+  { "<leader>dh", group = "+debug hover" },
+})
 nnoremap("<leader>dhh", "<cmd>lua require\"dap.ui.variables\".hover()<CR>", { desc = "Variable Hover" })
 nnoremap("<leader>dhv", "<cmd>lua require\"dap.ui.variables\".visual_hover()<CR>", { desc = "Variable Visual Hover" })
 nnoremap("<leader>dhu", "<cmd>lua require\"dap.ui.widgets\".hover()<CR>", { desc = "Widget Hover" })
@@ -259,11 +287,15 @@ nnoremap(
   { desc = "Widgets Centered Float Scopes" }
 )
 
--- nnoremap("<leader>dr", { desc = "+REPL" })
+wk.add({
+  { "<leader>dr", group = "+debug repl" },
+})
 nnoremap("<leader>dro", "<cmd>lua require\"dap\".repl.open()<CR>", { desc = "REPL Open" })
 nnoremap("<leader>drl", "<cmd>lua require\"dap\".repl.run_last()<CR>", { desc = "REPL run last" })
 
--- nnoremap("<leader>f", { desc = "+Fuzzy" })
+wk.add({
+  { "<leader>f", group = "+fuzzy" },
+})
 nnoremap("<leader>f.", "<cmd>lua require 'fzf-lua'.resume()<cr>")
 nnoremap("<leader>fr", "<cmd>lua require 'fzf-lua'.registers{}<CR>", {
   desc = "Registers",
@@ -359,7 +391,9 @@ end, {
   desc = "Spell suggest",
 })
 
--- nnoremap("<leader>l", { desc = "+LSP" })
+wk.add({
+  { "<leader>l", group = "+lsp" },
+})
 nnoremap("<leader>lr", function()
   require("fzf-lua").lsp_references({})
 end, { desc = "LSP References" })
@@ -435,9 +469,7 @@ end, { desc = "Workspace List Folders" })
 
 nnoremap("<leader>lG", function()
   require("fzf-lua").lsp_workspace_diagnostics({})
-end, {
-  desc = "Workspace Diagnostics",
-})
+end, { desc = "Workspace Diagnostics" })
 -- nnoremap("<leader>l]", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", { desc = "Next Diagnostic" })
 -- nnoremap("<leader>l[", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", { desc = "Previous Diagnostic" })
 nnoremap("<leader>ll", "<cmd>Trouble<CR>", { desc = "Trouble" })
@@ -447,11 +479,11 @@ nnoremap("<leader>lf", function()
   require("fzf-lua").lsp_finder({})
 end, { desc = "LSP Finder" })
 
--- nnoremap("<leader>lc", { desc = "+Calls" })
+wk.add({ { "<leader>lc", group = "+lsp calls" } })
 nnoremap("<leader>lco", "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>", { desc = "Outgoing calls" })
 nnoremap("<leader>lci", "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", { desc = "Incoming calls" })
 
--- nnoremap("<leader>v", { desc = "+Neovim" })
+wk.add({ { "<leader>v", group = "+neovim" } })
 nnoremap("<leader>vm", "<cmd>TSHighlightCapturesUnderCursor<CR>", { desc = "Show highlights under cursor" })
 nnoremap("<leader>ve", "<cmd>e $MYVIMRC<CR>", { desc = "Open VIMRC" })
 nnoremap("<leader>vs", "<cmd>luafile $MYVIMRC<CR>", { desc = "Source VIMRC" })
@@ -484,13 +516,10 @@ end, {
   silent = true,
 })
 
--- nnoremap("<leader>:w", function()
---   vim.fn.mkdir(vim.fn.expand("%:p:h"), "p")
---   vim.notify("Created " .. vim.fn.expand("%:p:h"))
---   vim.cmd(":w")
--- end, { desc = "Force write after creating folder" })
-
 -- Diagnostic keymaps
+wk.add({
+  { "<leader>d", group = "+diagnostic" },
+})
 map("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
 map("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
 map("n", "<leader>de", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })

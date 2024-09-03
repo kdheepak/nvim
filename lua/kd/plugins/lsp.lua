@@ -22,7 +22,7 @@ return {
       { "simrat39/rust-tools.nvim" },
       {
         "hedyhli/outline.nvim",
-        cmd = "SymbolsOutline",
+        cmd = "Outline",
         opts = {
           highlight_hovered_item = true,
           show_guides = true,
@@ -57,7 +57,7 @@ return {
           symbols = require("kd.utils").icons.document_symbols,
         },
         keys = {
-          { "<Leader>o", "<cmd>SymbolsOutline<CR>", desc = "Symbols Outline" },
+          { "<Leader>lo", "<cmd>Outline<CR>", desc = "LSP Symbols Outline" },
         },
       },
       -- Automatically install LSPs to stdpath for neovim
