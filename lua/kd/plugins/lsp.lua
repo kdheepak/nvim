@@ -167,6 +167,10 @@ return {
 
           require("mason-lspconfig").setup_handlers({
             function(server_name)
+              -- TODO: temporary hack till mason-lspconfig handles ts_ls
+              if server_name == "tsserver" then
+                server_name = "ts_ls"
+              end
               -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
               lspconfig[server_name].setup({
                 capabilities = capabilities,
@@ -300,7 +304,7 @@ return {
               typst = { "typstyle" },
               -- Use a sub-list to run only the first available formatter
               javascript = { "prettierd" },
-              markdown = { "prettierd" },
+              -- markdown = { "prettierd" },
               sh = { "shfmt" },
               json = { "jq" },
             },
