@@ -528,3 +528,5 @@ map("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic mes
 map("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
 map("n", "<leader>de", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
 map("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+
+nnoremap("-", "<cmd>Oil<CR>", { desc = "Open parent directory" })
