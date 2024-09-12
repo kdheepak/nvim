@@ -62,7 +62,7 @@ vim.o.updatetime = 250 -- set lower updatetime so that vim git gutter updates so
 vim.o.switchbuf = vim.o.switchbuf .. ",useopen" --  open buffers in tab
 
 vim.o.shortmess = "filnxtToOfcI" --  Shut off completion and intro messages
-vim.o.scrolloff = 10 --  show 10 lines above and below
+vim.o.scrolloff = 100000 -- always cursor in the middle
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.sessionoptions = vim.o.sessionoptions .. ",globals"
