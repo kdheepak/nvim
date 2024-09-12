@@ -42,6 +42,8 @@ nmap("k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vnoremap("J", ":m '>+1<CR>gv=gv")
 vnoremap("K", ":m '<-2<CR>gv=gv")
 
+nnoremap("<backspace>", "<c-^>")
+
 nnoremap("J", "j")
 nnoremap("K", "k")
 
