@@ -6,7 +6,7 @@ return {
       "theHamsta/nvim-dap-virtual-text",
       "nvim-neotest/nvim-nio",
       "williamboman/mason.nvim",
-      { dir = "~/gitrepos/nvim-dap-julia" },
+      -- { dir = "~/gitrepos/nvim-dap-julia" },
       "jbyuki/one-small-step-for-vimkind",
     },
     config = function()
@@ -17,7 +17,7 @@ return {
       local ui = require("dapui")
 
       require("dapui").setup()
-      require("nvim-dap-julia").setup()
+      -- require("nvim-dap-julia").setup()
 
       -- Eval var under cursor
       vim.keymap.set("n", "<space>?", function()
