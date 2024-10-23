@@ -118,7 +118,7 @@ return {
 
           -- Enable the following language servers
           local ensure_installed = {
-            -- "bashls",
+            "bashls",
             "clangd",
             "cmake",
             "jsonls",
@@ -126,7 +126,15 @@ return {
             "marksman",
             "pyright",
             "rust_analyzer@nightly",
-            "tsserver",
+            "tinymist",
+            "ruff",
+            "bashls",
+            "cmake",
+            "fennel_ls",
+            "jsonls",
+            "ts_ls",
+            -- "typstfmt",
+            -- "tsserver",
             -- "fennel_ls",
             -- "actionlint",
             -- "black",
@@ -162,20 +170,41 @@ return {
           local lspconfig = require("lspconfig")
 
           local function on_attach(client, bufnr)
-            require("lsp-format").on_attach(client, bufnr)
+            -- require("lsp-format").on_attach(client, bufnr)
           end
 
           require("mason-lspconfig").setup_handlers({
             function(server_name)
-              -- TODO: temporary hack till mason-lspconfig handles ts_ls
-              if server_name == "tsserver" then
-                server_name = "ts_ls"
-              end
               -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
               lspconfig[server_name].setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
                 handlers = handlers,
+              })
+            end,
+            ["ruff"] = function()
+              require("lspconfig").ruff.setup({
+                init_options = {
+                  settings = {
+                    fixAll = true,
+                    organizeImports = true,
+                    -- -- Any extra CLI arguments for `ruff` go here.
+                    -- args = {
+                    --   "--config",
+                    --   "~/.config/ruff/ruff.toml",
+                    -- },
+                  },
+                },
+              })
+            end,
+            ["pyright"] = function()
+              require("lspconfig").pyright.setup({
+                settings = {
+                  pyright = {
+                    -- Using Ruff's import organizer
+                    disableOrganizeImports = true,
+                  },
+                },
               })
             end,
             ["fennel_ls"] = function()
@@ -311,23 +340,37 @@ return {
             -- If this is set, Conform will run the formatter on save.
             -- It will pass the table to conform.format().
             -- This can also be a function that returns the table.
-            format_on_save = {
-              -- I recommend these options. See :help conform.format for details.
-              lsp_fallback = true,
-              timeout_ms = 500,
-            },
-            -- If this is set, Conform will run the formatter asynchronously after save.
-            -- It will pass the table to conform.format().
-            -- This can also be a function that returns the table.
-            format_after_save = {
-              lsp_fallback = true,
-            },
+            format_on_save = function(bufnr)
+              -- Disable with a global or buffer-local variable
+              if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+                return
+              end
+              return { timeout_ms = 500, lsp_format = "fallback" }
+            end,
           })
+
+          vim.api.nvim_create_user_command("FormatDisable", function(args)
+            if args.bang then
+              -- FormatDisable! will disable formatting just for this buffer
+              vim.b.disable_autoformat = true
+            else
+              vim.g.disable_autoformat = true
+            end
+          end, {
+            desc = "Disable autoformat-on-save",
+            bang = true,
+          })
+          vim.api.nvim_create_user_command("FormatEnable", function()
+            vim.b.disable_autoformat = false
+            vim.g.disable_autoformat = false
+          end, {
+            desc = "Re-enable autoformat-on-save",
+          })
+
           require("conform").formatters.shfmt =
             { prepend_args = { "--indent", "4", "--case-indent", "--space-redirects", "--simplify" } }
         end,
       },
-
       {
         "j-hui/fidget.nvim",
         event = "BufEnter",
