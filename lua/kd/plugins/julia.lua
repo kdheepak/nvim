@@ -1,6 +1,6 @@
 return {
   {
-    dir = "~/gitrepos/ts-julia-actions",
+    "kdheepak/ts-julia-actions",
     opts = {},
     ft = "julia",
   },
