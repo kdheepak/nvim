@@ -133,8 +133,6 @@ return {
             "fennel_ls",
             "jsonls",
             "ts_ls",
-            -- "typstfmt",
-            -- "tsserver",
             -- "fennel_ls",
             -- "actionlint",
             -- "black",
@@ -310,14 +308,6 @@ return {
               opts["handlers"] = handlers
               lspconfig.jsonls.setup(opts)
             end,
-          })
-        end,
-      },
-      {
-        "robitx/gp.nvim",
-        config = function()
-          require("gp").setup({
-            chat_conceal_model_params = false,
           })
         end,
       },
