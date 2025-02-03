@@ -183,13 +183,14 @@ return {
         end, { "i", "s" }),
       }),
       sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "nvim_lsp_signature_help" },
-        { name = "treesitter" },
-        { name = "vsnip" },
-        { name = "buffer" },
-        { name = "path" },
-        { name = "git" },
+        { name = "copilot", group_index = 2 },
+        { name = "nvim_lsp", group_index = 2 },
+        { name = "nvim_lsp_signature_help", group_index = 2 },
+        { name = "treesitter", group_index = 2 },
+        { name = "buffer", group_index = 2 },
+        { name = "vsnip", group_index = 3 },
+        { name = "path", group_index = 3 },
+        { name = "git", group_index = 3 },
       }),
       formatting = {
         format = function(entry, item)

@@ -1,9 +1,13 @@
 return {
   {
-    "zbirenbaum/copilot.lua",
-    config = function()
-      require("copilot").setup({})
-    end,
+    {
+      "zbirenbaum/copilot.lua",
+      cmd = "Copilot",
+      opts = {
+        panel = { enabled = false },
+        suggestion = { enabled = false },
+      },
+    },
   },
   {
     "yetone/avante.nvim",
@@ -28,6 +32,7 @@ return {
           auto_set_keymaps = true,
           auto_apply_diff_after_generation = false,
           support_paste_from_clipboard = false,
+          minimize_diff = true,
         },
       })
     end,
