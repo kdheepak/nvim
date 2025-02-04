@@ -156,9 +156,17 @@ return {
       mapping = cmp.mapping.preset.insert({
         ["<C-b>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-x>"] = cmp.mapping.abort(),
         ["<C-e>"] = cmp.mapping.close(),
+        ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
+        ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
+        ["<C-n>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
+        ["<C-m>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
+        ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+        ["<C-c>"] = cmp.mapping({
+          i = cmp.mapping.abort(),
+          c = cmp.mapping.close(),
+        }),
         ["<CR>"] = cmp.mapping({
           i = function(fallback)
             if cmp.visible() and cmp.get_active_entry() then
@@ -169,35 +177,37 @@ return {
           end,
           s = cmp.mapping.confirm({ select = false }),
         }),
-        ["<Tab>"] = vim.schedule_wrap(function(fallback)
+        ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() and require("kd.utils").has_words_before() then
             cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+          elseif luasnip.jumpable(1) then
+            luasnip.jump(1)
+          elseif luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+          elseif luasnip.expandable() then
+            luasnip.expand()
+          elseif require("kd.utils").check_backspace() then
+            -- cmp.complete()
+            fallback()
           else
             fallback()
           end
-        end),
-
-        -- ["<Tab>"] = cmp.mapping(function(fallback)
-        --   if cmp.visible() then
-        --     cmp.select_next_item()
-        --   elseif luasnip.expand_or_locally_jumpable() then
-        --     luasnip.expand_or_jump()
-        --   elseif require("kd.utils").has_words_before() then
-        --     cmp.complete()
-        --   else
-        --     fallback()
-        --   end
-        -- end, { "i", "s" }),
-
+        end, {
+          "i",
+          "s",
+        }),
         ["<S-Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
-            cmp.select_prev_item()
+            cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
           elseif luasnip.jumpable(-1) then
             luasnip.jump(-1)
           else
             fallback()
           end
-        end, { "i", "s" }),
+        end, {
+          "i",
+          "s",
+        }),
       }),
       sources = cmp.config.sources({
         { name = "buffer", group_index = 2 },
