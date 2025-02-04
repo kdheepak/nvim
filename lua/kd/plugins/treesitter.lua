@@ -49,12 +49,12 @@ return {
         lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
         keymaps = {
           -- You can use the capture groups defined in textobjects.scm
-          ["aa"] = "@parameter.outer",
-          ["ia"] = "@parameter.inner",
-          ["af"] = "@function.outer",
-          ["if"] = "@function.inner",
-          ["ac"] = "@class.outer",
-          ["ic"] = "@class.inner",
+          ["taa"] = "@parameter.outer",
+          ["tia"] = "@parameter.inner",
+          ["taf"] = "@function.outer",
+          ["tif"] = "@function.inner",
+          ["tac"] = "@class.outer",
+          ["tic"] = "@class.inner",
         },
       },
       move = {
@@ -80,10 +80,10 @@ return {
       swap = {
         enable = true,
         swap_next = {
-          ["<leader>a"] = "@parameter.inner",
+          ["<leader>tsa"] = "@parameter.inner",
         },
         swap_previous = {
-          ["<leader>A"] = "@parameter.inner",
+          ["<leader>tsA"] = "@parameter.inner",
         },
       },
     },

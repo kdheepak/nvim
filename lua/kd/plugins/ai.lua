@@ -54,11 +54,15 @@ return {
     end,
     keys = {
       {
+        "<leader>a",
+        group = "+Avante",
+      },
+      {
         "<leader>aa",
         function()
           require("avante.api").ask()
         end,
-        desc = "avante: ask",
+        desc = "Avante: ask a question",
         mode = { "n", "v" },
       },
       {
@@ -66,7 +70,7 @@ return {
         function()
           require("avante.api").edit()
         end,
-        desc = "avante: edit",
+        desc = "avante: edit selected text",
         mode = "v",
       },
       {
@@ -78,6 +82,16 @@ return {
         end,
         mode = { "n", "v" },
         desc = "Grammar Correction",
+      },
+      {
+        "<leader>app",
+        function()
+          require("avante.api").ask({
+            question = "Generate a concise and meaningful git commit message for the following changes",
+          })
+        end,
+        mode = { "n" },
+        desc = "Automate Git Commit",
       },
       {
         "<leader>apm",
