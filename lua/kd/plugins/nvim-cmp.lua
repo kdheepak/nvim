@@ -130,12 +130,21 @@ return {
 
     return {
       sorting = {
+        priority_weight = 2,
         comparators = {
-          compare.exact,
-          compare.score,
-          comparators.inherent_import_inscope,
-          comparators.inscope_inherent_import,
-          comparators.sort_by_label_but_underscore_last,
+          -- Give Copilot priority and then use the default comparators
+          require("copilot_cmp.comparators").prioritize,
+
+          cmp.config.compare.offset,
+          cmp.config.compare.exact,
+          -- cmp.config.compare.scopes,
+          cmp.config.compare.score,
+          cmp.config.compare.recently_used,
+          cmp.config.compare.locality,
+          cmp.config.compare.kind,
+          -- cmp.config.compare.sort_text,
+          cmp.config.compare.length,
+          cmp.config.compare.order,
         },
       },
       preselect = cmp.PreselectMode.None,
