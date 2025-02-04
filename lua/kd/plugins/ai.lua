@@ -1,3 +1,67 @@
+local prompt = {
+  grammar_correction = "Correct the text to standard English, but keep any code blocks inside intact.",
+  code_readability_analysis = [[
+  You must identify any readability issues in the code snippet.
+  Some readability issues to consider:
+  - Unclear naming
+  - Unclear purpose
+  - Redundant or obvious comments
+  - Lack of comments
+  - Long or complex one liners
+  - Too much nesting
+  - Long variable names
+  - Inconsistent naming and code style.
+  - Code repetition
+  You may identify additional problems. The user submits a small section of code from a larger file.
+  Only list lines with readability issues, in the format <line_num>|<issue and proposed solution>
+  If there's no issues with code respond with only: <OK>
+]],
+  optimize_code = "Optimize the following code",
+  summarize = "Summarize the following text",
+  translate = "Translate this into French, but keep any code blocks inside intact",
+  explain_code = "Explain the following code",
+  complete_code = function()
+    return "Complete the following codes written in " .. vim.bo.filetype
+  end,
+  add_docstring = "Add docstring to the following codes",
+  fix_bugs = "Fix the bugs inside the following codes if any",
+  add_tests = "Implement tests for the following code",
+  extract_keywords = "Extract the main keywords from the following text",
+  diagnostics = "Fix the diagnostics inside the following code if any @diagnostics",
+  git_diff = function()
+    local commit_prompt = [[
+    Write commit message with commitizen convention based on the following diff.
+
+    ```
+    ]] .. vim.fn.system("git diff") .. [[
+    ```
+
+    Write clear, informative commit messages that explain the 'what' and 'why' behind changes, not just the 'how'.
+    ]]
+    return commit_prompt
+  end,
+}
+
+local function ask(question)
+  return function()
+    question = vim.is_callable(question) and question() or question
+    require("avante.api").ask({ question = question })
+  end
+end
+
+-- prefill edit window with common scenarios to avoid repeating query and submit immediately
+local function edit_submit(question)
+  return function()
+    question = vim.is_callable(question) and question() or question
+    require("avante.api").edit()
+    vim.api.nvim_buf_set_lines(vim.api.nvim_get_current_buf(), 0, -1, false, { question })
+    -- optionally set the cursor position to the end of the input
+    vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { 1, #question + 1 })
+    -- simulate ctrl+s keypress to submit
+    vim.api.nvim_feedkeys(vim.keycode("<C-s>"), "m", false)
+  end
+end
+
 return {
   {
     "zbirenbaum/copilot.lua",
@@ -30,6 +94,7 @@ return {
     cmd = "AvanteAsk",
     build = "make",
     config = function()
+      require("avante_lib").load()
       require("avante").setup({
         provider = "copilot",
         vendors = {
@@ -62,141 +127,113 @@ return {
         function()
           require("avante.api").ask()
         end,
-        desc = "Avante: ask a question",
+        desc = "Avante: Ask",
         mode = { "n", "v" },
       },
+      { "<leader>av", "", desc = "+avante", mode = { "n", "v" } },
       {
         "<leader>ae",
         function()
           require("avante.api").edit()
         end,
-        desc = "avante: edit selected text",
+        desc = "Avante: Edit",
         mode = "v",
       },
       {
-        "<leader>apg",
+        "<leader>ar",
         function()
-          require("avante.api").ask({
-            question = "Correct the text to standard English, but keep any code blocks inside intact.",
-          })
+          require("avante.api").refresh()
         end,
+        desc = "Avante: Refresh",
+      },
+      { "<leader>av", "", desc = "+avante", mode = { "n", "v" } },
+      {
+        "<leader>avi",
+        ask(prompt.grammar_correction),
+        desc = "Grammar Correction (Ask)",
         mode = { "n", "v" },
-        desc = "Grammar Correction",
       },
       {
-        "<leader>app",
-        function()
-          require("avante.api").ask({
-            question = "Generate a concise and meaningful git commit message for the following changes",
-          })
-        end,
-        mode = { "n" },
-        desc = "Automate Git Commit",
+        "<leader>avr",
+        ask(prompt.code_readability_analysis),
+        desc = "Code Readability Analysis (Ask)",
+        mode = { "n", "v" },
       },
       {
-        "<leader>apm",
-        function()
-          require("avante.api").ask({ question = "Extract the main keywords from the following text" })
-        end,
+        "<leader>avo",
+        ask(prompt.optimize_code),
+        desc = "Optimize Code (Ask)",
         mode = { "n", "v" },
-        desc = "Extract Main Keywords",
+      },
+      { "<leader>avO", edit_submit(prompt.optimize_code), desc = "Optimize Code (Edit)", mode = "v" },
+      {
+        "<leader>avs",
+        ask(prompt.summarize),
+        desc = "Summarize text (Ask)",
+        mode = { "n", "v" },
       },
       {
-        "<leader>apr",
-        function()
-          require("avante.api").ask({
-            question = [[
-    You must identify any readability issues in the code snippet.
-    Some readability issues to consider:
-    - Unclear naming
-    - Unclear purpose
-    - Redundant or obvious comments
-    - Lack of comments
-    - Long or complex one liners
-    - Too much nesting
-    - Long variable names
-    - Inconsistent naming and code style.
-    - Code repetition
-    You may identify additional problems. The user submits a small section of code from a larger file.
-    Only list lines with readability issues, in the format <line_num>|<issue and proposed solution>
-    If there's no issues with code respond with only: <OK>
-  ]],
-          })
-        end,
+        "<leader>avt",
+        ask(prompt.translate),
+        desc = "Translate text (Ask)",
         mode = { "n", "v" },
-        desc = "Code Readability Analysis",
       },
       {
-        "<leader>apo",
-        function()
-          require("avante.api").ask({ question = "Optimize the following code" })
-        end,
+        "<leader>ave",
+        ask(prompt.explain_code),
+        desc = "Explain Code (Ask)",
         mode = { "n", "v" },
-        desc = "Optimize Code",
       },
       {
-        "<leader>aps",
-        function()
-          require("avante.api").ask({ question = "Summarize the following text" })
-        end,
+        "<leader>avc",
+        ask(prompt.complete_code),
+        desc = "Complete Code (Ask)",
         mode = { "n", "v" },
-        desc = "Summarize text",
       },
       {
-        "<leader>apt",
-        function()
-          require("avante.api").ask({ question = "Translate this into French, but keep any code blocks inside intact" })
-        end,
+        "<leader>avd",
+        ask(prompt.add_docstring),
+        desc = "Docstring (Ask)",
         mode = { "n", "v" },
-        desc = "Translate text",
+      },
+      { "<leader>avD", edit_submit(prompt.add_docstring), desc = "Docstring (Edit)", mode = "v" },
+      {
+        "<leader>avf",
+        ask(prompt.fix_bugs),
+        desc = "Fix Bugs (Ask)",
+        mode = { "n", "v" },
+      },
+      { "<leader>avF", edit_submit(prompt.fix_bugs), desc = "Fix Bugs (Edit)", mode = "v" },
+      {
+        "<leader>avu",
+        ask(prompt.add_tests),
+        desc = "Add Tests (Ask)",
+        mode = { "n", "v" },
+      },
+      { "<leader>avU", edit_submit(prompt.add_tests), desc = "Add Tests (Edit)", mode = "v" },
+      {
+        "<leader>avm",
+        ask(prompt.extract_keywords),
+        mode = { "n", "v" },
+        desc = "Extract Keywords (Ask)",
       },
       {
-        "<leader>ape",
-        function()
-          require("avante.api").ask({ question = "Explain the following code" })
-        end,
-        mode = { "n", "v" },
-        desc = "Explain Code",
+        "<leader>avM",
+        ask(prompt.extract_keywords),
+        mode = { "v" },
+        desc = "Extract Keywords (Edit)",
       },
       {
-        "<leader>apc",
-        function()
-          require("avante.api").ask({ question = "Complete the following code written in " .. vim.bo.filetype })
-        end,
+        "<leader>avh",
+        ask(prompt.diagnostics),
         mode = { "n", "v" },
-        desc = "Complete Code",
+        desc = "Fix Help Diagnostics",
       },
       {
-        "<leader>apD",
-        function()
-          require("avante.api").ask({ question = "Add docstring to the following code" })
-        end,
+        "<leader>avg",
+        ask(prompt.git_diff),
         mode = { "n", "v" },
-        desc = "Add Docstring",
-      },
-      {
-        "<leader>apd",
-        function()
-          require("avante.api").ask({ question = "Fix the diagnostics inside the following code if any @diagnostics" })
-        end,
-        mode = { "n", "v" },
-        desc = "Fix Diagnostics",
-      },
-      {
-        "<leader>apb",
-        function()
-          require("avante.api").ask({ question = "Fix the bugs inside the following codes if any" })
-        end,
-        mode = { "n", "v" },
-        desc = "Fix Bugs",
-      },
-      {
-        "<leader>apt",
-        function()
-          require("avante.api").ask({ question = "Implement tests for the following code" })
-        end,
-        mode = { "n", "v" },
-        desc = "Add Tests",
+        desc = "Git Commit Message",
       },
     },
     dependencies = {
