@@ -160,17 +160,25 @@ return {
           end,
           s = cmp.mapping.confirm({ select = false }),
         }),
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif luasnip.expand_or_locally_jumpable() then
-            luasnip.expand_or_jump()
-          elseif require("kd.utils").has_words_before() then
-            cmp.complete()
+        ["<Tab>"] = vim.schedule_wrap(function(fallback)
+          if cmp.visible() and require("kd.utils").has_words_before() then
+            cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
           else
             fallback()
           end
-        end, { "i", "s" }),
+        end),
+
+        -- ["<Tab>"] = cmp.mapping(function(fallback)
+        --   if cmp.visible() then
+        --     cmp.select_next_item()
+        --   elseif luasnip.expand_or_locally_jumpable() then
+        --     luasnip.expand_or_jump()
+        --   elseif require("kd.utils").has_words_before() then
+        --     cmp.complete()
+        --   else
+        --     fallback()
+        --   end
+        -- end, { "i", "s" }),
 
         ["<S-Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
@@ -183,14 +191,15 @@ return {
         end, { "i", "s" }),
       }),
       sources = cmp.config.sources({
+        { name = "buffer", group_index = 2 },
         { name = "copilot", group_index = 2 },
+        { name = "luasnip", group_index = 2 },
         { name = "nvim_lsp", group_index = 2 },
         { name = "nvim_lsp_signature_help", group_index = 2 },
+        { name = "path", group_index = 2 },
         { name = "treesitter", group_index = 2 },
-        { name = "buffer", group_index = 2 },
-        { name = "vsnip", group_index = 3 },
-        { name = "path", group_index = 3 },
-        { name = "git", group_index = 3 },
+        { name = "git", group_index = 2 },
+        { name = "vsnip", group_index = 2 },
       }),
       formatting = {
         format = function(entry, item)
