@@ -1,3 +1,12 @@
+local function deprioritize_snippet(entry1, entry2)
+  local types = require("cmp.types")
+  if entry1:get_kind() == types.lsp.CompletionItemKind.Snippet then
+    return false
+  end
+  if entry2:get_kind() == types.lsp.CompletionItemKind.Snippet then
+    return true
+  end
+end
 return {
   "hrsh7th/nvim-cmp",
   lazy = false,
@@ -129,24 +138,6 @@ return {
     local compare = require("cmp").config.compare
 
     return {
-      sorting = {
-        priority_weight = 2,
-        comparators = {
-          -- Give Copilot priority and then use the default comparators
-          require("copilot_cmp.comparators").prioritize,
-
-          cmp.config.compare.offset,
-          cmp.config.compare.exact,
-          -- cmp.config.compare.scopes,
-          cmp.config.compare.score,
-          cmp.config.compare.recently_used,
-          cmp.config.compare.locality,
-          cmp.config.compare.kind,
-          -- cmp.config.compare.sort_text,
-          cmp.config.compare.length,
-          cmp.config.compare.order,
-        },
-      },
       preselect = cmp.PreselectMode.None,
       snippet = {
         expand = function(args)
@@ -230,6 +221,25 @@ return {
           item.menu = cmp_icons[entry.source.name]
           return item
         end,
+      },
+      sorting = {
+        priority_weight = 2,
+        comparators = {
+          deprioritize_snippet,
+          compare.exact,
+          require("copilot_cmp.comparators").prioritize,
+          require("copilot_cmp.comparators").score,
+          compare.offset,
+          compare.scopes,
+          compare.score,
+          compare.recently_used,
+          -- require("clangd_extensions.cmp_scores"),
+          compare.locality,
+          compare.kind,
+          compare.sort_text,
+          compare.length,
+          compare.order,
+        },
       },
     }
   end,
