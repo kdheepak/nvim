@@ -34,7 +34,7 @@ return {
         -- ...
       })
 
-      vim.cmd("colorscheme github_light_colorblind")
+      vim.cmd("colorscheme github_light_tritanopia")
     end,
   },
 }
