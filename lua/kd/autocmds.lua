@@ -33,7 +33,7 @@ augroup("KDAutocmds", function()
   autocmd({ "BufWinEnter", "BufRead", "BufNewFile" }, "setlocal wrap")
 
   autocmd("TextYankPost", function()
-    require("vim.highlight").on_yank({ higroup = "Search", timeout = 500 })
+    vim.highlight.on_yank({ higroup = "Search", timeout = 500 })
   end)
 
   autocmd({ "BufWinEnter", "BufRead", "BufNewFile" }, function()

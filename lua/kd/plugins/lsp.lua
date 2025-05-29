@@ -75,7 +75,7 @@ return {
         },
       },
       {
-        "williamboman/mason-lspconfig.nvim",
+        "mason-org/mason-lspconfig.nvim",
         dependencies = {
           "lukas-reineke/lsp-format.nvim",
           config = function()
@@ -170,7 +170,7 @@ return {
             -- require("lsp-format").on_attach(client, bufnr)
           end
 
-          require("mason-lspconfig").setup_handlers({
+          require("mason-lspconfig").setup({
             function(server_name)
               -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
               lspconfig[server_name].setup({
