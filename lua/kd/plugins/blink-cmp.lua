@@ -36,7 +36,7 @@ return {
       },
       documentation = { window = { border = "single" } },
     },
-    signature = { window = { border = "single" } },
+    signature = { enabled = true, window = { border = "single" } },
 
     -- 'default' for mappings similar to built-in completion
     -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
