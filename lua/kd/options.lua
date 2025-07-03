@@ -69,6 +69,5 @@ vim.o.sessionoptions = vim.o.sessionoptions .. ",globals"
 vim.o.hidden = true
 vim.o.autoread = true
 vim.opt.laststatus = 3
-vim.g.python3_host_prog = vim.fn.expand("~/miniconda3/bin/python3")
 
 vim.g.markdown_fenced_languages = { "html", "python", "rust", "julia", "vim" }

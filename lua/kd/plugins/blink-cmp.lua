@@ -34,8 +34,9 @@ return {
           },
         },
       },
-      documentation = { window = { border = "single" } },
+      documentation = { auto_show = true, window = { border = "single" } },
     },
+    fuzzy = { implementation = "prefer_rust_with_warning" },
     signature = { enabled = true, window = { border = "single" } },
 
     -- 'default' for mappings similar to built-in completion
