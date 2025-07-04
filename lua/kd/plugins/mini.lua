@@ -1,7 +1,10 @@
 return {
   "echasnovski/mini.nvim",
   version = false,
-  dependencies = { "nvim-tree/nvim-web-devicons", "nvim-treesitter/nvim-treesitter-textobjects" },
+  dependencies = {
+    "nvim-tree/nvim-web-devicons",
+    --"nvim-treesitter/nvim-treesitter-textobjects"
+  },
   config = function()
     require("mini.ai").setup()
     require("mini.indentscope").setup()
