@@ -157,9 +157,6 @@ return {
           }
 
           -- Ensure the servers above are installed
-          require("mason-lspconfig").setup({
-            ensure_installed = ensure_installed,
-          })
 
           local capabilities = vim.lsp.protocol.make_client_capabilities()
           capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
@@ -171,6 +168,8 @@ return {
           end
 
           require("mason-lspconfig").setup({
+            ensure_installed = ensure_installed,
+            automatic_enable = true,
             function(server_name)
               -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
               lspconfig[server_name].setup({
@@ -210,6 +209,23 @@ return {
               })
             end,
             ["rust_analyzer"] = function()
+              lspconfig.rust_analyzer.setup({
+                capabilities = capabilities,
+                on_attach = on_attach,
+                settings = {
+                  ["rust-analyzer"] = {
+                    checkOnSave = {
+                      command = "clippy",
+                    },
+                    ["updates.channel"] = "nightly",
+                    rustfmt = {
+                      extraArgs = { "+nightly" },
+                    },
+                  },
+                },
+              })
+            end,
+            ["rust_analyzer@nightly"] = function()
               lspconfig.rust_analyzer.setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
