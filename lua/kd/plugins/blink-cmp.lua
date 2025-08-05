@@ -1,18 +1,5 @@
 return {
   {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    opts = {
-      suggestion = { enabled = false },
-      panel = { enabled = false },
-      filetypes = {
-        markdown = true,
-        help = true,
-      },
-    },
-  },
-  {
     "saghen/blink.cmp",
     -- optional: provides snippets for the snippet source
     dependencies = { "rafamadriz/friendly-snippets", "fang2hou/blink-copilot" },
