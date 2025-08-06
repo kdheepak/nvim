@@ -1,20 +1,20 @@
 return {
   { "rhaiscript/vim-rhai" },
-  {
-    "folke/lazydev.nvim",
-    ft = "lua",
-    dependencies = {
-      { "justinsgithub/wezterm-types", lazy = true },
-      { "Bilal2453/luvit-meta", lazy = true },
-    },
-    opts = {
-      library = {
-        "lazy.nvim",
-        { path = "luvit-meta/library", words = { "vim%.uv" } },
-        { path = "wezterm-types", mods = { "wezterm" } },
-      },
-    },
-  },
+  -- {
+  --   "folke/lazydev.nvim",
+  --   ft = "lua",
+  --   dependencies = {
+  --     { "justinsgithub/wezterm-types", lazy = true },
+  --     { "Bilal2453/luvit-meta", lazy = true },
+  --   },
+  --   opts = {
+  --     library = {
+  --       "lazy.nvim",
+  --       { path = "luvit-meta/library", words = { "vim%.uv" } },
+  --       { path = "wezterm-types", mods = { "wezterm" } },
+  --     },
+  --   },
+  -- },
   {
     -- LSP Configuration & Plugins
     "neovim/nvim-lspconfig",
@@ -98,8 +98,8 @@ return {
             { "│", "FloatBorder" },
           }
           local handlers = {
-            ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
-            ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
+            ["textDocument/hover"] = vim.lsp.buf.hover({ border = border }),
+            ["textDocument/signatureHelp"] = vim.lsp.buf.signature_help({ border = border }),
           }
 
           local diagnostic = {
@@ -165,6 +165,12 @@ return {
 
           local function on_attach(client, bufnr)
             -- require("lsp-format").on_attach(client, bufnr)
+            vim.keymap.set("n", "[d", function()
+              vim.diagnostic.jump({ count = 1, float = true })
+            end, { buffer = bufnr, desc = "Previous Diagnostic", silent = true })
+            vim.keymap.set("n", "]d", function()
+              vim.diagnostic.jump({ count = -1, float = true })
+            end, { buffer = bufnr, desc = "Next Diagnostic", silent = true })
           end
 
           require("mason-lspconfig").setup({
