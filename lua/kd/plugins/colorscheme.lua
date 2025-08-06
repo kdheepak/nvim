@@ -21,7 +21,6 @@ return {
         styles = {
           bold = true,
           italic = false,
-          transparency = true,
         },
         highlight_groups = {
           Comment = { italic = true },
