@@ -83,7 +83,6 @@ return {
       end,
     },
   },
-
   {
     "akinsho/git-conflict.nvim",
     version = "*",
