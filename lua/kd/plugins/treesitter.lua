@@ -1,115 +1,125 @@
 return {
-  "nvim-treesitter/nvim-treesitter",
-  dependencies = {
-    "windwp/nvim-ts-autotag",
-    -- "nvim-treesitter/nvim-treesitter-textobjects",
-    "nvim-treesitter/playground",
+  {
+    "Wansmer/treesj",
+    keys = { "<space>m", "<space>j", "<space>s" },
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("treesj").setup({})
+    end,
   },
-  cmd = {
-    "TSBufDisable",
-    "TSBufEnable",
-    "TSBufToggle",
-    "TSDisable",
-    "TSEnable",
-    "TSToggle",
-    "TSInstall",
-    "TSInstallInfo",
-    "TSInstallSync",
-    "TSModuleInfo",
-    "TSUninstall",
-    "TSUpdate",
-    "TSUpdateSync",
-  },
-  build = ":TSUpdate",
-  opts = {
-    -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = {
-      "astro",
-      "python",
-      "lua",
-      "julia",
-      "scheme",
-      "markdown",
-      "markdown_inline",
-      "json5",
-      "json",
-      "c",
-      "cpp",
-      "rust",
-      "typescript",
-      "gitcommit",
-      "gitignore",
-      "css",
-      "html",
-      "javascript",
-      "svelte",
-      "bash",
-      "editorconfig",
-      "git_config",
+  {
+    "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      "windwp/nvim-ts-autotag",
+      -- "nvim-treesitter/nvim-treesitter-textobjects",
+      "nvim-treesitter/playground",
     },
-    highlight = {
-      enable = true,
-      disable = function(_, bufnr)
-        return vim.api.nvim_buf_line_count(bufnr) > 10000
-      end,
+    cmd = {
+      "TSBufDisable",
+      "TSBufEnable",
+      "TSBufToggle",
+      "TSDisable",
+      "TSEnable",
+      "TSToggle",
+      "TSInstall",
+      "TSInstallInfo",
+      "TSInstallSync",
+      "TSModuleInfo",
+      "TSUninstall",
+      "TSUpdate",
+      "TSUpdateSync",
     },
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = "<c-space>",
-        node_incremental = "<c-space>",
-        scope_incremental = "<c-s>",
-        node_decremental = "<M-space>",
+    build = ":TSUpdate",
+    opts = {
+      -- Add languages to be installed here that you want installed for treesitter
+      ensure_installed = {
+        "astro",
+        "python",
+        "lua",
+        "julia",
+        "scheme",
+        "markdown",
+        "markdown_inline",
+        "json5",
+        "json",
+        "c",
+        "cpp",
+        "rust",
+        "typescript",
+        "gitcommit",
+        "gitignore",
+        "css",
+        "html",
+        "javascript",
+        "svelte",
+        "bash",
+        "editorconfig",
+        "git_config",
       },
-    },
-    -- indent = { enable = true },
-    autotag = { enable = true },
-    textobjects = {
-      select = {
+      highlight = {
         enable = true,
-        lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+        disable = function(_, bufnr)
+          return vim.api.nvim_buf_line_count(bufnr) > 10000
+        end,
+      },
+      incremental_selection = {
+        enable = true,
         keymaps = {
-          -- You can use the capture groups defined in textobjects.scm
-          ["taa"] = "@parameter.outer",
-          ["tia"] = "@parameter.inner",
-          ["taf"] = "@function.outer",
-          ["tif"] = "@function.inner",
-          ["tac"] = "@class.outer",
-          ["tic"] = "@class.inner",
+          init_selection = "<c-space>",
+          node_incremental = "<c-space>",
+          scope_incremental = "<c-s>",
+          node_decremental = "<M-space>",
         },
       },
-      move = {
-        enable = true,
-        set_jumps = true, -- whether to set jumps in the jumplist
-        goto_next_start = {
-          ["]m"] = "@function.outer",
-          ["]]"] = "@class.outer",
+      -- indent = { enable = true },
+      autotag = { enable = true },
+      textobjects = {
+        select = {
+          enable = true,
+          lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+          keymaps = {
+            -- You can use the capture groups defined in textobjects.scm
+            ["taa"] = "@parameter.outer",
+            ["tia"] = "@parameter.inner",
+            ["taf"] = "@function.outer",
+            ["tif"] = "@function.inner",
+            ["tac"] = "@class.outer",
+            ["tic"] = "@class.inner",
+          },
         },
-        goto_next_end = {
-          ["]M"] = "@function.outer",
-          ["]["] = "@class.outer",
+        move = {
+          enable = true,
+          set_jumps = true, -- whether to set jumps in the jumplist
+          goto_next_start = {
+            ["]m"] = "@function.outer",
+            ["]]"] = "@class.outer",
+          },
+          goto_next_end = {
+            ["]M"] = "@function.outer",
+            ["]["] = "@class.outer",
+          },
+          goto_previous_start = {
+            ["[m"] = "@function.outer",
+            ["[["] = "@class.outer",
+          },
+          goto_previous_end = {
+            ["[M"] = "@function.outer",
+            ["[]"] = "@class.outer",
+          },
         },
-        goto_previous_start = {
-          ["[m"] = "@function.outer",
-          ["[["] = "@class.outer",
-        },
-        goto_previous_end = {
-          ["[M"] = "@function.outer",
-          ["[]"] = "@class.outer",
-        },
-      },
-      swap = {
-        enable = true,
-        swap_next = {
-          ["<leader>tsa"] = "@parameter.inner",
-        },
-        swap_previous = {
-          ["<leader>tsA"] = "@parameter.inner",
+        swap = {
+          enable = true,
+          swap_next = {
+            ["<leader>tsa"] = "@parameter.inner",
+          },
+          swap_previous = {
+            ["<leader>tsA"] = "@parameter.inner",
+          },
         },
       },
     },
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+    end,
   },
-  config = function(_, opts)
-    require("nvim-treesitter.configs").setup(opts)
-  end,
 }
