@@ -25,6 +25,7 @@
   "gx-extended.nvim": { "branch": "main", "commit": "c1e92db2477f61104c23e23a4e0ff9b07a108d71" },
   "hotpot.nvim": { "branch": "main", "commit": "443fe563423c0fc2fdb1c4fa92c3ab3ad5de8ae1" },
   "hunk.nvim": { "branch": "master", "commit": "1e0a4d719c780bb8b0690a54915601508ced321e" },
+  "img-clip.nvim": { "branch": "main", "commit": "d8b6b030672f9f551a0e3526347699985a779d93" },
   "json5.vim": { "branch": "master", "commit": "29af1618015157caf2ac68813ec37cbf8982a049" },
   "jupytext.vim": { "branch": "master", "commit": "119d2f63c2c487658a972f0a6b710ed461dfed96" },
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
