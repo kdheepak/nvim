@@ -13,24 +13,24 @@ return {
       vim.cmd.colorscheme("catppuccin")
     end,
   },
-  {
-    "rose-pine/neovim",
-    name = "rose-pine",
-    config = function()
-      require("rose-pine").setup({
-        styles = {
-          bold = true,
-          italic = false,
-        },
-        highlight_groups = {
-          Comment = { italic = true },
-          ["@markup.italic"] = { italic = true },
-        },
-      })
-      -- load the colorscheme here
-      vim.cmd.colorscheme("rose-pine")
-    end,
-  },
+  -- {
+  --   "rose-pine/neovim",
+  --   name = "rose-pine",
+  --   config = function()
+  --     require("rose-pine").setup({
+  --       styles = {
+  --         bold = true,
+  --         italic = false,
+  --       },
+  --       highlight_groups = {
+  --         Comment = { italic = true },
+  --         ["@markup.italic"] = { italic = true },
+  --       },
+  --     })
+  --     -- load the colorscheme here
+  --     vim.cmd.colorscheme("rose-pine")
+  --   end,
+  -- },
   -- {
   --   "projekt0n/github-nvim-theme",
   --   name = "github-theme",
